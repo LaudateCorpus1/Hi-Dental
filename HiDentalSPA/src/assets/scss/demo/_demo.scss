@@ -1,0 +1,144 @@
+
+
+.markdown {
+
+    &.api-container {
+        font-size: 14px;
+        line-height: 1.5;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    > table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        empty-cells: show;
+        border: 1px solid $border-color;
+        width: 100%;
+        margin: 8px 0 16px;
+        margin-top: 25px;
+
+        td,
+        th {
+            border: 1px solid #ebedf0;
+            padding: 16px 24px;
+            text-align: left;
+        }
+
+        th {
+            white-space: nowrap;
+            color: #5c6b77;
+            font-weight: 500;
+            background: rgba(0,0,0,.02);
+        }
+    }
+}
+
+
+label {
+
+    &.api-type-label {
+        padding: 3px 10px;
+        font-size: 12px;
+        border-radius: 50px;
+        line-height: 18px;
+        display: inline;
+        vertical-align: middle;
+        color: #fff;
+        margin-left: 20px;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        &.component {
+            color: #3f87f5;
+            background: rgba(63, 135, 245, 0.15);
+        }
+
+        &.directive {
+            color: #de4436;
+            background: rgba(222, 68, 54, 0.05);
+        }
+
+        &.service {
+            color: #05c9a7;
+            background: rgba(0, 201, 167, 0.1);
+        }
+
+        &.plugins {
+            color: #ffc107;
+            background: rgba(255, 193, 7, 0.1);
+        }
+    }
+}
+
+.grid-demo {
+    
+    .ant-row {
+        margin-bottom: 20px;
+        font-size: 16px;
+
+        > div {
+            text-align: center;
+            color: $white;
+            padding: 30px;
+
+            &:nth-child(even) {
+                background-color: transparent;
+                color: $body-color;
+                border: 1px solid $border-color;
+            }
+
+            &:nth-child(odd) {
+                background-color: rgba($brand-primary, 0.7);
+            }
+        }    
+    }
+}
+
+.grid-demo-example {
+    
+    .ant-row,
+    .ant-row-flex {
+        margin-bottom: 20px;
+
+        > div {
+            text-align: center;
+            color: $white;
+            padding: 15px;
+
+            &:nth-child(even) {
+                background-color: rgba($brand-primary, 0.85);
+            }
+
+            &:nth-child(odd) {
+                background-color: rgba($brand-primary, 0.7);
+            }
+        }    
+    }
+}
+
+.grid-demo-gutter {
+
+    .ant-row {
+        margin-bottom: 20px;
+
+        > div {
+            text-align: center;
+            color: $white;
+
+            .gutter-box {
+                background-color: rgba($brand-primary, 0.7);
+                padding: 15px 0px;
+            }
+        }    
+    }
+}
+
+.grid-config {
+    background-color: rgba($brand-primary, 0.7);
+    height: 120px;
+    line-height: 120px;
+    font-size: 13px;
+    color: $white;
+    text-align: center;
+}

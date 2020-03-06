@@ -1,0 +1,190 @@
+.ant-btn {
+    font-size: $font-size-base;
+    padding: $btn-padding-y $btn-padding-x;
+    line-height: $btn-line-height;
+    height: auto;
+    border-color: $border-color;
+    color: $body-color;
+
+    &:hover, 
+    &:focus {
+        background-color: $gray-lighter;
+        border-color: $gray-lighter;
+        color: $body-color;
+    }
+
+    &.ant-btn-clicked {
+        &:after {
+            border-color: $border-color;
+        }
+    }
+
+    &:not(.ant-btn-circle):not(.ant-btn-circle-outline).ant-btn-icon-only {
+        line-height: 1;
+        padding-left: $btn-padding-y;
+        padding-right: $btn-padding-y;
+    }
+
+    &.disabled,
+    &[disabled] {
+        color: rgba($body-color,.25);
+        background-color: $gray-lightest;
+        border-color: $border-color;
+        
+        &.active,
+        &:active,
+        &:focus,
+        &:hover  {
+            color: rgba($body-color,.25);
+            background-color: $gray-lightest;
+            border-color: $border-color;
+        }
+    }
+}
+
+
+a {
+    &.ant-btn {
+        line-height: $btn-line-height;
+
+        &.ant-btn-circle {
+            line-height: $btn-circle-height - 2px;
+        }
+    }
+}
+
+.ant-btn-background-ghost {
+
+    &.ant-btn-default {
+        border-color: transparent;
+        box-shadow: none;
+
+        &:hover,
+        &:focus {
+            background-color: rgba($brand-primary ,0.15) !important;
+            color: $brand-primary;
+        }
+    }
+}
+
+@each $btn in $btn-loop {
+    .#{nth($btn, 1)} {
+        background-color: #{nth($btn, 2)};
+        border-color: #{nth($btn, 2)};
+        color: $white;
+        
+        &:hover,
+        &:focus {
+            color: $white;
+            background-color: lighten(nth($btn, 2),5%);
+            border-color: lighten(nth($btn, 2),5%);
+        }
+        
+        &:active {
+            color: $white;
+            background-color: darken(nth($btn, 2),5%);
+            border-color: darken(nth($btn, 2),5%);
+        }
+        
+        &.active {
+            color: $white;
+            background-color: darken(nth($btn, 2),5%);
+            border-color: darken(nth($btn, 2),5%);
+          
+            &:hover,
+            &:focus {
+                background-color: darken(nth($btn, 2),5%);
+                border-color: darken(nth($btn, 2),5%);
+            }
+        }
+
+        &:not([disabled]):not(.disabled):active,
+        &:not([disabled]):not(.disabled).active {
+          
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+        
+        &.ant-btn-background-ghost {
+            background-color: rgba(nth($btn, 2) ,0.15) !important;
+            border-color: transparent;
+            color: #{nth($btn, 2)};
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: #{nth($btn, 2)} !important;
+                border-color: #{nth($btn, 2)};
+                color: $white;
+            }
+        }
+
+        &.disabled, 
+        &[disabled] {
+            color: rgba($body-color,.25);
+            background-color: $gray-lightest;
+            border-color: $border-color;
+
+            &.active,
+            &:active,
+            &:hover,
+            &:focus {
+                color: rgba($body-color,.25);
+                background-color: $gray-lightest;
+                border-color: $border-color;
+            }
+        }
+
+        &.ant-btn-clicked {
+            &:after {
+                border-color: #{nth($btn, 2)};
+            }
+        }
+	}
+}
+
+.ant-btn-group {
+
+    >.ant-btn {
+        line-height: $btn-line-height;
+    }
+
+    @each $btn-group in $btn-loop {
+        .#{nth($btn-group, 1)} {
+            &:first-child {
+
+                &:not(:last-child) {
+                    border-right-color: rgba(218, 238, 255, 0.22)
+                }    
+            }
+
+            &:last-child:not(:first-child) {
+                border-left-color: rgba(218, 238, 255, 0.22);
+            }
+        }
+
+        .#{nth($btn-group, 1)} + .#{nth($btn-group, 1)}{
+            border-left-color: rgba(218, 238, 255, 0.22);
+        }    
+    }    
+}
+
+.ant-btn-circle {
+    padding: 0px;
+    height: $btn-circle-height;
+}
+
+.ant-btn-sm,
+.ant-btn-group-sm > .ant-btn {
+    padding: $btn-padding-y-sm $btn-padding-x-sm;
+    height: auto;
+}
+
+.ant-btn-lg,
+.ant-btn-group-lg > .ant-btn {
+    padding: $btn-padding-y-lg $btn-padding-x-lg;
+    font-size: 16px;
+    height: auto;
+}

@@ -1,0 +1,59 @@
+<div class="container-fluid p-h-0 p-v-20 h-100 bg" style="background-image: url('assets/images/others/login-3.png')">
+  <div class="d-flex flex-column justify-content-between h-100">
+      <div class="d-none d-md-block"></div>
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-md-7 col-lg-5 m-h-auto">
+                  <nz-card class="m-b-100 shadow-lg">
+                      <div class="d-flex align-items-center justify-content-between m-b-30">
+                          <img class="img-fluid" alt="" src="assets/images/logo/logo.png">
+                          <h2 class="m-b-0">Login</h2>
+                      </div>
+                      <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
+                          <nz-form-item>
+                              <nz-form-label nzRequired nzFor="userName">Usuario</nz-form-label>
+                              <nz-form-control>
+                                  <nz-input-group [nzPrefix]="prefixUser">
+                                      <input type="text" nz-input formControlName="userName" placeholder="Usuario">
+                                  </nz-input-group>
+                                  <nz-form-explain *ngIf="loginForm.get('userName').dirty && loginForm.get('userName').errors">Por favor introduce su usuario!</nz-form-explain>
+                              </nz-form-control>
+                          </nz-form-item>
+                          <nz-form-item>
+                              <nz-form-label nzRequired nzFor="password">Contraseña</nz-form-label>
+                              <a class="float-right font-size-13 p-t-10 text-muted" [routerLink]="['/authentication/reset-password-1']">Olvido su contraseña?</a>
+                              <nz-form-control>
+                                  <nz-input-group [nzPrefix]="prefixLock">
+                                      <input type="password" nz-input formControlName="password" placeholder="Contraseña">
+                                  </nz-input-group>
+                                  <nz-form-explain *ngIf="loginForm.get('password').dirty && loginForm.get('password').errors">Por favor introduce una contraseña!</nz-form-explain>
+                              </nz-form-control>
+                          </nz-form-item>
+                          <nz-form-item>
+                              <nz-form-control>
+                                  <div class="d-flex align-items-center justify-content-between">
+                                      <span class="font-size-13 text-muted">No tienes una cuenta? <a class="small" [routerLink]="['/authentication/sign-up-1']"> Contactanos</a></span>
+                                      <button nz-button class="login-form-button" [nzType]="'primary'">Entrar</button>
+                                  </div>
+                              </nz-form-control>
+                          </nz-form-item>
+                      </form>
+                      <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+                      <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+                  </nz-card>
+              </div>
+          </div>
+      </div>
+      <div class="d-none d-md-flex p-h-40 justify-content-between">
+          <span class="">© 2019 HiDental</span>
+          <ul class="list-inline">
+              <li class="list-inline-item">
+                  <a class="text-dark text-link" href="">Legal</a>
+              </li>
+              <li class="list-inline-item">
+                  <a class="text-dark text-link" href="">Privacy</a>
+              </li>
+          </ul>
+      </div>
+  </div>
+</div>

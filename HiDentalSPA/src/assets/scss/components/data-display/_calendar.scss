@@ -1,0 +1,225 @@
+.ant-fullcalendar {
+    font-family: $font-family-sans-serif;
+    line-height: $line-height-base;
+    color: $body-color;
+    border-top: 1px solid $full-calendar-border;
+}
+
+.ant-fullcalendar-column-header {
+    line-height: 18px;
+    padding: 0;
+    width: 33px;
+    text-align: center;
+
+    .ant-fullcalendar-column-header-inner {
+        font-weight: 500;
+        color: $gray-dark;
+    }
+}
+
+.ant-fullcalendar-value {
+    display: inline-block;
+    margin: 0 auto;
+    color: $full-calendar-color;
+    width: $full-calendar-value-size;
+    height: $full-calendar-value-size;
+    line-height: $full-calendar-value-size;
+    border-radius: $border-radius-circle;
+    text-align: center;
+
+    &:active {
+        background: $full-calendar-theme-color;
+        color: $full-calendar-color;
+    }
+
+    &:hover {
+        background: rgba($full-calendar-theme-color, 0.1);
+    }
+}    
+
+.ant-fullcalendar-month {
+
+    .ant-fullcalendar-value {
+        border-radius: $border-radius;
+    }
+}
+
+.ant-fullcalendar-month-panel-selected-cell,
+.ant-fullcalendar-selected-day {
+
+    .ant-fullcalendar-value {
+        background: rgba( $full-calendar-theme-color, 0.1);
+        color: $full-calendar-theme-color;
+    }
+}
+
+.ant-fullcalendar-month-panel-current-cell,
+.ant-fullcalendar-today {
+
+    .ant-fullcalendar-value {
+        box-shadow: 0 0 0 1px $full-calendar-theme-color inset;
+        background: $full-calendar-theme-color;
+        color: $white;
+    }
+}
+
+.ant-fullcalendar-fullscreen {
+    border-top: 0;
+
+    .ant-fullcalendar-table {
+
+        .ant-fullcalendar-tbody,
+        .ant-fullcalendar-month-panel-tbody {
+            border-left: 1px solid $border-color;
+            border-bottom: 1px solid $border-color;
+        }
+    }
+
+    .ant-fullcalendar-value {
+        background: 0 0;
+        text-align: center;
+        width: $full-calendar-value-size;
+        float: right;
+    }
+
+    .ant-fullcalendar-column-header {
+        text-align: right;
+        padding-right: 12px;
+        padding-bottom: 5px;
+    }
+
+    .ant-fullcalendar-date,
+    .ant-fullcalendar-month {
+        text-align: left;
+        margin: 0px;
+        margin-left: -2px;
+        margin-bottom: -2px;
+        display: block;
+        color: $full-calendar-theme-color;
+        height: 130px;
+        padding: 8px;
+        border-top: 1px solid $full-calendar-border;
+        border-right: 1px solid $full-calendar-border;
+
+
+        &:hover {
+            background-color: $full-calendar-selected-bg;
+        }
+
+        &:active {
+            background-color: darken($full-calendar-selected-bg, 2%);
+        }
+    }
+
+    .ant-fullcalendar-last-month-cell,
+    .ant-fullcalendar-next-month-btn-day {
+
+        .ant-fullcalendar-date {
+            color: $full-calendar-color;
+        }
+    }
+
+    .ant-fullcalendar-month-panel-selected-cell {
+
+        .ant-fullcalendar-month {
+            background-color: $full-calendar-selected-bg;
+        }
+    }
+
+    .ant-fullcalendar-selected-day {
+
+        .ant-fullcalendar-date {
+            background-color: $full-calendar-selected-bg;
+        }    
+    }
+
+    .ant-fullcalendar-selected-day,
+    .ant-fullcalendar-month-panel-selected-cell {
+
+        .ant-fullcalendar-value {
+            background: transparent;
+            color: $full-calendar-theme-color;
+        }
+    }
+
+    .ant-fullcalendar-month-panel-current-cell {
+
+        .ant-fullcalendar-month {
+            border-top-color: $border-color;
+            background: rgba($full-calendar-theme-color, 0.1);
+        }
+    }
+
+    .ant-fullcalendar-today {
+
+        .ant-fullcalendar-date {
+            border-top-color: $border-color;
+            background: rgba($full-calendar-theme-color, 0.1);
+        }
+
+        .ant-fullcalendar-value {
+            color: white;
+            background-color: $full-calendar-theme-color;
+        }
+    }
+
+    .ant-fullcalendar-content {
+        height: calc(100% - #{$full-calendar-value-size});
+        margin-top: $full-calendar-value-size;
+    }
+}
+
+.ant-fullcalendar-month-select {
+    margin-left: 10px;
+}
+
+.ant-fullcalendar-header {
+
+    .ant-radio-group {
+        margin-left: 10px;
+        text-align: left;
+    }
+}
+
+.ant-fullcalendar-last-month-cell,
+.ant-fullcalendar-next-month-btn-day {
+
+    .ant-fullcalendar-value {
+        color: rgba($body-color, 0.25);
+    }
+}
+
+.events {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+        margin-bottom: 5px;
+    }
+
+    .ant-badge-status {
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
+        text-overflow: ellipsis;
+        font-size: 12px;
+    }
+}
+
+.notes-month {
+    text-align: center;
+    font-size: 28px;
+
+    section {
+        font-size: 28px;
+    }
+}
+
+.calendar-card {
+    @include screen-mobile-above {
+        width: 320px;
+    }
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+}

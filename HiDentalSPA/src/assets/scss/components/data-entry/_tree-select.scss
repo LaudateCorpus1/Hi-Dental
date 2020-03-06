@@ -1,0 +1,16 @@
+.ant-select-tree, .ant-select-tree-checkbox-group {
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $body-color;
+}
+
+li.ant-tree-treenode-disabled {
+
+    >.ant-tree-node-content-wrapper {
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+} 

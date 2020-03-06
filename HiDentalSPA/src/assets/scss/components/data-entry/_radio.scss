@@ -1,0 +1,238 @@
+.ant-radio,
+.ant-radio-group,
+.ant-radio-wrapper {
+    font-family: $font-family-sans-serif;
+    font-size: $font-size-base;
+    color: $body-color;
+}
+
+.ant-radio {
+
+    &:hover {
+        .ant-radio-inner {
+            border-color: $radio-theme-color;
+        }
+    }
+}
+
+.ant-radio-wrapper {
+    line-height: $line-height-base;
+    margin-right: $radio-gutter; 
+    
+    &:hover {
+        .ant-radio {
+            .ant-radio-inner {
+                border-color: $radio-theme-color;
+            }
+        }
+    }
+}
+
+.ant-radio-inner {
+    width: $radio-width-height;
+    height: $radio-width-height;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $border-color;
+    background-color: transparent;
+
+    &:after {
+        height: $radio-dot-size;
+        width: $radio-dot-size;
+        left: $radio-position-left;
+        top: $radio-position-top;
+        background-color: $radio-theme-color;
+    }
+}
+
+.ant-radio-checked {
+    
+    .ant-radio-inner {
+        border-color: $radio-theme-color;
+    }
+}
+
+
+.ant-radio-focused {
+    .ant-radio-inner {
+        border-color: $radio-theme-color;
+    }
+}    
+
+
+.ant-radio-disabled {
+    .ant-radio-inner {
+        border-color: $border-color !important;
+        background-color: $radio-disable-bg;
+
+        &:after {
+            background-color: rgba($body-color, 0.5);
+        }
+    }
+}
+
+.ant-radio-button-wrapper {
+    font-size: $font-size-base;
+    padding: $btn-padding-y $radip-btn-padding-x;
+    line-height: $btn-line-height;
+    height: auto;
+    border-color: $border-color;
+    color: $body-color;
+
+    &:hover {
+        border-color: $border-color;
+        color: $radio-theme-color;
+    }
+
+    &:first-child {
+        border-left: 1px solid $border-color;
+    }
+
+    &:not(:first-child)::before {
+        background-color: $border-color;
+    }
+}
+
+.ant-radio-group-large {
+
+    .ant-radio-button-wrapper {
+        padding: $btn-padding-y-lg $btn-padding-x-lg;
+        font-size: 16px;
+        height: auto;
+    }
+}
+
+.ant-radio-group-small {
+
+    .ant-radio-button-wrapper {
+        padding: $btn-padding-y-sm $btn-padding-x-sm;
+        height: auto;
+    }
+}
+
+.ant-radio-button-wrapper-checked {
+    border-color: $radio-theme-color;
+    color: $radio-theme-color;
+    box-shadow: -1px 0 0 0 $radio-theme-color;
+
+    &:first-child {
+        border-color: $radio-theme-color;
+    }
+
+    &:hover {
+        border-color: $radio-theme-color;
+        color: $radio-theme-color;
+        box-shadow: -1px 0 0 0 $radio-theme-color;
+    }
+}
+
+.ant-radio-button-wrapper-disabled {
+    background-color: $gray-lightest;
+    color: rgba($body-color, 0.5);
+    border-color: $border-color;
+
+    &:first-child,
+    &:hover {
+        background-color: $gray-lightest;
+        color: rgba($body-color, 0.5);
+        border-color: $border-color;
+    }
+
+    &.ant-radio-button-wrapper-checked {
+        color: $white;
+        background-color: darken($gray-lightest, 5%);
+        border-color: $border-color;
+    }
+}
+
+.ant-radio-group-solid {
+    .ant-radio-button-wrapper-checked {
+        &:not(.ant-radio-button-wrapper-disabled) {
+            border-color: $radio-theme-color;
+            background: $radio-theme-color;
+            color: $white;
+
+            &:hover {
+                border-color: $radio-theme-color;
+                background: $radio-theme-color;
+                color: $white;
+            }
+        }
+    }
+}
+
+.color-selector {
+
+    .ant-radio {
+
+        &:after {
+            width: 25px;
+            height: 25px;
+        }
+    }
+
+    .ant-radio-inner {
+        border-color: transparent;
+        border-radius: $border-radius;
+
+        &:after {
+            height: 10px;
+            width: 6px;
+            left: 5px;
+            top: 2px;
+            background-color: transparent;
+            border-radius: 0px;
+            border: 2px solid $white;
+            border-top: 0;
+            border-left: 0;
+            transform: rotate(45deg);
+        }
+    }
+
+    .ant-radio-wrapper {
+        line-height: 0;
+        border-radius: $border-radius;
+
+        &:hover {
+            .ant-radio {
+
+                .ant-radio-inner {
+                    border-color: transparent;
+                }
+            }
+        }
+
+        &.bg-white {
+            
+            .ant-radio-inner {
+                border-color: $border-color;
+
+                &:after { 
+                    border-color: $gray;
+                }    
+            }
+
+            &:hover {
+                .ant-radio {
+    
+                    .ant-radio-inner {
+                        border-color: $border-color;
+                    }
+                }
+            }
+        }
+    }    
+
+    span.ant-radio+* {       
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .ant-radio-checked {
+        &:after {
+            animation: none;
+            transform: rotate(45deg);
+            border-color: transparent;
+        }
+    } 
+}

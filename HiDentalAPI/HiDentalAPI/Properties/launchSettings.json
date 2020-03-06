@@ -1,0 +1,21 @@
+{
+  "profiles": {
+    "HiDentalAPI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "Documentation",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5000"
+    },
+    "ERP_SPARTAN": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5002"
+    }
+  }
+}

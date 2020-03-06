@@ -1,0 +1,285 @@
+.ant-input {
+    font-family: $font-family-base;
+    padding: $input-padding-y $input-padding-x;
+    line-height: $input-line-height;
+    color: $input-color;
+    height: auto;
+    border: 1px solid $input-border-color;
+
+    &:hover,
+    &:focus {
+
+        &:not([disabled]) {
+            border-color: $brand-primary;
+        }
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba($brand-primary,.2)
+    }
+
+    &.ant-input-disabled {
+        &:hover,
+        &:focus { 
+            border-color: $input-border-color;
+        }         
+    }
+
+    &~.ant-input-prefix,
+    &~.ant-input-suffix {
+
+        &:not(.anticon) {
+
+            .ant-input-search-button {
+                height: $select-height;
+            }
+        }
+    }
+
+    &:disabled {
+        background-color: $input-bg-disabled;
+        cursor: not-allowed;
+
+        &:hover {
+            border-color: $input-border-color;
+        }  
+    }
+
+    @include placeholder {
+        color: $input-color-placeholder;
+    }
+}
+
+.ant-input-disabled {
+    background-color: $input-bg-disabled;
+    cursor: not-allowed;
+
+    &:hover {
+        border-color: $input-border-color;
+    }
+}
+
+.ant-input-lg {
+    padding: $input-padding-y-lg $input-padding-x-lg;
+    height: auto;
+    font-size: $input-font-size-lg;
+
+    &~.ant-input-prefix,
+    &~.ant-input-suffix {
+
+        &:not(.anticon) {
+
+            .ant-input-search-button {
+                height: $select-height-lg;
+            }
+        }
+    }
+}    
+
+.ant-input-sm {
+    padding: $input-padding-y-sm $input-padding-x-sm;
+    height: auto;
+
+    &~.ant-input-prefix,
+    &~.ant-input-suffix {
+
+        &:not(.anticon) {
+
+            .ant-input-search-button {
+                height: $select-height-sm;
+            }
+        }
+    }
+}    
+
+.ant-input-group-addon {
+    border: 1px solid $input-border-color;
+    background-color: $gray-lightest;
+    color: $body-color;
+}
+
+.ant-input-affix-wrapper {
+    font-family: $font-family-base;
+    line-height: $input-line-height;
+    font-size: $font-size-base;
+
+    .ant-input-prefix,
+    .ant-input-suffix {
+        color: $body-color;
+    }
+
+    &:hover {
+        .ant-input {
+
+            &:not(.ant-input-disabled) {
+                border-color: $brand-primary;
+            }
+        }
+    }
+}
+
+textarea {
+    &.ant-input {
+        min-height: $textarea-min-height;
+    }
+}
+
+.ant-input-number {
+    font-family: $font-family-base;
+    border: 1px solid $input-border-color;
+    line-height: $input-line-height;
+    height: $select-height;
+    color: $body-color;
+    font-size: $font-size-base;
+
+    &:hover,
+    &:focus {
+        border-color: $brand-primary;
+    }
+
+    &.ant-input-number-disabled {
+        &:hover,
+        &:focus {
+            border-color: $input-border-color;
+        }
+    }
+}
+
+.ant-input-number-input {
+    height: $select-height - 0.125rem;
+}
+
+.ant-input-number-lg {
+    height: $select-height-lg;
+
+    .ant-input-number-input {
+        height: $select-height-lg - 0.125rem;
+    }
+}
+
+.ant-input-number-sm {
+    height: $select-height-sm;
+
+    .ant-input-number-input {
+        height: $select-height-sm - 0.125rem;
+    }
+}
+
+.ant-input-number-handler-wrap {
+    border-left: 1px solid $input-border-color;
+}    
+
+.ant-input-number-handler {
+
+    &:hover {
+        .ant-input-number-handler-down-inner,
+        .ant-input-number-handler-up-inner {
+            color: $brand-primary;
+        }
+    }
+
+    &:active {
+        background-color: $gray-lightest;
+    }
+} 
+
+.ant-input-number-handler-down {
+    border-top: 1px solid $input-border-color;
+}
+
+.ant-input-number-focused {
+    border-color: $brand-primary;
+}
+
+.has-error {
+
+    .ant-input {
+        border-color: $input-error-color;
+
+        &:focus,
+        &:hover {
+            border-color: $input-error-color;
+        }
+
+        .ant-cascader-picker-arrow,
+        .ant-form-explain, 
+        .ant-form-split,
+        .ant-input-group-addon,
+        .ant-input-prefix,
+        .ant-select-arrow,
+        .has-feedback {
+            color: $input-error-color;
+        }
+
+        .ant-calendar-picker-icon,
+        .ant-picker-icon,
+        .ant-time-picker-icon {
+
+            &:after {
+                color: $input-error-color;
+            }
+        }
+    }
+
+    &.has-feedback {
+        
+        .ant-form-item-children {
+
+            &:after {
+                color: $input-error-color;
+            }
+        }
+    }
+}
+
+.has-warning {
+
+    .ant-input {
+        border-color: $input-warning-color;
+
+        &:hover {
+            border-color: $input-warning-color;
+        }
+    }
+
+    &.has-feedback {
+
+        .ant-form-item-children {
+
+            &:after {
+                color: $input-warning-color;
+            }
+        }
+    }
+} 
+
+
+.has-success {
+
+    &.has-feedback {
+        .ant-form-item-children {
+
+            &:after {
+                color: $input-success-color;
+            }
+        }
+    }
+} 
+
+.is-validating {
+
+    &.has-feedback {
+
+        .ant-form-item-children-icon {
+            color: $loading-color;
+        }
+    }
+}    
+
+
+.ant-form-item-required {
+    &:before {
+        color: $input-error-color;
+    }
+}
+

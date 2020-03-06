@@ -1,0 +1,95 @@
+.ant-time-picker {
+    font-family: $font-family-base;
+    width: 128px;
+}
+
+.ant-time-picker-input {
+    padding: $input-padding-y $input-padding-x;
+    height: auto;
+    background-color: $white;
+    background-image: none;
+    border: 1px solid $input-border-color;
+    border-radius: $border-radius;
+    line-height: $input-line-height;
+
+    &:hover {
+        border-color: $calendar-date-theme-color;
+    }    
+}
+
+.ant-time-picker-large {
+
+    .ant-time-picker-input {
+        padding: $input-padding-y-lg $input-padding-x-lg;
+        height: auto;
+        font-size: $input-font-size-lg;
+    }
+} 
+
+.ant-time-picker-small {
+
+    .ant-time-picker-input {
+        padding: $input-padding-y-sm $input-padding-x-sm;
+        height: auto;
+        font-size: $input-font-size-sm;
+    }
+} 
+
+.ant-time-picker-panel {
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $calendar-date-text-color;
+}
+
+.ant-time-picker-panel-select{
+
+    li {
+        list-style: none;
+        padding: 0 0 0 12px;
+        height: 32px;
+        line-height: 32px;
+
+        &:hover {
+            background: $gray-lightest;
+        }
+    }
+}
+
+.ant-calendar-time-picker-select {
+
+    li {
+        height: $calendar-date-y;
+        line-height: $calendar-date-y;
+
+        &:hover {
+            background-color: transparent;
+            color: $calendar-date-theme-color;
+        }
+
+        &.ant-calendar-time-picker-select-option-selected {
+            background-color: rgba($calendar-date-theme-color, 0.1);
+            color: $calendar-date-theme-color;
+        }
+    }
+}
+
+li.ant-time-picker-panel-select-option-selected {
+    background: rgba($calendar-date-theme-color, 0.1);
+    color: $calendar-date-theme-color;
+    font-weight: 600;
+
+    &:hover {
+        background: rgba($calendar-date-theme-color, 0.1);
+        color: $calendar-date-theme-color;
+        font-weight: 600;
+    }    
+}
+
+
+li.ant-time-picker-panel-select-option-disabled {
+
+    &:hover {
+        background-color: transparent;
+    }
+}

@@ -1,0 +1,99 @@
+.ant-form {
+    font-family: $font-family-base;
+}
+
+.ant-form-explain, .ant-form-extra {
+    color: $gray-light;
+    line-height: $line-height-base;
+    margin-top: 5px;
+}    
+
+.ant-form-item {
+    font-family: $font-family-sans-serif;
+    font-size:  $font-size-base;
+    line-height: $line-height-base;
+    color: $body-color;
+    margin: 0px;
+    margin-bottom: 24px;
+}
+
+.ant-form-item-label {
+
+    label {
+        color: $body-color;
+        font-weight: $font-weight-semibold;
+    }
+}
+
+.ant-form-item-required {
+
+    &:before {
+        content:""; 
+    }
+}
+
+.has-error .ant-input,
+.has-error .ant-input:hover {
+    border-color: #f5222d;
+}
+
+.has-error {
+
+    .ant-input {
+        border-color: $input-error-color;
+
+        &:hover {
+            border-color: $input-error-color;
+        }
+    }
+
+    .ant-calendar-picker-icon:after,
+    .ant-cascader-picker-arrow,
+    .ant-form-explain,
+    .ant-form-split,
+    .ant-input-group-addon, 
+    .ant-input-prefix, 
+    .ant-picker-icon:after, 
+    .ant-select-arrow, 
+    .ant-time-picker-icon:after, 
+    .has-feedback {
+        color: $input-error-color;
+    }
+}
+
+.has-warning {
+
+    .ant-input {
+        border-color: $input-warning-color;
+
+        &:hover {
+            border-color: $input-warning-color;
+        }
+    }
+
+    .ant-calendar-picker-icon:after, 
+    .ant-cascader-picker-arrow, 
+    .ant-form-explain, 
+    .ant-form-split, 
+    .ant-input-group-addon, 
+    .ant-input-prefix, 
+    .ant-picker-icon:after, 
+    .ant-select-arrow, 
+    .ant-time-picker-icon:after, 
+    .has-feedback {
+        color: $input-warning-color;
+    }
+}
+
+.has-success {
+
+    &.has-feedback {
+
+        .ant-form-item-children {
+
+            &:after {
+                color: $input-success-color;
+            }
+        }
+    }
+}
