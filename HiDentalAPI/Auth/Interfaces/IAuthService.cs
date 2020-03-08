@@ -1,6 +1,5 @@
 ﻿using Auth.Models;
-using Auth.ViewModels;
-using DatabaseLayer.Models;
+using DatabaseLayer.Users.ViewModels;
 using System.Threading.Tasks;
 
 namespace Auth.Interfaces

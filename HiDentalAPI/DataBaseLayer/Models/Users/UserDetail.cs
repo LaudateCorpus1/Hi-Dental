@@ -10,12 +10,17 @@ namespace DataBaseLayer.Models.Users
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
+        public string IdentityDocument { get; set; }
+        public string Gender { get; set; }
         public Guid UserTypeId { get; set; }
         public UserType UserType { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
-    }
 
+    }
+    /// <summary>
+    /// Define the TypeUsers
+    /// </summary>
     public class UserType : CommonsProperty
     {
         [Required]

@@ -1,5 +1,9 @@
-﻿using Auth.ViewModels;
+﻿using AutoMapper;
 using BussinesLayer.UnitOfWork;
+using DatabaseLayer.Models.Users;
+using DatabaseLayer.Users.ViewModels;
+using DataBaseLayer.Enums;
+using DataBaseLayer.MappingProfiles;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,9 +14,12 @@ namespace HiDentalAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUnitOfWork _service;
-        public AuthController(IUnitOfWork service)
+        private readonly IMapper _mapper;
+
+        public AuthController(IUnitOfWork service , IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
         [HttpPost]
         public async Task<IActionResult> SigIn(UserViewModel model)
@@ -30,7 +37,8 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> Create(CreateUserViewModel model)
         {
             if (ModelState.IsValid)
-            {
+            {   //define the type of creation
+                if (string.IsNullOrEmpty(model.CreatedBy)) model.TypeOfCreation = TypeOfCreation.ByApp;
                 var result = await _service.AuthService.Register(model);
                 if (result) return Ok(await _service.AuthService.BuildToken(new UserViewModel { UserName = model.UserName, Password = model.Password }));
             }

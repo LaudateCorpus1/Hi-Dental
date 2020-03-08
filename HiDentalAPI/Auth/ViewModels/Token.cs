@@ -1,4 +1,4 @@
-﻿using Auth.ViewModels;
+﻿using DatabaseLayer.ViewModels.Users;
 using System;
 using System.Collections.Generic;
 

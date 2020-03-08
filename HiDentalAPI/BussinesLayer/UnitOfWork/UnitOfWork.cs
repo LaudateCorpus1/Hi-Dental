@@ -1,5 +1,6 @@
 ﻿using Auth.Interfaces;
 using Auth.Services;
+using AutoMapper;
 using BussinesLayer.Contracts;
 using BussinesLayer.Services;
 using DatabaseLayer.Models.Users;

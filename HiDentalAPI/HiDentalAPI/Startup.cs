@@ -30,6 +30,7 @@ namespace HiDentalAPI
             services.ImplementServices();
             services.AddControllers();
             services.AddDocumentation();
+            services.ConfigureAutoMapper();
 
         }
 

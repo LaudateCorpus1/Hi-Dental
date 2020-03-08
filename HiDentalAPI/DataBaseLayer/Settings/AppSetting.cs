@@ -6,6 +6,7 @@ namespace DataBaseLayer.Settings
 {
     public class AppSetting
     {
+        public string AppName { get; set; }
         public bool IsDevelopment { get; set; }
         public string[] DefaultPermissions { get; set; }
         public UserApp User { get; set; }

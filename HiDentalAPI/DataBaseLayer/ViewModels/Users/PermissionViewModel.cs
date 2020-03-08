@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Auth.ViewModels
+namespace DatabaseLayer.ViewModels.Users
 {
     public class PermissionViewModel
     {

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataBaseLayer.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Text.Json.Serialization;
 
-namespace Auth.ViewModels
+namespace DatabaseLayer.Users.ViewModels
 {
     public class UserViewModel
     {
@@ -25,5 +25,8 @@ namespace Auth.ViewModels
         public string Names { get; set; }
         [Required]
         public string LastNames { get; set; }
+        public string CreatedBy { get; set; }
+        [JsonIgnore]
+        public TypeOfCreation TypeOfCreation { get; set; } = TypeOfCreation.ByUser;
     }
 }

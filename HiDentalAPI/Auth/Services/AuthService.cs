@@ -1,9 +1,10 @@
 ﻿using Auth.Interfaces;
 using Auth.Models;
-using Auth.ViewModels;
-using DatabaseLayer.Models;
+using AutoMapper;
 using DatabaseLayer.Models.Users;
 using DatabaseLayer.Persistence;
+using DatabaseLayer.Users.ViewModels;
+using DatabaseLayer.ViewModels.Users;
 using DataBaseLayer.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -97,8 +98,8 @@ namespace Auth.Services
                     ParentId = item.Role.ParentId,
                     UpdateAt = item.Role.UpdateAt,
                     Name = item.Role.Name
-                    
-                }; // TODO: add with autoMapper in the next commit
+
+                };
                 result.Add(res);
             }
             return result;
@@ -111,8 +112,10 @@ namespace Auth.Services
                 UserName = model.UserName,
                 Email = model.UserName,
                 Names = model.Names,
-                LastNames = model.LastNames
-            }, model.Password); ///TODO : WITH aUTOMAPPER
+                LastNames = model.LastNames,
+                CreatedBy = model.CreatedBy,
+                CreationType = model.TypeOfCreation
+            }, model.Password);
             return result.Succeeded;
         }
 

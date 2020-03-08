@@ -1,6 +1,8 @@
-﻿using BussinesLayer.UnitOfWork;
+﻿using AutoMapper;
+using BussinesLayer.UnitOfWork;
 using DatabaseLayer.Models.Users;
 using DatabaseLayer.Persistence;
+using DataBaseLayer.MappingProfiles;
 using DataBaseLayer.Models.Users;
 using DataBaseLayer.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -61,6 +63,10 @@ namespace HiDentalAPI.Extensions
             });
         }
 
+        public static void ConfigureAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(SharedMap));
+        }
 
         public static void AddSettings(this IServiceCollection services, IConfiguration configuration)
         {

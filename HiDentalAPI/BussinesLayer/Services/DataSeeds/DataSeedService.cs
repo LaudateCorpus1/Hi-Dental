@@ -1,5 +1,6 @@
 ﻿using DatabaseLayer.Models.Users;
 using DatabaseLayer.Persistence;
+using DataBaseLayer.Enums;
 using DataBaseLayer.Models;
 using DataBaseLayer.Models.Users;
 using DataBaseLayer.Settings;
@@ -64,7 +65,8 @@ namespace BussinesLayer.Services.DataSeeds
                 LastNames = options.Value.User.LastName,
                 EmailConfirmed = true,
                 PhoneNumber = options.Value.User.PhoneNumber,
-                LockoutEnabled = false
+                LockoutEnabled = false,
+                CreatedBy = nameof(TypeOfCreation.ByApp)
             };
             var result = userManager.CreateAsync(user, options.Value.User.Password);
             dbContext.Users.Add(user);
