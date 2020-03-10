@@ -22,7 +22,7 @@ namespace HiDentalAPI.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> SigIn(UserViewModel model)
+        public async Task<IActionResult> SigIn(UserLoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -40,7 +40,7 @@ namespace HiDentalAPI.Controllers
             {   //define the type of creation
                 if (string.IsNullOrEmpty(model.CreatedBy)) model.TypeOfCreation = TypeOfCreation.ByApp;
                 var result = await _service.AuthService.Register(model);
-                if (result) return Ok(await _service.AuthService.BuildToken(new UserViewModel { UserName = model.UserName, Password = model.Password }));
+                if (result) return Ok(await _service.AuthService.BuildToken(new UserLoginViewModel { UserName = model.UserName, Password = model.Password }));
             }
             return BadRequest(model);
         }

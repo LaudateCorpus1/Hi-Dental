@@ -11,7 +11,9 @@ namespace DatabaseLayer.Models.Users
 {
     public class User : IdentityUser
     {
+        [Required]
         public string Names { get; set; }
+        [Required]
         public string LastNames { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
         public DateTime UpdateAt { get; set; } = DateTime.Now;

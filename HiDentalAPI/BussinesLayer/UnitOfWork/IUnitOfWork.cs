@@ -8,6 +8,7 @@ namespace BussinesLayer.UnitOfWork
     {
         IAuthService AuthService { get; }
         IPatientService PatientService { get; }
+        IUserService UserService { get; }
         Task Commit();
     }
 }

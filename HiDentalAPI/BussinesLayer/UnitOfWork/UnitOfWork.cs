@@ -22,6 +22,7 @@ namespace BussinesLayer.UnitOfWork
         #endregion
         private AuthService _authService;
         private PatientService _patientService;
+        private UserService _userService;
 
         public UnitOfWork(ApplicationDbContext context, 
             UserManager<User> userManager,
@@ -36,6 +37,8 @@ namespace BussinesLayer.UnitOfWork
         public IPatientService PatientService => _patientService ?? (_patientService = new PatientService(_context));
 
         public IAuthService AuthService => _authService ?? (_authService = new AuthService(_userManager, _signInManager, _settings, _context));
+
+        public IUserService UserService => _userService ?? (_userService = new UserService(_context , _userManager));
 
         async Task IUnitOfWork.Commit() => await _context.SaveChangesAsync();
     }

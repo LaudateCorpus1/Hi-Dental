@@ -36,7 +36,7 @@ namespace Auth.Services
             _settings = options.Value;
             _dbContext = dbContext;
         }
-        public async Task<AuthResult> BuildToken(UserViewModel model)
+        public async Task<AuthResult> BuildToken(UserLoginViewModel model)
         {
             var claims = await GetUserClaims(model.UserName);
 
@@ -119,7 +119,7 @@ namespace Auth.Services
             return result.Succeeded;
         }
 
-        public async Task<bool> SignIn(UserViewModel model)
+        public async Task<bool> SignIn(UserLoginViewModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);

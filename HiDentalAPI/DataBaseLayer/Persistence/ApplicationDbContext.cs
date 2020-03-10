@@ -26,6 +26,10 @@ namespace DatabaseLayer.Persistence
                 .HasForeignKey(nameof(UserPermission.RoleId))
                 .HasPrincipalKey(x => x.Id);
             builder.Entity<UserPermission>().HasKey(x => new { x.RoleId, x.UserId });
+            builder.Entity<User>().HasQueryFilter(x => x.State != Enums.State.Removed);
+            builder.Entity<Patient>().HasQueryFilter(x => x.State != Enums.State.Removed);
+            builder.Entity<Appointment>().HasQueryFilter(x => x.State != Enums.State.Removed);
+            builder.Entity<Consultation>().HasQueryFilter(x => x.State != Enums.State.Removed);
         }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
