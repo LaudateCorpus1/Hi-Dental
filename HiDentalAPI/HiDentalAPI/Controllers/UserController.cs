@@ -2,7 +2,9 @@
 using BussinesLayer.UnitOfWork;
 using Common.ExtensionsMethods;
 using DatabaseLayer.Models.Users;
+using DatabaseLayer.Users.ViewModels;
 using DataBaseLayer.Models.Users;
+using DataBaseLayer.ViewModels.Email;
 using DataBaseLayer.ViewModels.Users;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace HiDentalAPI.Controllers
     {
         private readonly IUnitOfWork _service;
         private readonly IMapper _mapper;
-        public UserController(IUnitOfWork service , IMapper mapper)
+        public UserController(IUnitOfWork service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
@@ -94,5 +96,25 @@ namespace HiDentalAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<UserViewModel>>(await _service.UserService.FilterAsync(filters)));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ChangePasswordEmail(EmailViewModel email)
+        {
+            var result = await _service.UserService.SendEmailChangePasswordAsync(email);
+            if (!result) return NoContent();
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(UserChangePasswordViewModel model)
+        {
+            if(!await _service.UserService.ValidateKeyOfChangePassword(model.key))
+            {
+                ModelState.AddModelError(nameof(model.key), "Key invalida");
+                return BadRequest(ModelState);
+            }
+            var result = await _service.UserService.ChangePasswordAsync(model);
+            if (!result) return NoContent();
+            return Ok(result);
+        }
     }
 }

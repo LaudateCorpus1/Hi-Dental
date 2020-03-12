@@ -1,6 +1,8 @@
 ﻿using BussinesLayer.Repository.Contracts;
 using DatabaseLayer.Models.Users;
+using DatabaseLayer.Users.ViewModels;
 using DataBaseLayer.Models.Users;
+using DataBaseLayer.ViewModels.Email;
 using DataBaseLayer.ViewModels.Users;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,9 @@ namespace BussinesLayer.Contracts
         Task<bool> UpdateAsync(User model);
         Task<bool> UpdateDetailAsync(UserDetail model);
         Task<IEnumerable<User>> FilterAsync(FilterUserViewModel filters);
-
+        Task<bool> SendEmailChangePasswordAsync(EmailViewModel model);
+        Task<bool> ValidateKeyOfChangePassword(string key);
+        Task<bool> ChangePasswordAsync(UserChangePasswordViewModel user);
 
     }
 }

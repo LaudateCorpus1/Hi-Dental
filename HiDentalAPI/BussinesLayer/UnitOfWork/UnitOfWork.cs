@@ -15,6 +15,8 @@ namespace BussinesLayer.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+        private readonly IOptions<AppSetting> _appSettings;
+
         #region for user
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
@@ -27,18 +29,20 @@ namespace BussinesLayer.UnitOfWork
         public UnitOfWork(ApplicationDbContext context, 
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IOptions<AuthSetting> settings)
+            IOptions<AuthSetting> settings,
+            IOptions<AppSetting> appSetting)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _settings = settings;
+            _appSettings = appSetting;
         }
         public IPatientService PatientService => _patientService ?? (_patientService = new PatientService(_context));
 
         public IAuthService AuthService => _authService ?? (_authService = new AuthService(_userManager, _signInManager, _settings, _context));
 
-        public IUserService UserService => _userService ?? (_userService = new UserService(_context , _userManager));
+        public IUserService UserService => _userService ?? (_userService = new UserService(_context , _userManager , _appSettings));
 
         async Task IUnitOfWork.Commit() => await _context.SaveChangesAsync();
     }

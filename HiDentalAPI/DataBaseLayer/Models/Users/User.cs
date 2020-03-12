@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DatabaseLayer.Models.Users
 {
@@ -19,8 +20,10 @@ namespace DatabaseLayer.Models.Users
         public DateTime UpdateAt { get; set; } = DateTime.Now;
         public State State { get; set; } = State.Active;
         public string CreatedBy { get; set; } = nameof(TypeOfCreation.ByApp);
+        [NotMapped]
+        public string FullName => $"{Names} {LastNames}";
         /// <summary>
-         /// Define the type of user creation
+        /// Define the type of user creation
         /// if it's for the app, the property createdBy is ByApp otherwise it will have the creator id
         /// </summary>
         public TypeOfCreation CreationType { get; set; } = TypeOfCreation.ByUser;

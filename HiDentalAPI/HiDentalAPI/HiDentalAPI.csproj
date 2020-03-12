@@ -43,6 +43,9 @@
     <None Remove="datingpp.db" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="wwwroot\Emails\ChangePassword.html" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\BussinesLayer\BussinesLayer.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\DataBaseLayer\DataBaseLayer.csproj">
