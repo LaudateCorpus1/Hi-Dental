@@ -103,7 +103,7 @@ export const ROUTES: SideNavInterface[] = [
         ]
     },
     {
-        path: '',
+        path: 'usuarios',
         title: 'Usuarios',
         iconType: 'nzIcon',
         iconTheme: 'outline',
