@@ -21,6 +21,8 @@ namespace BussinesLayer.Contracts
         Task<bool> SendEmailChangePasswordAsync(EmailViewModel model);
         Task<bool> ValidateKeyOfChangePassword(string key);
         Task<bool> ChangePasswordAsync(UserChangePasswordViewModel user);
-
+        Task<bool> AddUserToRoleAsync(UserToRoleViewModel model);
+        Task<bool> RemoveUserFromRoleAsync(UserToRoleViewModel model);
+        Task<bool> UserIsInRoleAsync(UserToRoleViewModel model);
     }
 }

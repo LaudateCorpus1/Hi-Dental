@@ -42,7 +42,7 @@ namespace BussinesLayer.Services.DataSeeds
             if (dbContext.Roles.Any()) return Result.HasAny;
 
             var permissions = new List<Permission>();
-            foreach (var item in options.Value.DefaultPermissions) permissions.Add(new Permission { Name = item, NormalizedName = item });
+            foreach (var item in options.Value.DefaultPermissions) permissions.Add(new Permission { Name = item, NormalizedName = item.ToUpper() });
 
             dbContext.Roles.AddRange(permissions);
             return dbContext.SaveChanges() > 0 ? Result.Success : Result.Error;

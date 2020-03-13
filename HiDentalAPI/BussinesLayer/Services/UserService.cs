@@ -132,5 +132,41 @@ namespace BussinesLayer.Services
             var result = await _userManager.UpdateAsync(userResult);
             return result.Succeeded;
         }
+
+        public async Task<bool> AddUserToRoleAsync(UserToRoleViewModel model)
+        {
+            var user = await UserAndRoleExist(model);
+            if (user == null) return false;
+            var result = await _userManager.AddToRoleAsync(user, model.RoleName);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> RemoveUserFromRoleAsync(UserToRoleViewModel model)
+        {
+            var user = await UserAndRoleExist(model);
+            if (user == null) return false;
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Name == model.RoleName);
+            var userRole = await _dbContext.UserRoles.FirstOrDefaultAsync(x => x.RoleId == role.Id && x.UserId == model.UserId);
+            _dbContext.UserRoles.Remove(userRole);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> UserIsInRoleAsync(UserToRoleViewModel model)
+        {
+            var user = await UserAndRoleExist(model);
+            if (user == null) return false;
+            var role = await _userManager.GetRolesAsync(user);
+            var result = role.Contains(model.RoleName);
+            return result;
+        }
+
+        private async Task<User> UserAndRoleExist(UserToRoleViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Name == model.RoleName);
+            if (user == null || role == null) return null;
+            return user;
+        }
+
     }
 }

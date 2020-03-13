@@ -116,5 +116,43 @@ namespace HiDentalAPI.Controllers
             if (!result) return NoContent();
             return Ok(result);
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> AddUserToRole(UserToRoleViewModel model)
+        {
+            var isInRole = await _service.UserService.UserIsInRoleAsync(model);
+            if (isInRole)
+            {
+                ModelState.AddModelError(nameof(User), "El usuario ya tiene este rol asignado");
+                return BadRequest(ModelState);
+            }
+            var result = await _service.UserService.AddUserToRoleAsync(model);
+            if (!result)
+            {
+                ModelState.AddModelError(nameof(User), "El usuario o rol no existe");
+                return BadRequest(ModelState);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveUserFromRole(UserToRoleViewModel model)
+        {
+            var isInRole = await _service.UserService.UserIsInRoleAsync(model);
+            if (!isInRole)
+            {
+                ModelState.AddModelError(nameof(User), "El usuario no pertenece a este rol o permiso");
+                return BadRequest(ModelState);
+            }
+
+            var result = await _service.UserService.RemoveUserFromRoleAsync(model);
+            if (!result)
+            {
+                ModelState.AddModelError(nameof(User), "El usuario o rol no existe");
+                return BadRequest(ModelState);
+            }
+
+            return Ok(result);
+        }
     }
 }

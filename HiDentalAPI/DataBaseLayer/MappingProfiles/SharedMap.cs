@@ -13,7 +13,7 @@ namespace DataBaseLayer.MappingProfiles
         public SharedMap()
         {
             CreateMap<User, CreateUserViewModel> ().ReverseMap();
-            CreateMap<UserPermission, PermissionViewModel>().ReverseMap();
+            CreateMap<Permission, PermissionViewModel>().ReverseMap();
             CreateMap<UserDetail, UserDetailViewModel>().ReverseMap();
             CreateMap<User, UserViewModel>().ReverseMap();
         }

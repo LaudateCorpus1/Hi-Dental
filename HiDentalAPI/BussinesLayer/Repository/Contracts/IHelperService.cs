@@ -9,4 +9,9 @@ namespace BussinesLayer.Repository.Contracts
     {
         Task<bool> SoftDelete(Indentifier param);
     }
+
+    public interface IHelperServiceStructure<Indentifier> where Indentifier : struct
+    {
+        Task<bool> SoftDelete(Indentifier param);
+    }
 }

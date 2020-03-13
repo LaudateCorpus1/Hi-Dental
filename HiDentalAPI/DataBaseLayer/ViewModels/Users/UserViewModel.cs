@@ -2,6 +2,7 @@
 using DataBaseLayer.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DataBaseLayer.ViewModels.Users
@@ -31,6 +32,14 @@ namespace DataBaseLayer.ViewModels.Users
         public string Gender { get; set; }
         public Guid UserTypeId { get; set; }
         public string UserId { get; set; }
+    }
+
+    public class UserToRoleViewModel
+    {
+        [Required]
+        public string UserId { get; set; }
+        [Required]
+        public string RoleName { get; set; }
     }
 
 }

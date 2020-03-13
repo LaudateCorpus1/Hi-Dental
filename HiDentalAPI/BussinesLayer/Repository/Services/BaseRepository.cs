@@ -1,6 +1,8 @@
 ﻿using BussinesLayer.Repository.Contracts;
 using DatabaseLayer.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -19,9 +21,13 @@ namespace BussinesLayer.Repository.Services
 
         public IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> expression) => _dbContext.Set<TEntity>().Where(expression);
 
+        public async Task<IEnumerable<TEntity>> FilterAsync(Expression<Func<TEntity, bool>> expression) => await Filter(expression).ToListAsync();
+
         public IQueryable<TEntity> GetAll() => _dbContext.Set<TEntity>().AsQueryable();
 
         public async Task<TEntity> GetById(Guid id) => await _dbContext.Set<TEntity>().FindAsync(id);
+
+        public async Task<IEnumerable<TEntity>> GetList() => await GetAll().ToListAsync();
 
         public async Task<bool> Remove(TEntity entity)
         {

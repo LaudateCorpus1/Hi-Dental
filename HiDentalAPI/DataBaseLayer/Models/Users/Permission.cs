@@ -1,9 +1,8 @@
 ﻿using DatabaseLayer.Enums;
-using DataBaseLayer.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataBaseLayer.Models.Users
 {
