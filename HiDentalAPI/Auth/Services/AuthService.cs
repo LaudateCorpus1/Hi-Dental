@@ -5,6 +5,8 @@ using DatabaseLayer.Models.Users;
 using DatabaseLayer.Persistence;
 using DatabaseLayer.Users.ViewModels;
 using DatabaseLayer.ViewModels.Users;
+using DataBaseLayer.Enums;
+using DataBaseLayer.Models.Users;
 using DataBaseLayer.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,16 +27,19 @@ namespace Auth.Services
         private readonly SignInManager<User> _signInManager;
         private readonly AuthSetting _settings;
         private readonly ApplicationDbContext _dbContext;
+        private readonly AppSetting _appSetting;
 
         public AuthService(UserManager<User> userManager
             , SignInManager<User> signInManager,
             IOptions<AuthSetting> options,
-            ApplicationDbContext dbContext)
+            ApplicationDbContext dbContext,
+            IOptions<AppSetting> optionsApp)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _settings = options.Value;
             _dbContext = dbContext;
+            _appSetting = optionsApp.Value;
         }
         public async Task<AuthResult> BuildToken(UserLoginViewModel model)
         {
@@ -107,7 +112,7 @@ namespace Auth.Services
 
         public async Task<bool> Register(CreateUserViewModel model)
         {
-            var result = await _userManager.CreateAsync(new User
+            var user = new User
             {
                 UserName = model.UserName,
                 Email = model.UserName,
@@ -115,9 +120,23 @@ namespace Auth.Services
                 LastNames = model.LastNames,
                 CreatedBy = model.CreatedBy,
                 CreationType = model.TypeOfCreation
-            }, model.Password);
+            };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (model.TypeOfCreation == TypeOfCreation.ByApp)
+            {
+                var userType = await _dbContext.UserTypes.FirstOrDefaultAsync(x => x.Name == _appSetting.DefautlUserType);//change
+                await AddUserDetailAndTypeByDefault(new UserDetail { UserId = user.Id, UserTypeId = userType.Id });
+            }
             return result.Succeeded;
         }
+
+
+        private async Task AddUserDetailAndTypeByDefault(UserDetail model)
+        {
+            _dbContext.UserDetails.Add(model);
+            await _dbContext.SaveChangesAsync();
+        }
+
 
         public async Task<bool> SignIn(UserLoginViewModel model)
         {

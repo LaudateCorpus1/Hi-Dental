@@ -11,6 +11,8 @@ namespace BussinesLayer.UnitOfWork
         IUserService UserService { get; }
         IPermissionService PermissionService { get; }
         IUserTypeService UserTypeService { get; }
+        IUserDetailService UserDetailService { get; }
+
 
         Task Commit();
     }

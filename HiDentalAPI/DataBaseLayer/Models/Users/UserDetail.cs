@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer.Models.Users;
+using DataBaseLayer.Enums;
 using DataBaseLayer.Models.Commons;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,10 @@ namespace DataBaseLayer.Models.Users
         public string Description { get; set; }
         public string IdentityDocument { get; set; }
         public string Gender { get; set; }
+        [Required]
         public Guid UserTypeId { get; set; }
         public UserType UserType { get; set; }
+        [Required]
         public string UserId { get; set; }
         public User User { get; set; }
 

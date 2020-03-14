@@ -26,11 +26,14 @@ namespace BussinesLayer.UnitOfWork
         private readonly IOptions<AuthSetting> _settings;
         #endregion
 
+        #region services
         private AuthService _authService;
         private PatientService _patientService;
         private UserService _userService;
         private PermissionService _permissionService;
         private UserTypeService _userTypeService;
+        private UserDetailService _userDetailService;
+        #endregion
 
 
         public UnitOfWork(ApplicationDbContext context,
@@ -51,7 +54,7 @@ namespace BussinesLayer.UnitOfWork
         }
         public IPatientService PatientService => _patientService ?? (_patientService = new PatientService(_context));
 
-        public IAuthService AuthService => _authService ?? (_authService = new AuthService(_userManager, _signInManager, _settings, _context));
+        public IAuthService AuthService => _authService ?? (_authService = new AuthService(_userManager, _signInManager, _settings, _context , _appSettings));
 
         public IUserService UserService => _userService ?? (_userService = new UserService(_context, _userManager, _appSettings , _mapper));
 
@@ -59,6 +62,7 @@ namespace BussinesLayer.UnitOfWork
 
         public IUserTypeService UserTypeService => _userTypeService ?? (_userTypeService = new UserTypeService(_context));
 
+        public IUserDetailService UserDetailService => _userDetailService ?? (_userDetailService = new UserDetailService(_context));
 
         async Task IUnitOfWork.Commit() => await _context.SaveChangesAsync();
     }

@@ -42,4 +42,13 @@ namespace DataBaseLayer.ViewModels.Users
         public string RoleName { get; set; }
     }
 
+    public class UserToTypeViewModel
+    {
+        [Required]
+        public Guid UserDetailId { get; set; }
+
+        [Required]
+        public Guid TypeId { get; set; }
+    }
+
 }

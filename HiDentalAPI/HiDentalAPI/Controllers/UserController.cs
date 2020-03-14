@@ -3,11 +3,14 @@ using BussinesLayer.UnitOfWork;
 using Common.ExtensionsMethods;
 using DatabaseLayer.Models.Users;
 using DatabaseLayer.Users.ViewModels;
+using DataBaseLayer.Enums;
 using DataBaseLayer.Models.Users;
 using DataBaseLayer.ViewModels.Email;
 using DataBaseLayer.ViewModels.Users;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HiDentalAPI.Controllers
@@ -108,6 +111,32 @@ namespace HiDentalAPI.Controllers
             if (!isInRole) return BadRequest("El usuario no pertenece a este rol o permiso");
             var result = await _service.UserService.RemoveUserFromRoleAsync(model);
             if (!result) return BadRequest("El usuario o rol no existe");
+            return Ok(result);
+        }
+       
+        [HttpPost]
+        public async Task<IActionResult> AddDetail(UserDetail model)
+        {
+            var existUser = await _service.UserService.GetUserById(model.UserId);
+            if (existUser == null) return BadRequest("No existe este usuario");
+            var haveDetail = await _service.UserDetailService.FilterAsync(x => x.UserId == model.UserId);
+            if (haveDetail.Any()) return BadRequest("Este usuario ya tiene un detalle");
+            var result = await _service.UserDetailService.Add(model);
+            if (!result) return BadRequest("Ocurrio un error, intente de nuevo");
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllGender()
+        {
+            return Ok(Enum.GetValues(typeof(Gender)).Cast<Gender>().ToList());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateType(UserToTypeViewModel model)
+        {
+            var result = await _service.UserService.UpdateUserToTypeAsync(model);
+            if (!result) return BadRequest("Lo sentimos , puede que este usuario no exista o el typo");
             return Ok(result);
         }
     }

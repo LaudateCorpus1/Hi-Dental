@@ -202,5 +202,16 @@ namespace BussinesLayer.Services
                 Pages = pages
             };
         }
+
+        public async Task<bool> UpdateUserToTypeAsync(UserToTypeViewModel model)
+        {
+            var user = await _dbContext.UserDetails.FirstOrDefaultAsync(x => x.Id == model.UserDetailId);
+            if (user == null) return false;
+            var type = await _dbContext.UserTypes.FirstOrDefaultAsync(x => x.Id == model.TypeId);
+            if (type == null) return false;
+            user.UserTypeId = model.TypeId;
+            _dbContext.UserDetails.Update(user);
+            return await _dbContext.SaveChangesAsync() > 0;   
+        }
     }
 }
