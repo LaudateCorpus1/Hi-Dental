@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UsuariosComponent } from './usuarios.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuariosRoutingModule } from './usuarios.routing.module';
+import { UsuarioListadoComponent } from './usuario-listado/usuario-listado.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,7 @@ import { UsuariosRoutingModule } from './usuarios.routing.module';
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     FormsModule,
   ],
-  declarations: [UsuariosComponent],
+  declarations: [UsuariosComponent,UsuarioListadoComponent],
 
 })
 export class UsuariosModule { }

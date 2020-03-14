@@ -8,6 +8,7 @@ import { DefaultDashboardComponent } from './default/default-dashboard.component
 import { WithBreadcrumbDashboardComponent } from './with-breadcrumb/with-breadcrumb-dashboard.component';
 
 
+
 @NgModule({
     imports: [
         CommonModule,
@@ -17,7 +18,7 @@ import { WithBreadcrumbDashboardComponent } from './with-breadcrumb/with-breadcr
     exports: [],
     declarations: [
         DefaultDashboardComponent,
-        WithBreadcrumbDashboardComponent
+        WithBreadcrumbDashboardComponent,
     ],
     providers: [
         ThemeConstantService
