@@ -9,6 +9,7 @@ namespace DataBaseLayer.Settings
         public string AppName { get; set; }
         public string RouteDev { get; set; }
         public string RouteProd { get; set; }
+        public string DefautlUserType { get; set; }
         public string Route { get => IsDevelopment ? RouteDev : RouteProd; set { } }
         public bool IsDevelopment { get; set; }
         public string[] DefaultPermissions { get; set; }

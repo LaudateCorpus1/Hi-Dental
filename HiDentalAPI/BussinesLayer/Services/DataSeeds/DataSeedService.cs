@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,7 +29,12 @@ namespace BussinesLayer.Services.DataSeeds
             var result = SeedOfUserPermitions(dbContext, appSetting);
             if (result == Result.Success || result == Result.HasAny)
             {
-                SeedOfUsers(dbContext, userManager, appSetting);
+                var userTypeResult = SeedOfUserType(dbContext, appSetting);
+                if (userTypeResult != null)
+                {
+                    var resultOfUser = SeedOfUsers(dbContext, userManager, appSetting);
+                    if (resultOfUser != null) SeedOfUserDetail(dbContext, resultOfUser.Id, userTypeResult.Id);
+                }
             }
         }
 
@@ -49,14 +55,15 @@ namespace BussinesLayer.Services.DataSeeds
         }
 
         /// <summary>
+        /// Create the root user
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="userManager"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static Result SeedOfUsers(ApplicationDbContext dbContext, UserManager<User> userManager, IOptions<AppSetting> options)
+        private static User SeedOfUsers(ApplicationDbContext dbContext, UserManager<User> userManager, IOptions<AppSetting> options)
         {
-            if (dbContext.Users.Any()) return Result.HasAny;
+            if (dbContext.Users.Any()) return null;
             var user = new User
             {
                 UserName = options.Value.User.UserName,
@@ -68,15 +75,34 @@ namespace BussinesLayer.Services.DataSeeds
                 LockoutEnabled = false,
                 CreatedBy = nameof(TypeOfCreation.ByApp)
             };
+
             var result = userManager.CreateAsync(user, options.Value.User.Password);
             dbContext.Users.Add(user);
-            if (dbContext.SaveChanges() > 0)
-            {
-                var permissions = dbContext.Roles.FirstOrDefault(x => x.Name == options.Value.DefaultPermissions.FirstOrDefault());
-                dbContext.UserRoles.Add(new UserPermission { RoleId = permissions.Id, UserId = user.Id });
-                return dbContext.SaveChanges() > 0 ? Result.Success : Result.Error;
-            }
-            return Result.Error;
+            if (dbContext.SaveChanges() <= 0) return null;
+
+            var permissions = dbContext.Roles.FirstOrDefault(x => x.Name == options.Value.DefaultPermissions.FirstOrDefault());
+            dbContext.UserRoles.Add(new UserPermission { RoleId = permissions.Id, UserId = user.Id });
+            return dbContext.SaveChanges() > 0 ? user : null;
+        }
+
+        /// <summary>
+        /// Create the root userType
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        private static UserType SeedOfUserType(ApplicationDbContext dbContext, IOptions<AppSetting> options)
+        {
+            if (dbContext.UserTypes.Any()) return null;
+            var model = new UserType { Name = options.Value.DefautlUserType };
+            dbContext.UserTypes.Add(model);
+            return dbContext.SaveChanges() > 0 ? model : null;
+        }
+
+        private static bool SeedOfUserDetail(ApplicationDbContext dbContext, string userId, Guid userTypeId)
+        {
+            dbContext.UserDetails.Add(new UserDetail { UserId = userId, UserTypeId = userTypeId });
+            return dbContext.SaveChanges() > 0;
         }
     }
 
