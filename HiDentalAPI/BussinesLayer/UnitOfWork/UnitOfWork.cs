@@ -29,8 +29,10 @@ namespace BussinesLayer.UnitOfWork
         private PatientService _patientService;
         private UserService _userService;
         private PermissionService _permissionService;
+        private UserTypeService _userTypeService;
 
-        public UnitOfWork(ApplicationDbContext context, 
+
+        public UnitOfWork(ApplicationDbContext context,
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             RoleManager<Permission> roleManager,
@@ -48,9 +50,12 @@ namespace BussinesLayer.UnitOfWork
 
         public IAuthService AuthService => _authService ?? (_authService = new AuthService(_userManager, _signInManager, _settings, _context));
 
-        public IUserService UserService => _userService ?? (_userService = new UserService(_context , _userManager , _appSettings));
+        public IUserService UserService => _userService ?? (_userService = new UserService(_context, _userManager, _appSettings));
 
         public IPermissionService PermissionService => _permissionService ?? (_permissionService = new PermissionService(_context, _roleManager));
+
+        public IUserTypeService UserTypeService => _userTypeService ?? (_userTypeService = new UserTypeService(_context));
+
 
         async Task IUnitOfWork.Commit() => await _context.SaveChangesAsync();
     }

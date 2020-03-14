@@ -27,28 +27,16 @@ namespace HiDentalAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserDetail(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                ModelState.AddModelError(nameof(id), "Es requerido");
-                return BadRequest(ModelState);
-            }
+            if (string.IsNullOrEmpty(id)) return BadRequest("Es requerido");
             return Ok(_mapper.Map<UserViewModel>(await _service.UserService.GetUserById(id)));
         }
 
         [HttpDelete]
         public async Task<IActionResult> Remove(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                ModelState.AddModelError(nameof(id), "Es requerido");
-                return BadRequest(ModelState);
-            }
+            if (string.IsNullOrEmpty(id)) return BadRequest("Es requerido");
             var result = await _service.UserService.SoftDelete(id);
-            if (!result)
-            {
-                ModelState.AddModelError(nameof(User), "No se ha podido agregar, intente de nuevo");
-                return BadRequest(ModelState);
-            }
+            if (!result) return BadRequest("No se ha podido agregar, intente de nuevo");
             return Ok(result);
         }
 
@@ -57,11 +45,7 @@ namespace HiDentalAPI.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(user);
             var result = await _service.UserService.UpdateAsync(user);
-            if (!result)
-            {
-                ModelState.AddModelError(nameof(user), "No se ha podido actualizar , intente de nuevo");
-                return BadRequest(ModelState);
-            }
+            if (!result) return BadRequest("No se ha podido actualizar , intente de nuevo");
             return Ok(result);
         }
 
@@ -70,11 +54,7 @@ namespace HiDentalAPI.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(model);
             var result = await _service.UserService.UpdateDetailAsync(model);
-            if (!result)
-            {
-                ModelState.AddModelError(nameof(UserDetail), "No se ha podido actualizar , intente de nuevo");
-                return BadRequest(ModelState);
-            }
+            if (!result) return BadRequest("No se ha podido actualizar , intente de nuevo");
             return Ok(result);
         }
 
@@ -90,8 +70,7 @@ namespace HiDentalAPI.Controllers
         {
             if (filters.Names.IsNull() && filters.LastNames.IsNull() && filters.IndentityDocument.IsNull())
             {
-                ModelState.AddModelError(nameof(FilterUserViewModel), "Los parametros del filtro estan vacios");
-                return BadRequest(ModelState);
+                return BadRequest("Los parametros del filtro estan vacios");
             }
             return Ok(_mapper.Map<IEnumerable<UserViewModel>>(await _service.UserService.FilterAsync(filters)));
         }
@@ -107,11 +86,7 @@ namespace HiDentalAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePassword(UserChangePasswordViewModel model)
         {
-            if(!await _service.UserService.ValidateKeyOfChangePassword(model.key))
-            {
-                ModelState.AddModelError(nameof(model.key), "Key invalida");
-                return BadRequest(ModelState);
-            }
+            if(!await _service.UserService.ValidateKeyOfChangePassword(model.key)) return BadRequest("Key invalida");
             var result = await _service.UserService.ChangePasswordAsync(model);
             if (!result) return NoContent();
             return Ok(result);
@@ -121,17 +96,9 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> AddUserToRole(UserToRoleViewModel model)
         {
             var isInRole = await _service.UserService.UserIsInRoleAsync(model);
-            if (isInRole)
-            {
-                ModelState.AddModelError(nameof(User), "El usuario ya tiene este rol asignado");
-                return BadRequest(ModelState);
-            }
+            if (isInRole) return BadRequest("El usuario ya tiene este rol asignado");
             var result = await _service.UserService.AddUserToRoleAsync(model);
-            if (!result)
-            {
-                ModelState.AddModelError(nameof(User), "El usuario o rol no existe");
-                return BadRequest(ModelState);
-            }
+            if (!result) return BadRequest("El usuario o rol no existe");
             return Ok(result);
         }
 
@@ -139,19 +106,9 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> RemoveUserFromRole(UserToRoleViewModel model)
         {
             var isInRole = await _service.UserService.UserIsInRoleAsync(model);
-            if (!isInRole)
-            {
-                ModelState.AddModelError(nameof(User), "El usuario no pertenece a este rol o permiso");
-                return BadRequest(ModelState);
-            }
-
+            if (!isInRole) return BadRequest("El usuario no pertenece a este rol o permiso");
             var result = await _service.UserService.RemoveUserFromRoleAsync(model);
-            if (!result)
-            {
-                ModelState.AddModelError(nameof(User), "El usuario o rol no existe");
-                return BadRequest(ModelState);
-            }
-
+            if (!result) return BadRequest("El usuario o rol no existe");
             return Ok(result);
         }
     }

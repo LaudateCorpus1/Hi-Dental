@@ -10,6 +10,7 @@ namespace BussinesLayer.UnitOfWork
         IPatientService PatientService { get; }
         IUserService UserService { get; }
         IPermissionService PermissionService { get; }
+        IUserTypeService UserTypeService { get; }
 
         Task Commit();
     }

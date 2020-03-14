@@ -3,6 +3,7 @@ using DataBaseLayer.Models.Commons;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace DataBaseLayer.Models.Users
 {
@@ -25,6 +26,7 @@ namespace DataBaseLayer.Models.Users
     {
         [Required]
         public string Name { get; set; }
+        [JsonIgnore]
         public virtual ICollection<UserDetail> UserDetails { get; set; }
     }
 }

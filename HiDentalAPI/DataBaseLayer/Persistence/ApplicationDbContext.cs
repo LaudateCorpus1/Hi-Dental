@@ -32,6 +32,7 @@ namespace DatabaseLayer.Persistence
             builder.Entity<Patient>().HasQueryFilter(x => x.State != Enums.State.Removed);
             builder.Entity<Appointment>().HasQueryFilter(x => x.State != Enums.State.Removed);
             builder.Entity<Consultation>().HasQueryFilter(x => x.State != Enums.State.Removed);
+            builder.Entity<UserType>().HasQueryFilter(x => x.State != Enums.State.Removed);
             #endregion
 
         }

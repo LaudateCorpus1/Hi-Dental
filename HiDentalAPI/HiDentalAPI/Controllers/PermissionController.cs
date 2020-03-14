@@ -31,10 +31,7 @@ namespace HiDentalAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetById(string id)
         {
-            if (id.IsNull()) {
-                ModelState.AddModelError(nameof(id), "Requerido");
-                return BadRequest(ModelState);
-            } 
+            if (id.IsNull()) return BadRequest("Parametro id es Requerido");
             var result = _mapper.Map<PermissionViewModel>(await _services.PermissionService.GetByIdentifier(id));           
             if (result == null) return NotFound();
             return Ok(result);
@@ -43,11 +40,7 @@ namespace HiDentalAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterByName(string name)
         {
-            if (name.IsNull())
-            {
-                ModelState.AddModelError(nameof(name), "Requerido");
-                return BadRequest(ModelState);
-            }
+            if (name.IsNull()) return BadRequest("parametro name Requerido");
             var result = _mapper.Map<IEnumerable<PermissionViewModel>>(await _services.PermissionService.FilterAsync(x => x.Name.Contains(name)));
             if (result == null) return NoContent();
             return Ok(result);
@@ -59,18 +52,10 @@ namespace HiDentalAPI.Controllers
             if (!permission.ParentId.IsNull())
             {
                 var result = await _services.PermissionService.GetByIdentifier(permission.ParentId);
-                if(result == null)
-                {
-                    ModelState.AddModelError(nameof(permission.ParentId), "El parentId no existe");
-                    return BadRequest(ModelState);
-                }
+                if(result == null) return BadRequest("El parentId no existe");
             }
             var resultRole = await _services.PermissionService.Create(new Permission { Name = permission.Name });
-            if (!resultRole)
-            {
-                ModelState.AddModelError(nameof(permission.Name), "Ya existe un permiso con ese nombre");
-                return BadRequest(ModelState);
-            }
+            if (!resultRole) return BadRequest("Ya existe un permiso con ese nombre");
             return Ok(resultRole);
         }
 
@@ -90,11 +75,8 @@ namespace HiDentalAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(PermissionViewModel permission)
         {
-            if (permission == null)
-            {
-                ModelState.AddModelError(nameof(permission), "Requerido");
-                return BadRequest(ModelState);
-            }
+
+            if (permission == null) return BadRequest("Requerido");
             var map = _mapper.Map<Permission>(permission);
             var result = await _services.PermissionService.UpdateByProperties(map);
             if (!result) return NotFound();
