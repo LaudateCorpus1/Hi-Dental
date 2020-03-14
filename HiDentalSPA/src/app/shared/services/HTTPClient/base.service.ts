@@ -78,7 +78,7 @@ export class BaseService {
     request.parametros = parametros;
     return this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method, request);
   }
-   
+
   public GetAllByTerm<T>(api: DataApi, Method: string, termino: string): Observable<RespuestaContenido<T>>
   {
     return this.http.get<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method + '?termino=' + termino);
