@@ -17,6 +17,7 @@ namespace BussinesLayer.UnitOfWork
     {
         private readonly ApplicationDbContext _context;
         private readonly IOptions<AppSetting> _appSettings;
+        private readonly IMapper _mapper;
 
         #region for user
         private readonly UserManager<User> _userManager;
@@ -37,7 +38,8 @@ namespace BussinesLayer.UnitOfWork
             SignInManager<User> signInManager,
             RoleManager<Permission> roleManager,
             IOptions<AuthSetting> settings,
-            IOptions<AppSetting> appSetting)
+            IOptions<AppSetting> appSetting,
+            IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
@@ -45,12 +47,13 @@ namespace BussinesLayer.UnitOfWork
             _signInManager = signInManager;
             _settings = settings;
             _appSettings = appSetting;
+            _mapper = mapper;
         }
         public IPatientService PatientService => _patientService ?? (_patientService = new PatientService(_context));
 
         public IAuthService AuthService => _authService ?? (_authService = new AuthService(_userManager, _signInManager, _settings, _context));
 
-        public IUserService UserService => _userService ?? (_userService = new UserService(_context, _userManager, _appSettings));
+        public IUserService UserService => _userService ?? (_userService = new UserService(_context, _userManager, _appSettings , _mapper));
 
         public IPermissionService PermissionService => _permissionService ?? (_permissionService = new PermissionService(_context, _roleManager));
 

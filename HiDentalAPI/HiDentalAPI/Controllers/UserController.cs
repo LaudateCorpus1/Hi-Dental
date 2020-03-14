@@ -59,10 +59,9 @@ namespace HiDentalAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string id)
+        public async Task<IActionResult> GetAll([FromQuery] FilterUserViewModel filter)
         {
-            if (string.IsNullOrEmpty(id)) return BadRequest("id es requerido");
-            return Ok(_mapper.Map<IEnumerable<UserViewModel>>(await _service.UserService.GetAllByUserAsync(id)));
+            return Ok(await _service.UserService.GetAllWithPaginateAsync(filter));
         }
 
         [HttpPost]

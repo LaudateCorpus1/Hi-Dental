@@ -1,4 +1,5 @@
-﻿using BussinesLayer.Contracts;
+﻿using AutoMapper;
+using BussinesLayer.Contracts;
 using BussinesLayer.Repository.Services;
 using Common.ExtensionsMethods;
 using DatabaseLayer.Enums;
@@ -8,6 +9,7 @@ using DatabaseLayer.Users.ViewModels;
 using DataBaseLayer.Models.Users;
 using DataBaseLayer.Settings;
 using DataBaseLayer.ViewModels.Email;
+using DataBaseLayer.ViewModels.Pagination;
 using DataBaseLayer.ViewModels.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,11 +29,15 @@ namespace BussinesLayer.Services
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<User> _userManager;
         private readonly AppSetting _settings;
-        public UserService(ApplicationDbContext dbContext, UserManager<User> userManager, IOptions<AppSetting> options) : base(dbContext)
+        private readonly IMapper _mapper;
+        public UserService(ApplicationDbContext dbContext, UserManager<User> userManager, 
+            IOptions<AppSetting> options ,
+            IMapper mapper) : base(dbContext)
         {
             _dbContext = dbContext;
             _userManager = userManager;
             _settings = options.Value;
+            _mapper = mapper;
         }
 
 
@@ -45,9 +51,6 @@ namespace BussinesLayer.Services
             if (!filters.LastNames.IsNull()) result = result.Where(x => x.LastNames == filters.LastNames);
             return await result.ToListAsync();
         }
-
-        public async Task<IEnumerable<User>> GetAllByUserAsync(string id)
-            => await GetAll().Where(x => x.CreatedBy == id).ToListAsync();
 
         public async Task<User> GetUserById(string id)
             => await _dbContext.Users.Include(x => x.UserDetail).FirstOrDefaultAsync(x => x.Id == id);
@@ -92,7 +95,7 @@ namespace BussinesLayer.Services
             message.To.Add(email.UserName);
             message.Subject = email.Subject;
             message.IsBodyHtml = true;
-            message.Body = await GetPassEmailTemplate(user.FullName , $"{_settings.Route}{_settings.Email.ChangePasswordEndPoint}{user.SecurityStamp}");
+            message.Body = await GetPassEmailTemplate(user.FullName, $"{_settings.Route}{_settings.Email.ChangePasswordEndPoint}{user.SecurityStamp}");
 
             SmtpClient smtpClient = new SmtpClient
             {
@@ -113,7 +116,7 @@ namespace BussinesLayer.Services
             }
         }
 
-        private async Task<string> GetPassEmailTemplate(string name , string url)
+        private async Task<string> GetPassEmailTemplate(string name, string url)
         {
             var readContentResult = await File.ReadAllTextAsync($@"{Directory.GetCurrentDirectory()}\wwwroot\Emails\ChangePassword.html");
             readContentResult = readContentResult.Replace("{name}", name);
@@ -168,5 +171,36 @@ namespace BussinesLayer.Services
             return user;
         }
 
+        public async Task<PaginationViewModel<UserViewModel>> GetAllWithPaginateAsync(FilterUserViewModel model)
+        {
+
+
+            var result = GetAll().Include(x => x.UserDetail).Where(x => x.CreatedBy == model.Id);
+           
+            if (!model.IndentityDocument.IsNull())
+            {
+                return new PaginationViewModel<UserViewModel>
+                {
+                    ActualPage = model.Page,
+                    Entities = _mapper.Map<IEnumerable<UserViewModel>>(result.Where(x => x.UserDetail.IdentityDocument == model.IndentityDocument)),
+                    Total = result.Count(),
+                    Pages = model.Page
+                };
+            }
+
+            if (!model.Names.IsNull()) result = result.Where(x => x.Names.Contains(model.Names));
+            if (!model.LastNames.IsNull()) result = result.Where(x => x.LastNames.Contains(model.LastNames));
+
+            var total = result.Count();
+            var pages = total / model.QuantityByPage;
+
+            return new PaginationViewModel<UserViewModel>
+            {
+                ActualPage = model.Page,
+                Entities = _mapper.Map<IEnumerable<UserViewModel>>(await result.Skip((model.Page - 1) * model.QuantityByPage).Take(model.QuantityByPage).OrderByDescending(x => x.CreateAt).ToListAsync()),
+                Total = total,
+                Pages = pages
+            };
+        }
     }
 }

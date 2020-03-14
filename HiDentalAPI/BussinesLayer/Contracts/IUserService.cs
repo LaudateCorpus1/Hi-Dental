@@ -3,6 +3,7 @@ using DatabaseLayer.Models.Users;
 using DatabaseLayer.Users.ViewModels;
 using DataBaseLayer.Models.Users;
 using DataBaseLayer.ViewModels.Email;
+using DataBaseLayer.ViewModels.Pagination;
 using DataBaseLayer.ViewModels.Users;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,8 @@ using System.Threading.Tasks;
 
 namespace BussinesLayer.Contracts
 {
-    public interface IUserService : IBaseRepository<User> , IHelperService<string>
+    public interface IUserService : IBaseRepository<User> , IHelperService<string> , IPaginationService<UserViewModel,FilterUserViewModel>
     {
-        Task<IEnumerable<User>> GetAllByUserAsync(string id);
         Task<User> GetUserById(string id);
         Task<bool> UpdateAsync(User model);
         Task<bool> UpdateDetailAsync(UserDetail model);
