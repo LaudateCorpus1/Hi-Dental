@@ -28,7 +28,7 @@ namespace HiDentalAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUserDetail(string id)
+        public async Task<IActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id)) return BadRequest("Es requerido");
             return Ok(_mapper.Map<UserViewModel>(await _service.UserService.GetUserById(id)));
@@ -137,6 +137,14 @@ namespace HiDentalAPI.Controllers
         {
             var result = await _service.UserService.UpdateUserToTypeAsync(model);
             if (!result) return BadRequest("Lo sentimos , puede que este usuario no exista o el typo");
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateDentalBranch(UserToDentalBranchViewModel model)
+        {
+            var result = await _service.UserService.UpdateDentalBranchAsync(model);
+            if (!result) return BadRequest("Lo sentimos , ha ocurrido un error. Puede que el usuario o sucursal no exista");
             return Ok(result);
         }
     }

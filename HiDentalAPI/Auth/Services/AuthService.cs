@@ -119,7 +119,8 @@ namespace Auth.Services
                 Names = model.Names,
                 LastNames = model.LastNames,
                 CreatedBy = model.CreatedBy,
-                CreationType = model.TypeOfCreation
+                CreationType = model.TypeOfCreation,
+                DentalBranchId = model.DentalBranchId
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (model.TypeOfCreation == TypeOfCreation.ByApp)

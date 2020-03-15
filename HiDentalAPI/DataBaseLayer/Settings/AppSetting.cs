@@ -15,6 +15,7 @@ namespace DataBaseLayer.Settings
         public string[] DefaultPermissions { get; set; }
         public UserApp User { get; set; }
         public Email Email { get; set; }
+        public Office Office { get; set; }
     }
 
     /// <summary>
@@ -38,5 +39,10 @@ namespace DataBaseLayer.Settings
         public string Password { get; set; }
         public string ChangePasswordEndPoint { get; set; }
 
+    }
+
+    public class Office
+    {
+        public string Name { get; set; }
     }
 }

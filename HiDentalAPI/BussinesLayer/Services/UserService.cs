@@ -53,7 +53,7 @@ namespace BussinesLayer.Services
         }
 
         public async Task<User> GetUserById(string id)
-            => await _dbContext.Users.Include(x => x.UserDetail).FirstOrDefaultAsync(x => x.Id == id);
+            => await _dbContext.Users.Include(x => x.UserDetail).Include(x => x.DentalBranch).FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<bool> SoftDelete(string param)
         {
@@ -212,6 +212,17 @@ namespace BussinesLayer.Services
             user.UserTypeId = model.TypeId;
             _dbContext.UserDetails.Update(user);
             return await _dbContext.SaveChangesAsync() > 0;   
+        }
+
+        public async Task<bool> UpdateDentalBranchAsync(UserToDentalBranchViewModel model)
+        {
+            var exist = await _dbContext.DentalBranch.FirstOrDefaultAsync(x => x.Id == model.DentalBranchId);
+            if (exist == null) return false;
+            var user = await GetUserById(model.UserId);
+            if (user == null) return false;
+            user.DentalBranchId = model.DentalBranchId;
+            _dbContext.Users.Update(user);
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

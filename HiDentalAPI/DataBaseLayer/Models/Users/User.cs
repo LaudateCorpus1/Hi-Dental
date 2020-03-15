@@ -31,5 +31,7 @@ namespace DatabaseLayer.Models.Users
         public virtual ICollection<Consultation> Consults { get; set; }
         public virtual ICollection<UserPermission> UserRoles { get; set; }
         public virtual UserDetail UserDetail { get; set; }
+        public Guid DentalBranchId { get; set; }
+        public virtual DentalBranch DentalBranch { get; set; }
     }
 }

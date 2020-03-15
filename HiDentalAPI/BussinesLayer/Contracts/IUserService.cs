@@ -25,5 +25,6 @@ namespace BussinesLayer.Contracts
         Task<bool> RemoveUserFromRoleAsync(UserToRoleViewModel model);
         Task<bool> UserIsInRoleAsync(UserToRoleViewModel model);
         Task<bool> UpdateUserToTypeAsync(UserToTypeViewModel model);
+        Task<bool> UpdateDentalBranchAsync(UserToDentalBranchViewModel model);
     }
 }

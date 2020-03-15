@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20200303044212_ChangeModelName.Designer.cs" />
     <Compile Remove="Migrations\20200305013053_AddUserDetail.cs" />
     <Compile Remove="Migrations\20200305013053_AddUserDetail.Designer.cs" />
+    <Compile Remove="Migrations\20200315043654_AddBranchsModelsAndOffice.cs" />
+    <Compile Remove="Migrations\20200315043654_AddBranchsModelsAndOffice.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

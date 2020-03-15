@@ -29,11 +29,15 @@ namespace BussinesLayer.Services.DataSeeds
             var result = SeedOfUserPermitions(dbContext, appSetting);
             if (result == Result.Success || result == Result.HasAny)
             {
-                var userTypeResult = SeedOfUserType(dbContext, appSetting);
-                if (userTypeResult != null)
+                var officesResult = SeedOfOffices(dbContext, appSetting);
+                if (officesResult != null)
                 {
-                    var resultOfUser = SeedOfUsers(dbContext, userManager, appSetting);
-                    if (resultOfUser != null) SeedOfUserDetail(dbContext, resultOfUser.Id, userTypeResult.Id);
+                    var userTypeResult = SeedOfUserType(dbContext, appSetting);
+                    if (userTypeResult != null)
+                    {
+                        var resultOfUser = SeedOfUsers(dbContext, userManager, appSetting, officesResult.Id);
+                        if (resultOfUser != null) SeedOfUserDetail(dbContext, resultOfUser.Id, userTypeResult.Id);
+                    }
                 }
             }
         }
@@ -61,7 +65,7 @@ namespace BussinesLayer.Services.DataSeeds
         /// <param name="userManager"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static User SeedOfUsers(ApplicationDbContext dbContext, UserManager<User> userManager, IOptions<AppSetting> options)
+        private static User SeedOfUsers(ApplicationDbContext dbContext, UserManager<User> userManager, IOptions<AppSetting> options, Guid officeId)
         {
             if (dbContext.Users.Any()) return null;
             var user = new User
@@ -73,7 +77,8 @@ namespace BussinesLayer.Services.DataSeeds
                 EmailConfirmed = true,
                 PhoneNumber = options.Value.User.PhoneNumber,
                 LockoutEnabled = false,
-                CreatedBy = nameof(TypeOfCreation.ByApp)
+                CreatedBy = nameof(TypeOfCreation.ByApp),
+                DentalBranchId = officeId
             };
 
             var result = userManager.CreateAsync(user, options.Value.User.Password);
@@ -99,10 +104,23 @@ namespace BussinesLayer.Services.DataSeeds
             return dbContext.SaveChanges() > 0 ? model : null;
         }
 
+
         private static bool SeedOfUserDetail(ApplicationDbContext dbContext, string userId, Guid userTypeId)
         {
             dbContext.UserDetails.Add(new UserDetail { UserId = userId, UserTypeId = userTypeId });
             return dbContext.SaveChanges() > 0;
+        }
+
+        private static DentalBranch SeedOfOffices(ApplicationDbContext dbContext, IOptions<AppSetting> options)
+        {
+            if (dbContext.PrincipalOffices.Any()) return null;
+            var principalOffice = new PrincipalOffice { Title = options.Value.Office.Name };
+            dbContext.PrincipalOffices.Add(principalOffice);
+            var result = dbContext.SaveChanges() > 0;
+            if (!result) return null;
+            var dentalBranch = new DentalBranch { Title = options.Value.Office.Name, PrincipalOfficeId = principalOffice.Id };
+            dbContext.DentalBranch.Add(dentalBranch);
+            return dbContext.SaveChanges() > 0 ? dentalBranch : null;
         }
     }
 

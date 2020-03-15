@@ -1,5 +1,6 @@
 ﻿using DatabaseLayer.Enums;
 using DataBaseLayer.Enums;
+using DataBaseLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,8 @@ namespace DataBaseLayer.ViewModels.Users
         public string PhoneNumber { get; set; }
         public bool EmailConfirmed { get; set; }
         public UserDetailViewModel UserDetail { get; set; }
+        public Guid DentalBranchId { get; set; }
+        public DentalBranch DentalBranch { get; set; }
     }
 
     public class UserDetailViewModel
@@ -49,6 +52,15 @@ namespace DataBaseLayer.ViewModels.Users
 
         [Required]
         public Guid TypeId { get; set; }
+    }
+
+    public class UserToDentalBranchViewModel
+    {
+        [Required]
+        public Guid DentalBranchId { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
     }
 
 }

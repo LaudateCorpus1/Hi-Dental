@@ -28,6 +28,8 @@ namespace DatabaseLayer.Users.ViewModels
         public string CreatedBy { get; set; }
         [JsonIgnore]
         public TypeOfCreation TypeOfCreation { get; set; } = TypeOfCreation.ByUser;
+        [Required]
+        public Guid DentalBranchId { get; set; }
     }
 
     public class UserChangePasswordViewModel
