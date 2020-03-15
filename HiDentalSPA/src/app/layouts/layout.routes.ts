@@ -9,9 +9,11 @@ export const Layout_ROUTES: Routes = [
     
     {
         path: 'usuarios',
-        loadChildren: () => import('../layouts/usuarios/usuarios.module').then(m => m.UsuariosModule),
         data: {
             title: 'usuarios ',
-        }
+        },
+        loadChildren: () => import('../layouts/usuarios/usuarios.module').then(m => m.UsuariosModule),
+    
+        
     } 
 ];
