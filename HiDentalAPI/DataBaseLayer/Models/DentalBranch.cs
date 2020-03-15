@@ -14,6 +14,7 @@ namespace DataBaseLayer.Models
         [Phone(ErrorMessage = "Numero invalido")]
         public string PhoneNumber { get; set; }
         public Guid PrincipalOfficeId { get; set; }
-        public PrincipalOffice PrincipalOffice { get; set; }
+        public virtual PrincipalOffice PrincipalOffice { get; set; }
+        public bool IsPrincipal { get; set; }
     }
 }

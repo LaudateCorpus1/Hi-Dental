@@ -10,6 +10,7 @@ namespace DataBaseLayer.Models
     {
         public string Description { get; set; }
         public string Address { get; set; }
+        [Required]
         public string Title { get; set; }
         [Phone(ErrorMessage = "{0} Invalido")]
         public string PhoneNumber { get; set; }

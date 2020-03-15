@@ -68,7 +68,7 @@ namespace HiDentalAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Filter(FilterUserViewModel filters)
+        public async Task<IActionResult> Filter([FromQuery]FilterUserViewModel filters)
         {
             if (filters.Names.IsNull() && filters.LastNames.IsNull() && filters.IndentityDocument.IsNull())
             {
