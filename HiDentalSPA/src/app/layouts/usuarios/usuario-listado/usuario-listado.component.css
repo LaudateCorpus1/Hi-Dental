@@ -1,0 +1,5 @@
+.borderStrong{
+    border: 1px solid gainsboro !important;
+    border-radius: 4px;
+    color: grey;
+}
