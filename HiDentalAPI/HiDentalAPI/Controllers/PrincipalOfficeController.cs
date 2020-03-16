@@ -26,7 +26,7 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _unitOfWork.PrincipalOfficeService.GetWithChildrenBranchsAsync(id);
-            if (result == null) return BadRequest("Esta oficina no existe");
+            if (result == null) return NotFound();
             return Ok(result);
         }
 
@@ -36,6 +36,14 @@ namespace HiDentalAPI.Controllers
             var result = await _unitOfWork.PrincipalOfficeService.Add(model);
             if (!result) return BadRequest("Intente de nuevo");
             return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetDentalBranches(Guid id)
+        {
+            var exist = await _unitOfWork.PrincipalOfficeService.GetById(id);
+            if (exist == null) return BadRequest("La oficina principal no existe , intente nuevamente ");
+            return Ok(await _unitOfWork.PrincipalOfficeService.DentalBranches(exist.Id));
         }
 
         [HttpGet]

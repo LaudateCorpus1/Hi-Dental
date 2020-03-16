@@ -59,6 +59,7 @@ namespace BussinesLayer.Services
             result.NormalizedName = model.Name.ToUpper();
             result.HasChild = model.HasChild;
             result.ParentId = model.ParentId;
+            result.UpdateAt = model.UpdateAt;
             var op = await _roleManager.UpdateAsync(result);
             return op.Succeeded;
         }

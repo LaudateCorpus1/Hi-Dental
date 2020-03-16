@@ -12,7 +12,9 @@ namespace BussinesLayer.UnitOfWork
         IPermissionService PermissionService { get; }
         IUserTypeService UserTypeService { get; }
         IUserDetailService UserDetailService { get; }
-        IPrincipalOfficeService PrincipalOfficeService { get;}
+        IPrincipalOfficeService PrincipalOfficeService { get; }
+        IDentalBranchService DentalBranchService { get; }
+
 
         Task Commit();
     }

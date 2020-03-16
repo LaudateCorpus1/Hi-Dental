@@ -79,6 +79,7 @@ namespace BussinesLayer.Services
             result.Description = model.Description.Evaluate(result.Description);
             result.Gender = model.Gender.Evaluate(result.Gender);
             result.IdentityDocument = model.IdentityDocument.Evaluate(result.IdentityDocument);
+            result.UpdateAt = model.UpdateAt;
             _dbContext.Update(result);
             return await _dbContext.SaveChangesAsync() > 0;
         }
@@ -221,6 +222,7 @@ namespace BussinesLayer.Services
             var user = await GetUserById(model.UserId);
             if (user == null) return false;
             user.DentalBranchId = model.DentalBranchId;
+            user.UpdateAt = DateTime.Now;
             _dbContext.Users.Update(user);
             return await _dbContext.SaveChangesAsync() > 0;
         }

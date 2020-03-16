@@ -118,7 +118,13 @@ namespace BussinesLayer.Services.DataSeeds
             dbContext.PrincipalOffices.Add(principalOffice);
             var result = dbContext.SaveChanges() > 0;
             if (!result) return null;
-            var dentalBranch = new DentalBranch { Title = options.Value.Office.Name, PrincipalOfficeId = principalOffice.Id };
+            var dentalBranch = new DentalBranch
+            {
+                Title = options.Value.Office.Name,
+                PhoneNumber = "0000000000",
+                Address = options.Value.Office.Name,
+                PrincipalOfficeId = principalOffice.Id
+            };
             dbContext.DentalBranch.Add(dentalBranch);
             return dbContext.SaveChanges() > 0 ? dentalBranch : null;
         }

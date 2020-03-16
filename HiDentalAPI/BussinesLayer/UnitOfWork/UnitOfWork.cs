@@ -34,6 +34,7 @@ namespace BussinesLayer.UnitOfWork
         private UserTypeService _userTypeService;
         private UserDetailService _userDetailService;
         private PrincipalOfficeService _principalOfficeService;
+        private DentalBranchService _dentalBranchService;
         #endregion
 
 
@@ -67,6 +68,7 @@ namespace BussinesLayer.UnitOfWork
 
         public IPrincipalOfficeService PrincipalOfficeService => _principalOfficeService ?? (_principalOfficeService = new PrincipalOfficeService(_context));
 
+        public IDentalBranchService DentalBranchService => _dentalBranchService ?? (_dentalBranchService = new DentalBranchService(_context));
         async Task IUnitOfWork.Commit() => await _context.SaveChangesAsync();
     }
 }

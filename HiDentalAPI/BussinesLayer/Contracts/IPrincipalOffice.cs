@@ -9,5 +9,6 @@ namespace BussinesLayer.Contracts
     public interface IPrincipalOfficeService : IBaseRepository<PrincipalOffice> , IHelperServiceStructure<Guid>
     {
         Task<PrincipalOffice> GetWithChildrenBranchsAsync(Guid id);
+        Task<IEnumerable<DentalBranch>> DentalBranches(Guid id);
     }
 }

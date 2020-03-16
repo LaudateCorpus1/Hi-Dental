@@ -8,9 +8,8 @@ using System.Text.Json.Serialization;
 
 namespace DataBaseLayer.Models.Users
 {
-    public class UserDetail 
+    public class UserDetail : CommonsProperty
     {
-        public Guid Id { get; set; }
         public string Description { get; set; }
         public string IdentityDocument { get; set; }
         public string Gender { get; set; }
@@ -20,7 +19,6 @@ namespace DataBaseLayer.Models.Users
         [Required]
         public string UserId { get; set; }
         public User User { get; set; }
-
     }
     /// <summary>
     /// Define the TypeUsers

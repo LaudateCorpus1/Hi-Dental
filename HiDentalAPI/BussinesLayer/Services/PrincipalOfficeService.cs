@@ -4,6 +4,8 @@ using DatabaseLayer.Persistence;
 using DataBaseLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BussinesLayer.Services
@@ -16,6 +18,9 @@ namespace BussinesLayer.Services
         {
             _dbContext = dbContext;
         }
+
+        public async Task<IEnumerable<DentalBranch>> DentalBranches(Guid id) 
+            => await _dbContext.DentalBranch.Where(x => x.PrincipalOfficeId == id).ToListAsync();
 
         public async Task<PrincipalOffice> GetWithChildrenBranchsAsync(Guid id)
             => await _dbContext.PrincipalOffices.Include(x => x.DentalBranches).FirstOrDefaultAsync(x => x.Id == id);
