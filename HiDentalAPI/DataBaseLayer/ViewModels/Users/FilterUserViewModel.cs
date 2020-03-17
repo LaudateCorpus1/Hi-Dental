@@ -7,8 +7,11 @@ namespace DataBaseLayer.ViewModels.Users
 {
     public class FilterUserViewModel
     {
-        [Required]
+        /// <summary>
+        /// CreatedBy 
+        /// </summary>
         public string Id { get; set; }
+        public Guid DentalBranchId { get; set; }
         public string Names { get; set; }
         public string LastNames { get; set; }
         public string IndentityDocument { get; set; }

@@ -64,6 +64,7 @@ namespace HiDentalAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] FilterUserViewModel filter)
         {
+            if (filter.Id.IsNull() && filter.DentalBranchId == Guid.Empty) return BadRequest("Parametros invalidos");
             return Ok(await _service.UserService.GetAllWithPaginateAsync(filter));
         }
 

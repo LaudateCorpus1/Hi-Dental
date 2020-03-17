@@ -30,8 +30,8 @@ namespace BussinesLayer.Services
         private readonly UserManager<User> _userManager;
         private readonly AppSetting _settings;
         private readonly IMapper _mapper;
-        public UserService(ApplicationDbContext dbContext, UserManager<User> userManager, 
-            IOptions<AppSetting> options ,
+        public UserService(ApplicationDbContext dbContext, UserManager<User> userManager,
+            IOptions<AppSetting> options,
             IMapper mapper) : base(dbContext)
         {
             _dbContext = dbContext;
@@ -175,9 +175,17 @@ namespace BussinesLayer.Services
         public async Task<PaginationViewModel<UserViewModel>> GetAllWithPaginateAsync(FilterUserViewModel model)
         {
 
+            
+            var result = new List<User>().AsQueryable();
+            if (!model.Id.IsNull())
+            {
+                result = GetAll().Include(x => x.UserDetail).Where(x => x.CreatedBy == model.Id);
+            }
+            else
+            {
+                result = GetAll().Include(x => x.UserDetail).Where(x => x.DentalBranchId == model.DentalBranchId);
+            }
 
-            var result = GetAll().Include(x => x.UserDetail).Where(x => x.CreatedBy == model.Id);
-           
             if (!model.IndentityDocument.IsNull())
             {
                 return new PaginationViewModel<UserViewModel>
@@ -212,7 +220,7 @@ namespace BussinesLayer.Services
             if (type == null) return false;
             user.UserTypeId = model.TypeId;
             _dbContext.UserDetails.Update(user);
-            return await _dbContext.SaveChangesAsync() > 0;   
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> UpdateDentalBranchAsync(UserToDentalBranchViewModel model)
@@ -226,5 +234,9 @@ namespace BussinesLayer.Services
             _dbContext.Users.Update(user);
             return await _dbContext.SaveChangesAsync() > 0;
         }
+
+        public async Task<IEnumerable<User>> GetAllUserByDentalBranchAsync(Guid id)
+            => await GetAll().Where(x => x.DentalBranchId == id).ToListAsync();
+
     }
 }

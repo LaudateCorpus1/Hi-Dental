@@ -14,12 +14,10 @@ namespace HiDentalAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUnitOfWork _service;
-        private readonly IMapper _mapper;
 
-        public AuthController(IUnitOfWork service , IMapper mapper)
+        public AuthController(IUnitOfWork service)
         {
             _service = service;
-            _mapper = mapper;
         }
         [HttpPost]
         public async Task<IActionResult> SigIn(UserLoginViewModel model)
