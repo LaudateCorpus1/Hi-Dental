@@ -4,14 +4,16 @@ using DatabaseLayer.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataBaseLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200318171642_InitPatient")]
+    partial class InitPatient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,15 +313,8 @@ namespace DataBaseLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("DentalBranchId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -366,8 +361,6 @@ namespace DataBaseLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DentalBranchId");
 
                     b.ToTable("Patients");
                 });
@@ -605,15 +598,6 @@ namespace DataBaseLayer.Migrations
                     b.HasOne("DatabaseLayer.Models.Users.User", "User")
                         .WithMany("Consults")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("DatabaseLayer.Models.Patients.Patient", b =>
-                {
-                    b.HasOne("DataBaseLayer.Models.DentalBranch", "DentalBranch")
-                        .WithMany()
-                        .HasForeignKey("DentalBranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DatabaseLayer.Models.Users.User", b =>

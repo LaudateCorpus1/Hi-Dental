@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,13 +54,14 @@ namespace Auth.Services
             audience: _settings.ValidAudience,
             claims: claims,
             signingCredentials: creds);
+            var permissions = await GetUserPermissionAsync(model.UserName);
             var authResult = new AuthResult
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = DateTime.Today,
                 Expire = false,
-                Permissions = await GetUserPermissionAsync(model.UserName),
-                UserName = model.UserName
+                Permissions = permissions,
+                User = model
             };
             return authResult;
         }
@@ -85,14 +87,14 @@ namespace Auth.Services
         /// </summary>
         /// <param name="userName">User</param>
         /// <returns>Claim[]</returns>
-        private async Task<List<PermissionViewModel>> GetUserPermissionAsync(string userName)
+        private async Task<List<Permission>> GetUserPermissionAsync(string userName)
         {
             var user = await _dbContext.Users.Include(x => x.UserRoles)
                 .FirstOrDefaultAsync(x => x.UserName == userName);
-            var result = new List<PermissionViewModel>();
+            var result = new List<Permission>();
             foreach (var item in user.UserRoles)
             {
-                var res = new PermissionViewModel
+                var res = new Permission
                 {
                     CreateAt = item.Role.CreateAt,
                     HasChild = item.Role.HasChild,
@@ -103,12 +105,12 @@ namespace Auth.Services
                     ParentId = item.Role.ParentId,
                     UpdateAt = item.Role.UpdateAt,
                     Name = item.Role.Name
-
                 };
                 result.Add(res);
             }
             return result;
         }
+
 
         public async Task<bool> Register(CreateUserViewModel model)
         {
@@ -139,11 +141,12 @@ namespace Auth.Services
         }
 
 
-        public async Task<bool> SignIn(UserLoginViewModel model)
+        public async Task<User> SignIn(UserLoginViewModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user == null) return null;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-            return result.Succeeded;
+            return result.Succeeded ? user : null;
         }
     }
 }

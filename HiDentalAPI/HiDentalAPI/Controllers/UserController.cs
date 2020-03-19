@@ -64,7 +64,7 @@ namespace HiDentalAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] FilterUserViewModel filter)
         {
-            if (filter.Id.IsNull() && filter.DentalBranchId == Guid.Empty) return BadRequest("Parametros invalidos");
+            if (filter.CreatedBy.IsNull() && filter.DentalBranchId == Guid.Empty) return BadRequest("Parametros invalidos");
             return Ok(await _service.UserService.GetAllWithPaginateAsync(filter));
         }
 
@@ -146,6 +146,13 @@ namespace HiDentalAPI.Controllers
         {
             var result = await _service.UserService.UpdateDentalBranchAsync(model);
             if (!result) return BadRequest("Lo sentimos , ha ocurrido un error. Puede que el usuario o sucursal no exista");
+            return Ok(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> FindByUserName(string userName)
+        {
+            var result = _mapper.Map<UserViewModel>(await _service.UserService.GetByUserName(userName));
+            if (result == null) return NoContent();
             return Ok(result);
         }
     }

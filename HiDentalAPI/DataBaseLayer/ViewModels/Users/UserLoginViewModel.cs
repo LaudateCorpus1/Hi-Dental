@@ -12,6 +12,8 @@ namespace DatabaseLayer.Users.ViewModels
         [Required]
         [MinLength(6, ErrorMessage = "La contraseña debe ser mayor a 6")]
         public string Password { get; set; }
+        public Guid DentalBranchId { get; set; }
+        public string Id { get; set; }
     }
 
     public class CreateUserViewModel

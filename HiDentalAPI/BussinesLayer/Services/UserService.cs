@@ -175,15 +175,17 @@ namespace BussinesLayer.Services
         public async Task<PaginationViewModel<UserViewModel>> GetAllWithPaginateAsync(FilterUserViewModel model)
         {
 
-            
+
             var result = new List<User>().AsQueryable();
-            if (!model.Id.IsNull())
+            if (!model.CreatedBy.IsNull())
             {
-                result = GetAll().Include(x => x.UserDetail).Where(x => x.CreatedBy == model.Id);
+                result = GetAll().Include(x => x.UserDetail)
+                    .ThenInclude(x => x.UserType).Where(x => x.CreatedBy == model.CreatedBy);
             }
             else
             {
-                result = GetAll().Include(x => x.UserDetail).Where(x => x.DentalBranchId == model.DentalBranchId);
+                result = GetAll().Include(x => x.UserDetail)
+                    .ThenInclude(x => x.UserType).Where(x => x.DentalBranchId == model.DentalBranchId);
             }
 
             if (!model.IndentityDocument.IsNull())
@@ -237,6 +239,9 @@ namespace BussinesLayer.Services
 
         public async Task<IEnumerable<User>> GetAllUserByDentalBranchAsync(Guid id)
             => await GetAll().Where(x => x.DentalBranchId == id).ToListAsync();
+
+        public async Task<User> GetByUserName(string userName)
+            => await _userManager.FindByNameAsync(userName);
 
     }
 }

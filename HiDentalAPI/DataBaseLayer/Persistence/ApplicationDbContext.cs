@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer.Models;
+using DatabaseLayer.Models.Patients;
 using DatabaseLayer.Models.Users;
 using DataBaseLayer.Models;
 using DataBaseLayer.Models.Users;

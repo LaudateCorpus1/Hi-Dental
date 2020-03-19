@@ -14,8 +14,12 @@ namespace DataBaseLayer.MappingProfiles
         {
             CreateMap<User, CreateUserViewModel> ().ReverseMap();
             CreateMap<Permission, PermissionViewModel>().ReverseMap();
-            CreateMap<UserDetail, UserDetailViewModel>().ReverseMap();
             CreateMap<User, UserViewModel>().ReverseMap();
+            CreateMap<User, UserLoginViewModel>().ReverseMap();
+            CreateMap<UserDetail, UserDetailViewModel>().ReverseMap();
+            CreateMap<UserType, UserTypeViewModel>().ReverseMap();
+            CreateMap<Permission, PermissionViewModel>().ReverseMap();
+
         }
     }
 }

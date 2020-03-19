@@ -1,6 +1,8 @@
 ﻿using DatabaseLayer.Enums;
 using DataBaseLayer.Enums;
 using DataBaseLayer.Models;
+using DataBaseLayer.Models.Commons;
+using DataBaseLayer.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +10,10 @@ using System.Text;
 
 namespace DataBaseLayer.ViewModels.Users
 {
+
+    /// <summary>
+    /// Modelo para mapear el modelo User
+    /// </summary>
     public class UserViewModel
     {
         public string Id { get; set; }
@@ -27,16 +33,9 @@ namespace DataBaseLayer.ViewModels.Users
         public DentalBranch DentalBranch { get; set; }
     }
 
-    public class UserDetailViewModel
-    {
-        public Guid Id { get; set; }
-        public string Description { get; set; }
-        public string IdentityDocument { get; set; }
-        public string Gender { get; set; }
-        public Guid UserTypeId { get; set; }
-        public string UserId { get; set; }
-    }
-
+    /// <summary>
+    /// VM para agregar un usuario a un rol
+    /// </summary>
     public class UserToRoleViewModel
     {
         [Required]
@@ -45,6 +44,9 @@ namespace DataBaseLayer.ViewModels.Users
         public string RoleName { get; set; }
     }
 
+    /// <summary>
+    /// VM para agregar un usuario a un tipo
+    /// </summary>
     public class UserToTypeViewModel
     {
         [Required]
@@ -54,6 +56,9 @@ namespace DataBaseLayer.ViewModels.Users
         public Guid TypeId { get; set; }
     }
 
+    /// <summary>
+    /// VM para agregar un usuario a una sucursal
+    /// </summary>
     public class UserToDentalBranchViewModel
     {
         [Required]
@@ -63,4 +68,23 @@ namespace DataBaseLayer.ViewModels.Users
         public string UserId { get; set; }
     }
 
+    /// <summary>
+    /// VM para mapear el userDetail to UserDetailViewModel
+    /// </summary>
+    public class UserDetailViewModel : CommonsProperty
+    {
+        public string Description { get; set; }
+        public string IdentityDocument { get; set; }
+        public string Gender { get; set; }
+        public Guid UserTypeId { get; set; }
+        public UserTypeViewModel UserType { get; set; }
+        public string UserId { get; set; }
+    }
+    /// <summary>
+    /// VM para mapear el userType al userTypeViewModel
+    /// </summary>
+    public class UserTypeViewModel : CommonsProperty
+    {
+        public string Name { get; set; }
+    }
 }

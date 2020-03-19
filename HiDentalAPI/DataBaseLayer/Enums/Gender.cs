@@ -10,6 +10,8 @@ namespace DataBaseLayer.Enums
         [Display(Name = nameof(M))]
         M,
         [Display(Name = nameof(F))]
-        F
+        F,
+        [Display(Name = nameof(Other))]
+        Other
     }
 }

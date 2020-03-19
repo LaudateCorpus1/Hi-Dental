@@ -7,7 +7,7 @@ namespace Common.ExtensionsMethods
     public static class StringExtension
     {
         /// <summary>
-        /// Valida si un string es null
+        /// Valida si un string es null o esta vacio
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
