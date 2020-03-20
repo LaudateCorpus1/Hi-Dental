@@ -10,8 +10,8 @@ namespace Auth.Models
         public string Token { get; set; }
         public DateTime Expiration { get; set; }
         public bool Expire { get; set; }
-        public List<Permission> Permissions { get; set; }
-        public List<Permission> UnavailablePermissions { get; set; }
+        public List<PermissionViewModel> Permissions { get; set; }
+        public IEnumerable<PermissionViewModel> UnavailablePermissions { get; set; }
         public object User { get; set; }
     }
 }

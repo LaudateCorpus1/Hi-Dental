@@ -40,7 +40,7 @@ namespace BussinesLayer.Services
                 ActualPage = filterEntity.Page,
                 Pages = pages,
                 Total = total,
-                Entities = await result.Skip(filterEntity.QuantityByPage - 1).Take(filterEntity.QuantityByPage)
+                Entities = await result.Skip((filterEntity.Page - 1) * filterEntity.QuantityByPage).Take(filterEntity.QuantityByPage)
                 .OrderByDescending(x => x.CreateAt).ToListAsync()
             };
         }

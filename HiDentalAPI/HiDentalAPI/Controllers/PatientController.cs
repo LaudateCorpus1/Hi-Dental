@@ -13,7 +13,7 @@ namespace HiDentalAPI.Controllers
     {
         private readonly IUnitOfWork _services;
         public PatientController(IUnitOfWork unitOfWork) => _services = unitOfWork;
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery]FilterPatientViewModel model)
         {
@@ -36,6 +36,24 @@ namespace HiDentalAPI.Controllers
             var result = await _services.PatientService.Add(model);
             if (!result) return BadRequest("Lo sentimos ocurrio un error, intente de nuevo");
             return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(Patient model)
+        {
+            var exist = await _services.PatientService.GetById(model.Id);
+            if (exist == null) return NotFound();
+            var result = await _services.PatientService.Update(model);
+            if (!result) return BadRequest("Ocurrio un error intente de nuevo");
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Remove(Guid id)
+        {
+            var exist = await _services.PatientService.GetById(id);
+            if (exist == null) return NotFound();
+            return Ok(await _services.PatientService.SoftDelete(id));
         }
     }
 }

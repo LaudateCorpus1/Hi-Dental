@@ -41,7 +41,6 @@ namespace DatabaseLayer.Models.Patients
         public DentalBranch DentalBranch { get; set; }
 
         [JsonIgnore]
-        [Required]
         public string Code { get; set; } = StringsHelper.GenerateRandomString(6);
 
     }
