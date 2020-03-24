@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BussinesLayer.UnitOfWork;
 using DataBaseLayer.Models;
+using DataBaseLayer.ViewModels.PrincipalOffice;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,8 @@ namespace HiDentalAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _unitOfWork.PrincipalOfficeService.GetList());
+        public async Task<IActionResult> GetAll([FromQuery]FilterOfficeViewModel filter) 
+            => Ok(await _unitOfWork.PrincipalOfficeService.GetAllWithPaginateAsync(filter));
 
         [HttpGet]
         public async Task<IActionResult> GetById(Guid id)

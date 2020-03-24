@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DatabaseLayer.Enums;
 using DataBaseLayer.Models;
+using DataBaseLayer.Models.Offices;
 using DataBaseLayer.Models.Users;
 using DataBaseLayer.Settings;
 using DataBaseLayer.ViewModels.ComboBox;

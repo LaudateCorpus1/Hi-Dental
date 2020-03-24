@@ -1,7 +1,11 @@
 ﻿using BussinesLayer.Contracts;
 using BussinesLayer.Repository.Services;
+using Common.ExtensionsMethods;
 using DatabaseLayer.Persistence;
 using DataBaseLayer.Models;
+using DataBaseLayer.Models.Offices;
+using DataBaseLayer.ViewModels.DentalBranch;
+using DataBaseLayer.ViewModels.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,6 +37,23 @@ namespace BussinesLayer.Services
             if (branch == null) return null;
             if (!branch.IsPrincipal) return null;
             return await GetAll().Where(x => x.PrincipalOfficeId == branch.PrincipalOfficeId).ToListAsync();
+        }
+
+        public async Task<PaginationViewModel<DentalBranch>> GetAllWithPaginateAsync(FilterDentalBranchViewModel filterEntity)
+        {
+            var branch = GetAll().Where(x => x.PrincipalOfficeId == filterEntity.PrincipalOfficeId);
+            if (!filterEntity.Title.IsNull()) branch = branch.Where(x => x.Title.Contains(filterEntity.Title));
+            if (!filterEntity.PhoneNumber.IsNull()) branch = branch.Where(x => x.Title.Contains(filterEntity.PhoneNumber));
+            var total = branch.Count();
+            var pages = total / filterEntity.QuantityByPage;
+            return new PaginationViewModel<DentalBranch>
+            {
+                ActualPage = filterEntity.Page,
+                Pages = pages,
+                Total = total,
+                Entities = await branch.Skip((filterEntity.Page - 1) * filterEntity.QuantityByPage)
+                .Take(filterEntity.QuantityByPage).OrderByDescending(x => x.CreateAt).ToListAsync()
+            };
         }
 
         public async Task<bool> SoftDelete(Guid param)

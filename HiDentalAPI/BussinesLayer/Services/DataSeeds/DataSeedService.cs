@@ -2,6 +2,7 @@
 using DatabaseLayer.Persistence;
 using DataBaseLayer.Enums;
 using DataBaseLayer.Models;
+using DataBaseLayer.Models.Offices;
 using DataBaseLayer.Models.Users;
 using DataBaseLayer.Settings;
 using Microsoft.AspNetCore.Builder;

@@ -1,7 +1,11 @@
 ﻿using BussinesLayer.Contracts;
 using BussinesLayer.Repository.Services;
+using Common.ExtensionsMethods;
 using DatabaseLayer.Persistence;
 using DataBaseLayer.Models;
+using DataBaseLayer.Models.Offices;
+using DataBaseLayer.ViewModels.Pagination;
+using DataBaseLayer.ViewModels.PrincipalOffice;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,6 +25,23 @@ namespace BussinesLayer.Services
 
         public async Task<IEnumerable<DentalBranch>> DentalBranches(Guid id) 
             => await _dbContext.DentalBranch.Where(x => x.PrincipalOfficeId == id).ToListAsync();
+
+        public async Task<PaginationViewModel<PrincipalOffice>> GetAllWithPaginateAsync(FilterOfficeViewModel filterEntity)
+        {
+            var offices = GetAll();
+            if (!filterEntity.Title.IsNull()) offices = offices.Where(x => x.Title.Contains(filterEntity.Title));
+            if (!filterEntity.PhoneNumber.IsNull()) offices = offices.Where(x => x.PhoneNumber.Contains(filterEntity.PhoneNumber));
+            var total = offices.Count();
+            var pages = total / filterEntity.QuantityByPage;
+            return new PaginationViewModel<PrincipalOffice>
+            {
+                ActualPage = filterEntity.Page,
+                Total = total,
+                Pages = pages,
+                Entities = await offices.Skip((filterEntity.Page - 1) * filterEntity.QuantityByPage)
+                .Take(filterEntity.QuantityByPage).OrderByDescending(x => x.CreateAt).ToListAsync()           
+            };
+        }
 
         public async Task<PrincipalOffice> GetWithChildrenBranchsAsync(Guid id)
             => await _dbContext.PrincipalOffices.Include(x => x.DentalBranches).FirstOrDefaultAsync(x => x.Id == id);

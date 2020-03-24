@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using BussinesLayer.UnitOfWork;
 using Common.ExtensionsMethods;
 using DataBaseLayer.Models;
+using DataBaseLayer.Models.Offices;
+using DataBaseLayer.ViewModels.DentalBranch;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +20,9 @@ namespace HiDentalAPI.Controllers
         public DentalBranchController(IUnitOfWork unitOfWork) => _sevices = unitOfWork;
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(Guid id)
+        public async Task<IActionResult> GetAll([FromQuery] FilterDentalBranchViewModel filter)
         {
-            var result = (await _sevices.DentalBranchService.GetAllByPrincipalOfficeId(id));
+            var result = await _sevices.DentalBranchService.GetAllWithPaginateAsync(filter);
             if (result == null) return BadRequest("esta oficina no tiene subsucursales");
             return Ok(result);
         }

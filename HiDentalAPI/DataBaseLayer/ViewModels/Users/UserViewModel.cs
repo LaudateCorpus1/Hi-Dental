@@ -1,12 +1,8 @@
 ﻿using DatabaseLayer.Enums;
 using DataBaseLayer.Enums;
-using DataBaseLayer.Models;
 using DataBaseLayer.Models.Commons;
-using DataBaseLayer.Models.Users;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace DataBaseLayer.ViewModels.Users
 {
@@ -30,7 +26,7 @@ namespace DataBaseLayer.ViewModels.Users
         public bool EmailConfirmed { get; set; }
         public UserDetailViewModel UserDetail { get; set; }
         public Guid DentalBranchId { get; set; }
-        public DentalBranch DentalBranch { get; set; }
+        public Models.Offices.DentalBranch DentalBranch { get; set; }
     }
 
     /// <summary>
