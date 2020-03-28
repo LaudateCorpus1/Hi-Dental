@@ -6,11 +6,7 @@ namespace DatabaseLayer.Enums
     {
         Active,
         Removed,
-        Blocked,
-
-        #region For Movements
-        Payment
-        #endregion
+        Blocked
     }
 
 }
