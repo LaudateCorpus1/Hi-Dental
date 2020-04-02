@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsuarioFormularioComponent } from '../usuario-formulario/usuario-formulario.component';
+import { PermisosTreeViewComponent } from '../permisos-tree-view/permisos-tree-view.component';
 
 @Component({
   selector: 'app-usuario-tabs',
@@ -7,6 +8,7 @@ import { UsuarioFormularioComponent } from '../usuario-formulario/usuario-formul
   styleUrls: ['./usuario-tabs.component.css']
 })
 export class UsuarioTabsComponent implements OnInit {
+  @ViewChild('tree', { static: false }) child: PermisosTreeViewComponent;
   @ViewChild('form', { static: false }) form: UsuarioFormularioComponent;
   constructor() { }
 

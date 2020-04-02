@@ -103,13 +103,44 @@ export const ROUTES: SideNavInterface[] = [
         ]
     },
     {
-        path: '/usuarios',
-        title: 'usuarios',
+        path: '',
+        title: 'Administracion',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'user',
         submenu: [
+            {
+                path: '/usuarios',
+                title: 'Usuarios',
+                iconType: 'nzIcon',
+                iconTheme: 'outline',
+                icon: 'user',
+                submenu: [
+              
+                ]
+            },
+            {
+                path: '/oficinas',
+                title: 'Oficinas',
+                iconType: 'nzIcon',
+                iconTheme: 'outline',
+                icon: 'user',
+                submenu: [
+              
+                ]
+            },
+            {
+                path: '/sucursales',
+                title: 'sucursales',
+                iconType: 'nzIcon',
+                iconTheme: 'outline',
+                icon: 'user',
+                submenu: [
+              
+                ]
+            },
       
         ]
     },
+
 ]    
