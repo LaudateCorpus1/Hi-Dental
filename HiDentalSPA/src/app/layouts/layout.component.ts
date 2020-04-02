@@ -57,7 +57,6 @@ export class LayoutComponent implements OnInit {
       let label = '', path = '/', display = null;
 
       if (route.routeConfig) {
-        console.log(route.routeConfig.data);
           if (route.routeConfig.data) {
               label = route.routeConfig.data['title'];
               path += route.routeConfig.path;

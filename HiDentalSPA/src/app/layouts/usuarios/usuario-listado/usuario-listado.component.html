@@ -1,10 +1,12 @@
+
 <nz-card>
+<h4>Listado de usuarios</h4>
   <div class="row m-b-30">
       <div class="col-lg-10">
           <div class="d-md-flex">
               <div class="m-b-10 m-r-20 w-100" >
                   <nz-input-group  [nzPrefix]="prefixTemplate">
-                      <input class="borderStrong" type="text" nz-input placeholder="Nombre | Apellido | Cedula" [(ngModel)]="search">
+                      <input class="borderStrong" type="text" (keyup)="getUsuarios()" nz-input placeholder="Nombre | Apellido | Cedula" [(ngModel)]="search">
                   </nz-input-group>      
                   <ng-template #prefixTemplate>
                       <i nz-icon nzType="search" class="opacity-05"></i>
@@ -27,52 +29,57 @@
           </button>
       </div>
   </div>
-  <nz-table #ordersListTable [nzData]="displayData" 
-      (nzCurrentPageDataChange)="currentPageDataChange($event)"
-      (nzPageIndexChange)="refreshStatus()"
-      (nzPageSizeChange)="refreshStatus()">
-      <thead (nzSortChange)="sort($event)" nzSingleSort>
-          <tr>
-              <!-- <th nzShowSort nzSortKey="id">ID</th> -->
-              <th nzShowSort nzSortKey="name">Nombre</th>
-              <th nzShowSort nzSortKey="date">Email</th>
-              <th nzShowSort nzSortKey="amount">Tipo de usuario</th>
-              <th nzShowSort nzSortKey="status">Creado</th>
-              <th nzShowSort nzSortKey="status">Estado</th>
-              <th></th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let item of ordersListTable.data | search:'name':search as count ;  let i=index">
-              <!-- <td>#{{item.id}}</td> -->
-              <td>
-                  <div class="d-flex align-items-center">
-                      <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="item.avatar"></nz-avatar>
-                      <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
-                  </div>
-              </td>
-              <td>{{item.Email}}</td>
-              <td>{{item.TipoUsuario}}</td>
+  <nz-spin nzTip='Loading...' [nzSpinning]="Cargando" [nzDelay]="500">
+    <nz-table #ordersListTable [nzData]="usuarios" 
+  
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    (nzPageIndexChange)="getUsuarios()"
+    (nzPageSizeChange)="getUsuarios()"
+    >
+    <thead  >
+        <tr>
+            <th  nzSortKey="name">Nombre</th>
+            <th  nzSortKey="email">Email</th>
+            <th  nzSortKey="typeuser">Tipo de usuario</th>
+            <th  nzSortKey="status">Creado</th>
+            <th  nzSortKey="status">Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+         <tr *ngFor="let item of ordersListTable.data ">
+            <td>
+                <div class="d-flex align-items-center">
+                    <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="'assets/images/avatars/thumb-7.jpg'"></nz-avatar>
+                    <h6 class="m-l-10 m-b-0">{{item.names +" "+ item.lastNames}}</h6>
+                </div>
+            </td>
+            <td>{{item.userName}}</td>
+            <td>tipo de usuario</td>
 
-              <td>{{item.date}}</td>
-              <td>
-                  <nz-badge *ngIf="item.status == 'approved'" nzStatus="success"></nz-badge>
-                  <nz-badge *ngIf="item.status == 'rejected'" nzStatus="error"></nz-badge>
-                  <nz-badge *ngIf="item.status == 'pending'"  nzStatus="processing"></nz-badge> 
-                  <span class="text-capitalize">{{item.status}}</span>
-              </td>
-              <td class="text-md-right">
-                  <!-- <a [routerLink]="['/apps/e-commerce/product-edit']" class="m-r-5" nz-button nzType="default" nzGhost  nz-tooltip nzTitle="Edit" nzPlacement="bottom">
-                      <i nz-icon nzType="edit" theme="outline"></i>
-                  </a> -->
-                  <button class="m-r-10 " [routerLink]="['usuario/2']" nz-button style="background-color: #FCF3CF !important;"  nzGhost>
-                    <i nz-icon nzType="edit" style=" color: #F1C40F !important;" theme="fill"></i>
-                  </button>
-                  <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?" (nzOnConfirm)="deleteRow(2)" nzGhost>
-                    <i nz-icon nzType="delete" theme="fill"></i>
-                  </button>
-              </td>
-          </tr>
-      </tbody>
-  </nz-table>
+            <td>{{item.createAt | date}}</td>
+            <td>
+                <nz-badge *ngIf="item.state == 0" nzStatus="success"></nz-badge>
+                <nz-badge *ngIf="item.state == 1" nzStatus="error"></nz-badge>
+                <nz-badge *ngIf="item.state == 2"  nzStatus="processing"></nz-badge> 
+                <span class="text-capitalize" *ngIf="item.state==0">Activo</span>
+                <span class="text-capitalize" *ngIf="item.state==1">Eliminado</span>
+                <span class="text-capitalize" *ngIf="item.state==2">Bloqueado</span>
+            </td>
+            <td class="text-md-right">
+            
+                <button class="m-r-10 " routerLink="usuario/{{item.id}}"  nz-button style="background-color: #FCF3CF !important;"  nzGhost>
+                  <i nz-icon nzType="edit" style=" color: #F1C40F !important;" theme="fill"></i>
+                </button>
+                <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?" (nzOnConfirm)="deleteRow(2)" nzGhost>
+                  <i nz-icon nzType="delete" theme="fill"></i>
+                </button>
+            </td>
+        </tr> 
+    </tbody>
+</nz-table>
+
+</nz-spin>
+
+
 </nz-card>

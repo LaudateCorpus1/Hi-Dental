@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsuariosComponent } from './usuarios.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsuariosRoutingModule } from './usuarios.routing.module';
 import { UsuarioListadoComponent } from './usuario-listado/usuario-listado.component';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
@@ -14,12 +14,14 @@ import { UsuarioFormularioComponent } from './usuario-formulario/usuario-formula
 
 @NgModule({
   imports: [
+  
     CommonModule,
+  
     SharedModule,
     UsuariosRoutingModule,
     NgZorroAntdModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    FormsModule,
+
  
   ],
 
