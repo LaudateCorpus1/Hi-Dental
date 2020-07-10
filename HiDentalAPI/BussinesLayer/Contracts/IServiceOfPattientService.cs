@@ -1,5 +1,5 @@
 ﻿using BussinesLayer.Repository.Contracts;
-using DataBaseLayer.Models.Appointment;
+using DataBaseLayer.Models.Plan;
 using System;
 using System.Collections.Generic;
 using System.Text;

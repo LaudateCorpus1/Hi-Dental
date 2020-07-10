@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BussinesLayer.UnitOfWork;
-using DataBaseLayer.Models.Appointment;
+using DataBaseLayer.Models.Plan;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

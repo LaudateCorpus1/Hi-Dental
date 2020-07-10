@@ -31,7 +31,7 @@ namespace HiDentalAPI.Controllers
 
         [HttpGet]
         public async Task<IActionResult> PrincipalOffices()
-            => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid, string>>>(await _unitOfWork.PrincipalOfficeService.GetList()));
+            => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid, string>>>(await _unitOfWork.DentalBranchService.GetList(x => x.IsPrincipal == true)));
 
         [HttpGet]
         public async Task<IActionResult> DentalBranchs()

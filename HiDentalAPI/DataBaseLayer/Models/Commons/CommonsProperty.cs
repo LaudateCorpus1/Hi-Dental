@@ -6,16 +6,16 @@ using DatabaseLayer.Enums;
 
 namespace DataBaseLayer.Models.Commons
 {
-  public class CommonsProperty
+    public class CommonsProperty
     {
         public Guid Id { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
         public DateTime UpdateAt { get; set; } = DateTime.Now;
         public State State { get; set; } = State.Active;
         [NotMapped]
-        public string CreatedAtStr => CreateAt.ToShortDateString();
+        public string CreatedAtStr => CreateAt.ToString("dd/MM/yyyy");
         [NotMapped]
-        public string UpdatedAtStr => UpdateAt.ToShortDateString();
+        public string UpdatedAtStr => UpdateAt.ToString("dd/MM/yyyy");
 
 
     }

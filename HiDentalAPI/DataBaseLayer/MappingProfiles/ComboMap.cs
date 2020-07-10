@@ -21,11 +21,6 @@ namespace DataBaseLayer.MappingProfiles
                 .ForMember(x => x.Group, y => y.MapFrom(s => s.State))
                 .ReverseMap();
 
-            CreateMap<PrincipalOffice, ComboBoxViewModel<Guid, string>>()
-                .ForMember(x => x.Code, y => y.MapFrom(s => s.Id))
-                .ForMember(x => x.Group, y => y.MapFrom(s => s.Address))
-                .ReverseMap();
-
             CreateMap<DentalBranch, ComboBoxViewModel<Guid, Guid>>()
                 .ForMember(x => x.Code, y => y.MapFrom(s => s.Id))
                 .ForMember(x => x.Group, y => y.MapFrom(s => s.PrincipalOfficeId))

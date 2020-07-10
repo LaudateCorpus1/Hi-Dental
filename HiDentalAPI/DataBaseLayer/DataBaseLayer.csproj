@@ -13,6 +13,10 @@
     <Compile Remove="Migrations\20200305013053_AddUserDetail.Designer.cs" />
     <Compile Remove="Migrations\20200315043654_AddBranchsModelsAndOffice.cs" />
     <Compile Remove="Migrations\20200315043654_AddBranchsModelsAndOffice.Designer.cs" />
+    <Compile Remove="Migrations\20200403213840_ImplementPlan.cs" />
+    <Compile Remove="Migrations\20200403213840_ImplementPlan.Designer.cs" />
+    <Compile Remove="Migrations\20200709211524_recoveryTheProyect.cs" />
+    <Compile Remove="Migrations\20200709211524_recoveryTheProyect.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,7 +9,11 @@ namespace BussinesLayer.Contracts
 {
     public interface IDentalBranchService : IBaseRepository<DentalBranch>, IHelperServiceStructure<Guid>, IPaginationService<DentalBranch, FilterDentalBranchViewModel>
     {
-        Task<IEnumerable<DentalBranch>> GetAllByPrincipalOfficeId(Guid id);
+        /// <summary>
+        /// Obtiene las sucursales dependientes de otras sucursales
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<IEnumerable<DentalBranch>> GetAllSecondBranches(Guid id);
     }
 }

@@ -33,7 +33,6 @@ namespace BussinesLayer.UnitOfWork
         private PermissionService _permissionService;
         private UserTypeService _userTypeService;
         private UserDetailService _userDetailService;
-        private PrincipalOfficeService _principalOfficeService;
         private DentalBranchService _dentalBranchService;
         private ServiceOfPattientService _serviceOfPattientService;
         #endregion
@@ -66,8 +65,6 @@ namespace BussinesLayer.UnitOfWork
         public IUserTypeService UserTypeService => _userTypeService ?? (_userTypeService = new UserTypeService(_context));
 
         public IUserDetailService UserDetailService => _userDetailService ?? (_userDetailService = new UserDetailService(_context));
-
-        public IPrincipalOfficeService PrincipalOfficeService => _principalOfficeService ?? (_principalOfficeService = new PrincipalOfficeService(_context));
 
         public IDentalBranchService DentalBranchService => _dentalBranchService ?? (_dentalBranchService = new DentalBranchService(_context));
 

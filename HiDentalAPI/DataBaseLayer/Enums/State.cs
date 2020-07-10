@@ -6,7 +6,11 @@ namespace DatabaseLayer.Enums
     {
         Active,
         Removed,
-        Blocked
+        Blocked,
+
+        #region Payments 
+        IsPayment ///TODO: AGREGAR ESTO AL COMBO BOX UN LISTADO
+        #endregion
     }
 
 }

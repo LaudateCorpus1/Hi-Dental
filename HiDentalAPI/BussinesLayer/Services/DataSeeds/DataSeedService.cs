@@ -114,17 +114,11 @@ namespace BussinesLayer.Services.DataSeeds
 
         private static DentalBranch SeedOfOffices(ApplicationDbContext dbContext, IOptions<AppSetting> options)
         {
-            if (dbContext.PrincipalOffices.Any()) return null;
-            var principalOffice = new PrincipalOffice { Title = options.Value.Office.Name };
-            dbContext.PrincipalOffices.Add(principalOffice);
-            var result = dbContext.SaveChanges() > 0;
-            if (!result) return null;
             var dentalBranch = new DentalBranch
             {
                 Title = options.Value.Office.Name,
                 PhoneNumber = "0000000000",
                 Address = options.Value.Office.Name,
-                PrincipalOfficeId = principalOffice.Id
             };
             dbContext.DentalBranch.Add(dentalBranch);
             return dbContext.SaveChanges() > 0 ? dentalBranch : null;

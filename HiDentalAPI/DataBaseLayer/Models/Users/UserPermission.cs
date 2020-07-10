@@ -6,7 +6,7 @@ namespace DataBaseLayer.Models
 {
     public class UserPermission : IdentityUserRole<string>
     {
-        public Permission Role { get; set; }
-        public User User { get; set; }
+        public virtual Permission Role { get; set; }
+        public virtual User User { get; set; }
     } 
 }

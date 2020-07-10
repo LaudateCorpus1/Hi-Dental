@@ -4,14 +4,16 @@ using DatabaseLayer.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataBaseLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200710002606_recoveryTheProyect")]
+    partial class recoveryTheProyect
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +31,9 @@ namespace DataBaseLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("AppointmentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
@@ -42,7 +47,7 @@ namespace DataBaseLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PrincipalOfficeId")
+                    b.Property<Guid>("PrincipalOfficeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("State")
@@ -56,6 +61,8 @@ namespace DataBaseLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PrincipalOfficeId");
 
                     b.ToTable("DentalBranch");
                 });
@@ -96,6 +103,39 @@ namespace DataBaseLayer.Migrations
                     b.HasIndex("DentalBranchId");
 
                     b.ToTable("ServiceOfPattients");
+                });
+
+            modelBuilder.Entity("DataBaseLayer.Models.PrincipalOffice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PrincipalOffices");
                 });
 
             modelBuilder.Entity("DataBaseLayer.Models.UserPermission", b =>
@@ -560,6 +600,15 @@ namespace DataBaseLayer.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DataBaseLayer.Models.Offices.DentalBranch", b =>
+                {
+                    b.HasOne("DataBaseLayer.Models.PrincipalOffice", "PrincipalOffice")
+                        .WithMany("DentalBranches")
+                        .HasForeignKey("PrincipalOfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataBaseLayer.Models.Plan.ServiceOfPattient", b =>

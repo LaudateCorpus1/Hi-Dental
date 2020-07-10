@@ -27,7 +27,8 @@ namespace BussinesLayer.Repository.Services
 
         public async Task<TEntity> GetById(Guid id) => await _dbContext.Set<TEntity>().FindAsync(id);
 
-        public async Task<IEnumerable<TEntity>> GetList() => await GetAll().ToListAsync();
+        public async Task<IEnumerable<TEntity>> GetList(Expression<Func<TEntity, bool>> expression = null) 
+            => expression == null ? await GetAll().ToListAsync() : await FilterAsync(expression);
 
         public async Task<bool> Remove(TEntity entity)
         {

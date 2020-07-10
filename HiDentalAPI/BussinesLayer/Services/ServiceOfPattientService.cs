@@ -1,7 +1,7 @@
 ﻿using BussinesLayer.Contracts;
 using BussinesLayer.Repository.Services;
 using DatabaseLayer.Persistence;
-using DataBaseLayer.Models.Appointment;
+using DataBaseLayer.Models.Plan;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

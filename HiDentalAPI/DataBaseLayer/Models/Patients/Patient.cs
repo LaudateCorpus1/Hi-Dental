@@ -1,4 +1,5 @@
 ﻿using Common.Helpers;
+using DatabaseLayer.Models.Appointments;
 using DataBaseLayer.Enums;
 using DataBaseLayer.Models;
 using DataBaseLayer.Models.Commons;
@@ -43,6 +44,8 @@ namespace DatabaseLayer.Models.Patients
 
         [JsonIgnore]
         public string Code { get; set; } = StringsHelper.GenerateRandomString(6);
+
+        public virtual ICollection<Appointment> Appointment { get; set; }
 
     }
 }

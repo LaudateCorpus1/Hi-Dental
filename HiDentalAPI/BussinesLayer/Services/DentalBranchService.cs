@@ -23,14 +23,6 @@ namespace BussinesLayer.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<DentalBranch>> GetAllByPrincipalOfficeId(Guid id)
-            => await GetAll().Where(x => x.PrincipalOfficeId == id).ToListAsync();
-
-        /// <summary>
-        /// Obtiene las sucursales hermanas que son secundarias
-        /// </summary>
-        /// <param name="id">Id de la sucursal principal, hija de la oficina principal</param>
-        /// <returns>IENUMERABLE</returns>
         public async Task<IEnumerable<DentalBranch>> GetAllSecondBranches(Guid id)
         {
             var branch = await GetById(id);

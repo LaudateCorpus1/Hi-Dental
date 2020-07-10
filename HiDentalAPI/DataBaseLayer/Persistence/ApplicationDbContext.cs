@@ -1,9 +1,10 @@
 ﻿using DatabaseLayer.Models;
+using DatabaseLayer.Models.Appointments;
 using DatabaseLayer.Models.Patients;
 using DatabaseLayer.Models.Users;
 using DataBaseLayer.Models;
-using DataBaseLayer.Models.Appointment;
 using DataBaseLayer.Models.Offices;
+using DataBaseLayer.Models.Plan;
 using DataBaseLayer.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -33,7 +34,12 @@ namespace DatabaseLayer.Persistence
             #region Filters
             builder.Entity<User>().HasQueryFilter(x => x.State != Enums.State.Removed);
             builder.Entity<Patient>().HasQueryFilter(x => x.State != Enums.State.Removed);
-            builder.Entity<Appointment>().HasQueryFilter(x => x.State != Enums.State.Removed);
+            builder.Entity<Appointment>()
+                .HasQueryFilter(x => x.State != Enums.State.Removed)
+                .HasOne(x => x.Patient)
+                .WithMany(x => x.Appointment)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.Entity<Consultation>().HasQueryFilter(x => x.State != Enums.State.Removed);
             builder.Entity<UserType>().HasQueryFilter(x => x.State != Enums.State.Removed);
             builder.Entity<DentalBranch>().HasQueryFilter(x => x.State != Enums.State.Removed);
@@ -47,7 +53,6 @@ namespace DatabaseLayer.Persistence
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<DentalBranch> DentalBranch { get; set; }
-        public DbSet<PrincipalOffice> PrincipalOffices { get; set; }
         public DbSet<ServiceOfPattient> ServiceOfPattients { get; set; }
 
     }

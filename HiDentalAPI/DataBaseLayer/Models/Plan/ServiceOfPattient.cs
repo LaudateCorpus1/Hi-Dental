@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace DataBaseLayer.Models.Appointment
+namespace DataBaseLayer.Models.Plan
 {
     public class ServiceOfPattient : CommonsProperty
     {
