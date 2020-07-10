@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BussinesLayer.UnitOfWork;
 using DataBaseLayer.Models.Plan;
+using DataBaseLayer.ViewModels.Responses;
+using DataBaseLayer.ViewModels.ServiceOfPattients;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,13 +22,14 @@ namespace HiDentalAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(Guid dentalBranchId) => Ok(await _service.ServiceOfPattientService.GetListByDentalBrach(dentalBranchId));
+        public async Task<IActionResult> GetAll([FromQuery] FilterServiceOfPattientVM filter)
+            => Ok(await _service.ServiceOfPattientService.GetAllWithPaginateAsync(filter));
 
         [HttpGet]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _service.ServiceOfPattientService.GetById(id);
-            if (result == null) return NotFound();
+            if (result == null) return NotFound(new ResponseBase { Code = CodeResponse.NotFound, Message = "El servicio no existe" });
             return Ok(result);
         }
 
@@ -34,7 +37,7 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> Create(ServiceOfPattient model)
         {
             var result = await _service.ServiceOfPattientService.Add(model);
-            if (!result) return BadRequest("Error intente de nuevo");
+            if (!result) return BadRequest(new ResponseBase { Code = CodeResponse.DbError, Message = "Error intente de nuevo" });
             return Ok(result);
         }
 
@@ -42,7 +45,7 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> Update(ServiceOfPattient model)
         {
             var exist = await _service.ServiceOfPattientService.GetById(model.Id);
-            if (exist == null) return NotFound();
+            if (exist == null) return NotFound(new ResponseBase { Code = CodeResponse.NotFound, Message = "El servicio no existe" });
             return Ok(await _service.ServiceOfPattientService.Update(model));
         }
 
@@ -50,9 +53,9 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> Remove(Guid id)
         {
             var exist = await _service.ServiceOfPattientService.GetById(id);
-            if (exist == null) return NotFound();
+            if (exist == null) return NotFound(new ResponseBase { Code = CodeResponse.NotFound, Message = "El servicio no existe" });
             return Ok(await _service.ServiceOfPattientService.Remove(exist));
         }
-        
+
     }
 }

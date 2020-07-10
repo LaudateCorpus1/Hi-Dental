@@ -89,7 +89,7 @@ namespace HiDentalAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePassword(UserChangePasswordViewModel model)
         {
-            if(!await _service.UserService.ValidateKeyOfChangePassword(model.key)) return BadRequest("Key invalida");
+            if(!await _service.UserService.ValidateKeyOfChangePassword(model.Key)) return BadRequest("Key invalida");
             var result = await _service.UserService.ChangePasswordAsync(model);
             if (!result) return NoContent();
             return Ok(result);

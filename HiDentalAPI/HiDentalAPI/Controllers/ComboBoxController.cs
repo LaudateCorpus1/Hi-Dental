@@ -27,15 +27,12 @@ namespace HiDentalAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UserTypes() => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid,State>>>(await _unitOfWork.UserTypeService.GetList()));
-
-        [HttpGet]
-        public async Task<IActionResult> PrincipalOffices()
-            => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid, string>>>(await _unitOfWork.DentalBranchService.GetList(x => x.IsPrincipal == true)));
+        public async Task<IActionResult> UserTypes()
+            => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid,State>>>(await _unitOfWork.UserTypeService.GetList()));
 
         [HttpGet]
         public async Task<IActionResult> DentalBranchs()
-            => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid, Guid>>>(await _unitOfWork.DentalBranchService.GetList()));
+            => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid, Guid?>>>(await _unitOfWork.DentalBranchService.GetList(x => x.IsPrincipal == true)));
     
     }
 }

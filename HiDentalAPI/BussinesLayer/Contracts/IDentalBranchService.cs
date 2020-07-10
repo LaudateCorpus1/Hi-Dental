@@ -14,6 +14,6 @@ namespace BussinesLayer.Contracts
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IEnumerable<DentalBranch>> GetAllSecondBranches(Guid id);
+        Task<IEnumerable<DentalBranch>> GetAllByPrincipalOfficeId(Guid id);
     }
 }

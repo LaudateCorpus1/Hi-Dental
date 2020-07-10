@@ -31,7 +31,7 @@ namespace DatabaseLayer.Users.ViewModels
         [JsonIgnore]
         public TypeOfCreation TypeOfCreation { get; set; } = TypeOfCreation.ByUser;
         [Required]
-        public Guid DentalBranchId { get; set; }
+        public Guid? DentalBranchId { get; set; }
     }
 
     public class UserChangePasswordViewModel
@@ -41,7 +41,7 @@ namespace DatabaseLayer.Users.ViewModels
         [Required]
         public string Password { get; set; }
         [Required]
-        public string key { get; set; }
+        public string Key { get; set; }
 
     }
 }

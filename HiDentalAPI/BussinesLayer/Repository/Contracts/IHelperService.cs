@@ -34,5 +34,6 @@ namespace BussinesLayer.Repository.Contracts
     public interface IPaginationService<TEntity, TFilterEntity> where TEntity : class where TFilterEntity : class
     {
         Task<PaginationViewModel<TEntity>> GetAllWithPaginateAsync(TFilterEntity filterEntity);
+
     }
 }

@@ -23,17 +23,19 @@ namespace BussinesLayer.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<DentalBranch>> GetAllSecondBranches(Guid id)
+        public async Task<IEnumerable<DentalBranch>> GetAllByPrincipalOfficeId(Guid id)
         {
             var branch = await GetById(id);
             if (branch == null) return null;
             if (!branch.IsPrincipal) return null;
-            return await GetAll().Where(x => x.PrincipalOfficeId == branch.PrincipalOfficeId).ToListAsync();
+            return await GetAll().Where(x => x.PrincipalOfficeId == id).ToListAsync();
         }
 
         public async Task<PaginationViewModel<DentalBranch>> GetAllWithPaginateAsync(FilterDentalBranchViewModel filterEntity)
         {
-            var branch = GetAll().Where(x => x.PrincipalOfficeId == filterEntity.PrincipalOfficeId);
+            var branch = GetAll();
+            if (filterEntity.IsPrincipal) branch = branch.Where(x => x.IsPrincipal == filterEntity.IsPrincipal);
+            if(filterEntity.PrincipalOfficeId.HasValue) branch = branch.Where(x => x.PrincipalOfficeId == filterEntity.PrincipalOfficeId);
             if (!filterEntity.Title.IsNull()) branch = branch.Where(x => x.Title.Contains(filterEntity.Title));
             if (!filterEntity.PhoneNumber.IsNull()) branch = branch.Where(x => x.Title.Contains(filterEntity.PhoneNumber));
             var total = branch.Count();

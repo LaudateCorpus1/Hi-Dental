@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using DatabaseLayer.Models.Appointments;
 using DatabaseLayer.Models.Patients;
+using DataBaseLayer.Models.Plan;
 
 namespace DataBaseLayer.Models.Offices
 {
@@ -18,11 +19,8 @@ namespace DataBaseLayer.Models.Offices
         [Required]
         [Phone(ErrorMessage = "{0} Numero invalido")]
         public string PhoneNumber { get; set; }
-        public bool IsPrincipal
-        {
-            get { return IsPrincipal; }
-            set { IsPrincipal = PrincipalOfficeId.HasValue ? false : true; }
-        }
+
+        public bool IsPrincipal { get; set; }
         /// <summary>
         /// ID DE LA DENTALBRANCH PRINCIPAL
         /// </summary>
@@ -30,5 +28,9 @@ namespace DataBaseLayer.Models.Offices
 
         public virtual ICollection<Appointment> Appoiments { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
+        public virtual ICollection<ServiceOfPattient> Services { get; set; }
+
+        public DentalBranch() => IsPrincipal = PrincipalOfficeId != null;
+
     }
 }

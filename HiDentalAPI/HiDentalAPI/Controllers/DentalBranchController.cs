@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BussinesLayer.UnitOfWork;
+﻿using BussinesLayer.UnitOfWork;
 using Common.ExtensionsMethods;
-using DataBaseLayer.Models;
 using DataBaseLayer.Models.Offices;
 using DataBaseLayer.ViewModels.DentalBranch;
-using Microsoft.AspNetCore.Http;
+using DataBaseLayer.ViewModels.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace HiDentalAPI.Controllers
 {
@@ -23,7 +20,7 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> GetAll([FromQuery] FilterDentalBranchViewModel filter)
         {
             var result = await _sevices.DentalBranchService.GetAllWithPaginateAsync(filter);
-            if (result == null) return BadRequest("esta oficina no tiene subsucursales");
+            if (result == null) return BadRequest(new ResponseBase { Code = CodeResponse.NotFound, Message = "esta oficina no tiene subsucursales" });
             return Ok(result);
         }
 
@@ -36,10 +33,10 @@ namespace HiDentalAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSecondBranches(Guid id)
+        public async Task<IActionResult> GetAllByPrincipalOfficeId(Guid id)
         {
-            var result = await _sevices.DentalBranchService.GetAllSecondBranches(id);
-            if (result == null) return BadRequest("Esta sucursal no tiene subs sucursales");
+            var result = await _sevices.DentalBranchService.GetAllByPrincipalOfficeId(id);
+            if (result == null) return NotFound(new ResponseBase { Code = CodeResponse.NotFound, Message = "Esta sucursal no existe" });
             return Ok(result);
         }
 
@@ -47,7 +44,7 @@ namespace HiDentalAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Filter(string title)
         {
-            if (title.IsNull()) return BadRequest("parametros invalidos");
+            if (title.IsNull()) return BadRequest(new ResponseBase { Code = CodeResponse.InvalidParams, Message = "parametros invalidos" });
             var result = await _sevices.DentalBranchService.FilterAsync(x => x.Title.Contains(title));
             return Ok(result);
         }
@@ -56,7 +53,7 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> Create(DentalBranch model)
         {
             var result = await _sevices.DentalBranchService.Add(model);
-            if (!result) return BadRequest("Intente de nuevo");
+            if (!result) return BadRequest(new ResponseBase { Code = CodeResponse.DbError, Message = "Intente de nuevo" });
             return Ok(result);
         }
 
@@ -73,7 +70,7 @@ namespace HiDentalAPI.Controllers
             var exist = await _sevices.DentalBranchService.GetById(id);
             if (exist == null) return NotFound();
             var result = await _sevices.DentalBranchService.SoftDelete(id);
-            if (!result) return BadRequest("Intente de nuevo");
+            if (!result) return BadRequest(new ResponseBase { Code = CodeResponse.Unknown, Message = "Intente de nuevo" });
             return Ok(result);
         }
     }

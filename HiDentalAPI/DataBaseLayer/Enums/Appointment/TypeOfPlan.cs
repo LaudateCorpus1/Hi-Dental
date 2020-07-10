@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataBaseLayer.Enums.Appointment
 {
-    public enum TypeOfService
+    public enum TypeOfPlan
     {
         Service,
         TreatmentPlan,

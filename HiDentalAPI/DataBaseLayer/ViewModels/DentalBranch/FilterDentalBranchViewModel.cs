@@ -8,9 +8,9 @@ namespace DataBaseLayer.ViewModels.DentalBranch
 {
     public class FilterDentalBranchViewModel : FilterCommon
     {
-        [Required]
-        public Guid PrincipalOfficeId { get; set; }
+        public Guid? PrincipalOfficeId { get; set; }
         public string Title { get; set; }
         public string PhoneNumber { get; set; }
+        public bool  IsPrincipal { get; set; }
     }
 }

@@ -17,7 +17,5 @@ namespace DataBaseLayer.Models.Plan
         public string Description { get; set; }
         public Guid DentalBranchId { get; set; }
         public virtual DentalBranch DentalBranch { get; set; }
-        [Required]
-        public TypeOfService Type { get; set; }
     }
 }

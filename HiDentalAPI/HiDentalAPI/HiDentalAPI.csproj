@@ -31,9 +31,6 @@
     <Compile Remove="StartupExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Update="Properties\launchSettings.json">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

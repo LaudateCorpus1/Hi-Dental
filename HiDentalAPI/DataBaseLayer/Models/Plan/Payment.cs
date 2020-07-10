@@ -13,5 +13,8 @@ namespace DataBaseLayer.Models.Plan
         public string Description { get; set; }
         [Required]
         public DateTime PaymentDate { get; set; }
+
+        public Guid PlantId { get; set; }
+        public Plan Plan { get; set; }
     }
 }

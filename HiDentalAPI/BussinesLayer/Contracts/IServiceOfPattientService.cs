@@ -1,5 +1,6 @@
 ﻿using BussinesLayer.Repository.Contracts;
 using DataBaseLayer.Models.Plan;
+using DataBaseLayer.ViewModels.ServiceOfPattients;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace BussinesLayer.Contracts
 {
-    public interface IServiceOfPattientService : IBaseRepository<ServiceOfPattient>
+    public interface IServiceOfPattientService : IBaseRepository<ServiceOfPattient> , IPaginationService<ServiceOfPattient,FilterServiceOfPattientVM>
     {
-        Task<IEnumerable<ServiceOfPattient>> GetListByDentalBrach(Guid id);
     }
 }

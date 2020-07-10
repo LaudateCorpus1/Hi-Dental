@@ -2,6 +2,8 @@
 using BussinesLayer.Repository.Services;
 using DatabaseLayer.Persistence;
 using DataBaseLayer.Models.Plan;
+using DataBaseLayer.ViewModels.Pagination;
+using DataBaseLayer.ViewModels.ServiceOfPattients;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,23 @@ namespace BussinesLayer.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<ServiceOfPattient>> GetListByDentalBrach(Guid id)
-            => await GetAll().Include(x => x.DentalBranch).Where(x => x.DentalBranchId == id).ToListAsync();
+        public async Task<PaginationViewModel<ServiceOfPattient>> GetAllWithPaginateAsync(FilterServiceOfPattientVM filterEntity)
+        {
+            var result = GetAll();
+
+            if (filterEntity.DentalBranchId != Guid.Empty) result = result.Where(x => x.DentalBranchId == filterEntity.DentalBranchId); 
+
+            var total = result.Count();
+            var pages = total / filterEntity.QuantityByPage;
+
+            return new PaginationViewModel<ServiceOfPattient>
+            {
+                ActualPage = filterEntity.Page,
+                Pages = pages,
+                Total = total,
+                Entities = await result.Skip((filterEntity.Page - 1) * filterEntity.QuantityByPage).Take(filterEntity.QuantityByPage)
+                .OrderByDescending(x => x.CreateAt).ToListAsync()
+            };
+        }
     }
 }

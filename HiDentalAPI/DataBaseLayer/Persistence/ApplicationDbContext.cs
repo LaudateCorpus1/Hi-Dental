@@ -44,6 +44,7 @@ namespace DatabaseLayer.Persistence
             builder.Entity<UserType>().HasQueryFilter(x => x.State != Enums.State.Removed);
             builder.Entity<DentalBranch>().HasQueryFilter(x => x.State != Enums.State.Removed);
             builder.Entity<ServiceOfPattient>().HasQueryFilter(x => x.State != Enums.State.Removed);
+
             #endregion
 
         }
