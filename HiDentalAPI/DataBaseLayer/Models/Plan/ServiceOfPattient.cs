@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DataBaseLayer.Models.Plan
 {
-    public class ServiceOfPattient : CommonsProperty
+    public class ServiceOfPatient : CommonsProperty
     {
         [Required]
         public decimal Cost { get; set; }
@@ -17,5 +17,6 @@ namespace DataBaseLayer.Models.Plan
         public string Description { get; set; }
         public Guid DentalBranchId { get; set; }
         public virtual DentalBranch DentalBranch { get; set; }
+        public virtual ICollection<ServicePlan> ServiceOfPattients { get; set; }
     }
 }

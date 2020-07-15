@@ -8,5 +8,6 @@ namespace BussinesLayer.Repository.Contracts
         Task<bool> Add(TEntity entity);
         Task<bool> Update(TEntity entity);
         Task<bool> Remove(TEntity entity);
+        Task<bool> CommitAsync();
     }
 }

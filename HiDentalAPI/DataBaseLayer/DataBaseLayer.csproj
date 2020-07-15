@@ -17,6 +17,10 @@
     <Compile Remove="Migrations\20200403213840_ImplementPlan.Designer.cs" />
     <Compile Remove="Migrations\20200709211524_recoveryTheProyect.cs" />
     <Compile Remove="Migrations\20200709211524_recoveryTheProyect.Designer.cs" />
+    <Compile Remove="Migrations\20200713182120_FixPlanModel.cs" />
+    <Compile Remove="Migrations\20200713182120_FixPlanModel.Designer.cs" />
+    <Compile Remove="Migrations\20200713195836_AddinTableOfPlans.cs" />
+    <Compile Remove="Migrations\20200713195836_AddinTableOfPlans.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

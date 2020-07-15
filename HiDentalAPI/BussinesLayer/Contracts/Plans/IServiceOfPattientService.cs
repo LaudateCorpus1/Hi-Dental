@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BussinesLayer.Contracts
 {
-    public interface IServiceOfPattientService : IBaseRepository<ServiceOfPattient> , IPaginationService<ServiceOfPattient,FilterServiceOfPattientVM>
+    public interface IServiceOfPattientService : IBaseRepository<ServiceOfPatient> , IPaginationService<ServiceOfPatient,FilterServiceOfPattientVM>
     {
     }
 }

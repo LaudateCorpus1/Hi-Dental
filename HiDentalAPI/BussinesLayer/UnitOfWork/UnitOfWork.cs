@@ -2,9 +2,12 @@
 using Auth.Services;
 using AutoMapper;
 using BussinesLayer.Contracts;
+using BussinesLayer.Contracts.Plans;
 using BussinesLayer.Services;
+using BussinesLayer.Services.Plans;
 using DatabaseLayer.Models.Users;
 using DatabaseLayer.Persistence;
+using DataBaseLayer.Models.Plan;
 using DataBaseLayer.Models.Users;
 using DataBaseLayer.Settings;
 using Microsoft.AspNetCore.Identity;
@@ -35,6 +38,7 @@ namespace BussinesLayer.UnitOfWork
         private UserDetailService _userDetailService;
         private DentalBranchService _dentalBranchService;
         private ServiceOfPattientService _serviceOfPattientService;
+        private PlanService _planService;
         #endregion
 
 
@@ -69,6 +73,8 @@ namespace BussinesLayer.UnitOfWork
         public IDentalBranchService DentalBranchService => _dentalBranchService ?? (_dentalBranchService = new DentalBranchService(_context));
 
         public IServiceOfPattientService ServiceOfPattientService => _serviceOfPattientService ?? (_serviceOfPattientService = new ServiceOfPattientService(_context));
+
+        public IPlanService PlanService => _planService ?? (_planService = new PlanService(_context));
 
         async Task IUnitOfWork.Commit() => await _context.SaveChangesAsync();
     }

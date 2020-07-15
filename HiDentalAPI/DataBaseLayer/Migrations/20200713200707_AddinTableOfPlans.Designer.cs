@@ -4,14 +4,16 @@ using DatabaseLayer.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataBaseLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200713200707_AddinTableOfPlans")]
+    partial class AddinTableOfPlans
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,10 +114,6 @@ namespace DataBaseLayer.Migrations
                     b.Property<int>("State")
                         .HasColumnType("int");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("TypeOfPlan")
                         .HasColumnType("int");
 
@@ -127,6 +125,36 @@ namespace DataBaseLayer.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Plans");
+                });
+
+            modelBuilder.Entity("DataBaseLayer.Models.Plan.PlanService", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ServiceOfPattientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("ServiceOfPattientId");
+
+                    b.ToTable("PlanService");
                 });
 
             modelBuilder.Entity("DataBaseLayer.Models.Plan.ServiceOfPatient", b =>
@@ -162,36 +190,6 @@ namespace DataBaseLayer.Migrations
                     b.HasIndex("DentalBranchId");
 
                     b.ToTable("ServiceOfPattients");
-                });
-
-            modelBuilder.Entity("DataBaseLayer.Models.Plan.ServicePlan", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("PlanId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ServiceOfPattientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
-
-                    b.HasIndex("ServiceOfPattientId");
-
-                    b.ToTable("PlanService");
                 });
 
             modelBuilder.Entity("DataBaseLayer.Models.UserPermission", b =>
@@ -674,16 +672,7 @@ namespace DataBaseLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DataBaseLayer.Models.Plan.ServiceOfPatient", b =>
-                {
-                    b.HasOne("DataBaseLayer.Models.Offices.DentalBranch", "DentalBranch")
-                        .WithMany("Services")
-                        .HasForeignKey("DentalBranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DataBaseLayer.Models.Plan.ServicePlan", b =>
+            modelBuilder.Entity("DataBaseLayer.Models.Plan.PlanService", b =>
                 {
                     b.HasOne("DataBaseLayer.Models.Plan.Plan", "Plan")
                         .WithMany("ServiceOfPattients")
@@ -695,6 +684,15 @@ namespace DataBaseLayer.Migrations
                         .WithMany("ServiceOfPattients")
                         .HasForeignKey("ServiceOfPattientId")
                         .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DataBaseLayer.Models.Plan.ServiceOfPatient", b =>
+                {
+                    b.HasOne("DataBaseLayer.Models.Offices.DentalBranch", "DentalBranch")
+                        .WithMany("Services")
+                        .HasForeignKey("DentalBranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

@@ -56,7 +56,7 @@ namespace BussinesLayer.Services
             model.State = DatabaseLayer.Enums.State.Removed;
             model.UpdateAt = DateTime.Now;
             _dbContext.Update(model);
-            return await _dbContext.SaveChangesAsync() > 0;
+            return await CommitAsync();
         }
     }
 }

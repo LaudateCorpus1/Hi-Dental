@@ -28,7 +28,7 @@ namespace DataBaseLayer.Models.Offices
 
         public virtual ICollection<Appointment> Appoiments { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
-        public virtual ICollection<ServiceOfPattient> Services { get; set; }
+        public virtual ICollection<ServiceOfPatient> Services { get; set; }
 
         public DentalBranch() => IsPrincipal = PrincipalOfficeId != null;
 

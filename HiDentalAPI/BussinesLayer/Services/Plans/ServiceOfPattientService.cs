@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BussinesLayer.Services
 {
-    public class ServiceOfPattientService : BaseRepository<ServiceOfPattient>, IServiceOfPattientService
+    public class ServiceOfPattientService : BaseRepository<ServiceOfPatient>, IServiceOfPattientService
     {
         private readonly ApplicationDbContext _dbContext;
         public ServiceOfPattientService(ApplicationDbContext dbContext) : base(dbContext)
@@ -20,7 +20,7 @@ namespace BussinesLayer.Services
             _dbContext = dbContext;
         }
 
-        public async Task<PaginationViewModel<ServiceOfPattient>> GetAllWithPaginateAsync(FilterServiceOfPattientVM filterEntity)
+        public async Task<PaginationViewModel<ServiceOfPatient>> GetAllWithPaginateAsync(FilterServiceOfPattientVM filterEntity)
         {
             var result = GetAll();
 
@@ -29,7 +29,7 @@ namespace BussinesLayer.Services
             var total = result.Count();
             var pages = total / filterEntity.QuantityByPage;
 
-            return new PaginationViewModel<ServiceOfPattient>
+            return new PaginationViewModel<ServiceOfPatient>
             {
                 ActualPage = filterEntity.Page,
                 Pages = pages,

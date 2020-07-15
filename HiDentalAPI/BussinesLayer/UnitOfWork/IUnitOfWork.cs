@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Auth.Interfaces;
 using BussinesLayer.Contracts;
+using BussinesLayer.Contracts.Plans;
 
 namespace BussinesLayer.UnitOfWork
 {
@@ -14,6 +15,7 @@ namespace BussinesLayer.UnitOfWork
         IUserDetailService UserDetailService { get; }
         IDentalBranchService DentalBranchService { get; }
         IServiceOfPattientService ServiceOfPattientService { get; }
+        IPlanService PlanService { get; }
 
         Task Commit();
     }

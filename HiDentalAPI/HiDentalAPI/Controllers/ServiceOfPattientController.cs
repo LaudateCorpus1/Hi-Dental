@@ -34,7 +34,7 @@ namespace HiDentalAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ServiceOfPattient model)
+        public async Task<IActionResult> Create(ServiceOfPatient model)
         {
             var result = await _service.ServiceOfPattientService.Add(model);
             if (!result) return BadRequest(new ResponseBase { Code = CodeResponse.DbError, Message = "Error intente de nuevo" });
@@ -42,7 +42,7 @@ namespace HiDentalAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(ServiceOfPattient model)
+        public async Task<IActionResult> Update(ServiceOfPatient model)
         {
             var exist = await _service.ServiceOfPattientService.GetById(model.Id);
             if (exist == null) return NotFound(new ResponseBase { Code = CodeResponse.NotFound, Message = "El servicio no existe" });
