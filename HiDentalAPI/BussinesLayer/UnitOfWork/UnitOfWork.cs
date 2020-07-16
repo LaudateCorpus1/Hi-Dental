@@ -39,6 +39,7 @@ namespace BussinesLayer.UnitOfWork
         private DentalBranchService _dentalBranchService;
         private ServiceOfPattientService _serviceOfPattientService;
         private PlanService _planService;
+        private ServicePlanService _servicePlanService;
         #endregion
 
 
@@ -75,6 +76,8 @@ namespace BussinesLayer.UnitOfWork
         public IServiceOfPattientService ServiceOfPattientService => _serviceOfPattientService ?? (_serviceOfPattientService = new ServiceOfPattientService(_context));
 
         public IPlanService PlanService => _planService ?? (_planService = new PlanService(_context));
+
+        public IServicePlanService ServicePlanService => _servicePlanService ?? (_servicePlanService = new ServicePlanService(_context));
 
         async Task IUnitOfWork.Commit() => await _context.SaveChangesAsync();
     }

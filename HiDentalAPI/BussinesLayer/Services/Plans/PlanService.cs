@@ -47,11 +47,5 @@ namespace BussinesLayer.Services.Plans
             result.State = State.Removed;
             return await Update(result);
         }
-
-        public async Task<bool> AddServiceToPlan(ServicePlan model)
-        {
-            _dbContext.PlanService.Add(model);
-            return await CommitAsync();
-        }
     }
 }

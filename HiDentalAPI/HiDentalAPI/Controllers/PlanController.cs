@@ -57,12 +57,5 @@ namespace HiDentalAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddPlanService(ServicePlan model)
-        {
-            var result = await _services.PlanService.AddServiceToPlan(model);
-            if (!result) return BadRequest(new ResponseBase { Code = CodeResponse.DbError, Message = "Ha ocurrido un error, intente de nuevo" });
-            return Ok(result);
-        }
     }
 }

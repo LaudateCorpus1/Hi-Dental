@@ -16,6 +16,7 @@ namespace BussinesLayer.UnitOfWork
         IDentalBranchService DentalBranchService { get; }
         IServiceOfPattientService ServiceOfPattientService { get; }
         IPlanService PlanService { get; }
+        IServicePlanService ServicePlanService { get; }
 
         Task Commit();
     }
