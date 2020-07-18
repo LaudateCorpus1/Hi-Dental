@@ -35,7 +35,9 @@ namespace BussinesLayer.Services
         {
             var branch = GetAll();
             if (filterEntity.IsPrincipal) branch = branch.Where(x => x.IsPrincipal == filterEntity.IsPrincipal);
-            if(filterEntity.PrincipalOfficeId.HasValue) branch = branch.Where(x => x.PrincipalOfficeId == filterEntity.PrincipalOfficeId);
+            else branch = branch.Where(x => x.PrincipalOfficeId == filterEntity.PrincipalOfficeId);
+           
+
             if (!filterEntity.Title.IsNull()) branch = branch.Where(x => x.Title.Contains(filterEntity.Title));
             if (!filterEntity.PhoneNumber.IsNull()) branch = branch.Where(x => x.Title.Contains(filterEntity.PhoneNumber));
             var total = branch.Count();
