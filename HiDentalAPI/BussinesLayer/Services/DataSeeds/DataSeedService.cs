@@ -101,7 +101,7 @@ namespace BussinesLayer.Services.DataSeeds
         {
             if (dbContext.UserTypes.Any()) return null;
             var model = new UserType { Name = options.Value.DefautlUserType };
-            dbContext.UserTypes.Add(model);
+            dbContext.UserTypes.AddRange(model);
             return dbContext.SaveChanges() > 0 ? model : null;
         }
 

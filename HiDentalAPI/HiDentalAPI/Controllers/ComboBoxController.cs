@@ -34,5 +34,8 @@ namespace HiDentalAPI.Controllers
         public async Task<IActionResult> DentalBranchs()
             => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid, Guid?>>>(await _unitOfWork.DentalBranchService.GetList(x => x.IsPrincipal == true)));
     
+        [HttpGet]
+        public async Task<IActionResult> DentalBranchsNotPrincipal(Guid principalId)
+           => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid, Guid?>>>(await _unitOfWork.DentalBranchService.GetList(x => x.IsPrincipal == false && x.PrincipalOfficeId == principalId)));
     }
 }
