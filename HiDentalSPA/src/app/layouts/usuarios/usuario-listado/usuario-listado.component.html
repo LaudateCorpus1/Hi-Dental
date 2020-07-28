@@ -33,8 +33,14 @@
     <nz-table #ordersListTable [nzData]="usuarios" 
   
     (nzCurrentPageDataChange)="currentPageDataChange($event)"
+
+    [nzFrontPagination]="false"
+    nzShowSizeChanger
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
     (nzPageIndexChange)="getUsuarios()"
-    (nzPageSizeChange)="getUsuarios()"
+    (nzPageSizeChange)="getUsuarios(false)"
     >
     <thead  >
         <tr>
@@ -71,7 +77,7 @@
                 <button class="m-r-10 " routerLink="usuario/{{item.id}}"  nz-button style="background-color: #FCF3CF !important;"  nzGhost>
                   <i nz-icon nzType="edit" style=" color: #F1C40F !important;" theme="fill"></i>
                 </button>
-                <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?" (nzOnConfirm)="deleteRow(2)" nzGhost>
+                <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?" (nzOnConfirm)="deleteUsuario(item.id)" nzGhost>
                   <i nz-icon nzType="delete" theme="fill"></i>
                 </button>
             </td>

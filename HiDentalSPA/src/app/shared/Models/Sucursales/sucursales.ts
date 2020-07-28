@@ -26,6 +26,7 @@ export class SucursalesViewModel {
 }
 export class SucursalFilterParams extends Paginacion {
     title?: string;
+    isPrincipal=false;
     principalOfficeId:string;
     // tslint:disable-next-line: no-use-before-declare
 }

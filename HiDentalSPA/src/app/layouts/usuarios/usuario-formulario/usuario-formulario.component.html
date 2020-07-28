@@ -1,6 +1,6 @@
 
-
-<form nz-form [nzLayout]="validateForm.get('formLayout')?.value"  [formGroup]="validateForm" (ngSubmit)="submitForm()">
+ <nz-spin nzTip='Loading...' [nzSpinning]="editLoading" [nzDelay]="500">
+<form nz-form [nzLayout]="formulario.get('formLayout')?.value"  [formGroup]="formulario" (ngSubmit)="beforeOnsubmitForm()">
     <!-- <nz-divider style="margin-top: -15px !important; " nzText="Informacion personal" nzOrientation="left"></nz-divider> -->
     <nz-divider style="margin-top: -15px !important; " nzDashed [nzText]="InformacionPersonal">
         <ng-template #InformacionPersonal>Informacion personal</ng-template>
@@ -11,7 +11,7 @@
                 <nz-form-label [nzSpan]="isHorizontal? 4:null">Apellidos</nz-form-label>
                 <nz-form-control [nzSpan]="isHorizontal? 14:null">
                     <input nzSize="small" nz-input formControlName="lastnames" placeholder="Apellidos">
-                    <nz-form-explain *ngIf="validateForm.get('lastnames').dirty && validateForm.get('lastnames').errors">Este campo es obligatorio!</nz-form-explain>
+                    <nz-form-explain *ngIf="formulario.get('lastnames').dirty && formulario.get('lastnames').errors">Este campo es obligatorio!</nz-form-explain>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -20,7 +20,7 @@
                 <nz-form-label [nzSpan]="isHorizontal? 4:null">Nombres</nz-form-label>
                 <nz-form-control [nzSpan]="isHorizontal? 14:null">
                     <input nzSize="small" nz-input formControlName="names" placeholder="Nombres">
-                    <nz-form-explain *ngIf="validateForm.get('names').dirty && validateForm.get('names').errors">Este campo es obligatorio!</nz-form-explain>
+                    <nz-form-explain *ngIf="formulario.get('names').dirty && formulario.get('names').errors">Este campo es obligatorio!</nz-form-explain>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -30,8 +30,8 @@
             <nz-form-item >
                 <nz-form-label [nzSpan]="isHorizontal? 4:null">Cedula</nz-form-label>
                 <nz-form-control [nzSpan]="isHorizontal? 14:null">
-                    <input nzSize="small" nz-input formControlName="identificationCard" placeholder="Cedula">
-                    <nz-form-explain *ngIf="validateForm.get('identificationCard').dirty && validateForm.get('identificationCard').errors">Este campo es obligatorio!</nz-form-explain>
+                    <input nzSize="small" nz-input formControlName="identityDocument" placeholder="Cedula">
+                    <nz-form-explain *ngIf="formulario.get('identityDocument').dirty && formulario.get('identityDocument').errors">Este campo es obligatorio!</nz-form-explain>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -39,30 +39,22 @@
             <nz-form-item>
                 <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired>Genero</nz-form-label>
                 <nz-form-control [nzSpan]="isHorizontal? 14:null">
-                    <nz-select id="gender" nzSize="small"  formControlName="gender" nzPlaceHolder="Seleccione una opcion" (ngModelChange)="genderChange($event)">
-                    <nz-option nzValue="male" nzLabel="Masculino"></nz-option>
-                    <nz-option nzValue="female" nzLabel="Femenino"></nz-option>
+                    <nz-select id="gender" nzSize="small"  formControlName="gender" nzPlaceHolder="Seleccione una opcion" >
+                    <nz-option nzValue="Masculino" nzLabel="Masculino"></nz-option>
+                    <nz-option nzValue="Femenino" nzLabel="Femenino"></nz-option>
                     </nz-select>
-                    <nz-form-explain *ngIf="validateForm.get('gender').dirty && validateForm.get('gender').errors">Por favor seleccione un genero!</nz-form-explain>
+                    <nz-form-explain *ngIf="formulario.get('gender').dirty && formulario.get('gender').errors">Por favor seleccione un genero!</nz-form-explain>
                 </nz-form-control>
             </nz-form-item>
         </div>
       </div>
       <div nz-row style="margin-top: -20px !important"  nzType="flex" nzJustify="space-between">
         <div  nz-col nzSpan="11"> 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="isHorizontal? 4:null" nzFor="phoneNumber" nzRequired>Telefono celular</nz-form-label>
-                <nz-form-control [nzSpan]="isHorizontal? 14:null" [nzValidateStatus]="validateForm.controls['phoneNumber']">
-                    <nz-input-group nzSize="small" [nzAddOnBefore]="addOnBeforeTemplate">
-                        <ng-template #addOnBeforeTemplate>
-                            <nz-select nzSize="small"  formControlName="phoneNumberPrefix" style="width: 90px;">
-                            <nz-option  nzLabel="+(809)" nzValue="+809"></nz-option>
-                            <nz-option nzLabel="+(829)" nzValue="+829"></nz-option>
-                            </nz-select>
-                        </ng-template>
-                        <input formControlName="phoneNumber" id="'phoneNumber'" nz-input>
-                    </nz-input-group>
-                    <nz-form-explain *ngIf="validateForm.get('phoneNumber').dirty && validateForm.get('phoneNumber').errors">Please input your phone number!</nz-form-explain>
+            <nz-form-item >
+                <nz-form-label [nzSpan]="isHorizontal? 4:null">Telefono celular</nz-form-label>
+                <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                    <input nzSize="small" nz-input formControlName="phoneNumber" placeholder="ej: 809-321-1231">
+                    <nz-form-explain *ngIf="formulario.get('phoneNumber').dirty && formulario.get('phoneNumber').errors">Este campo es obligatorio!</nz-form-explain>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -70,11 +62,10 @@
             <nz-form-item>
                 <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired>Tipo de usuario</nz-form-label>
                 <nz-form-control [nzSpan]="isHorizontal? 14:null">
-                    <nz-select id="typeUser" nzSize="small"  formControlName="typeUser" nzPlaceHolder="Seleccione un tipo de usuario" (ngModelChange)="genderChange($event)">
-                    <nz-option nzValue="Doctor" nzLabel="Doctor"></nz-option>
-                    <nz-option nzValue="Secretaria" nzLabel="Secretaria"></nz-option>
+                    <nz-select nzShowSearch nzAllowClear nzSize="small"  formControlName="userTypeId" [nzLoading]="loadingUserTypes"   nzPlaceHolder="seleccione un tipo de usuario"   [(ngModel)]="UserTypeSeletedForm" >
+                        <nz-option *ngFor="let o of comboboxUserTypes" [nzValue]="o.code" [nzLabel]="o.title"></nz-option>
                     </nz-select>
-                    <nz-form-explain *ngIf="validateForm.get('typeUser').dirty && validateForm.get('typeUser').errors">Por favor seleccione un genero!</nz-form-explain>
+                    <nz-form-explain *ngIf="formulario.get('userTypeId').dirty && formulario.get('userTypeId').errors">Por favor seleccione un tipo!</nz-form-explain>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -86,22 +77,21 @@
       <div nz-row style="margin-top: -8px !important" nzType="flex" nzJustify="space-between">
         <div  nz-col nzSpan="11"> 
             <nz-form-item >
-                <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired nzFor="email">Correo Electronico</nz-form-label>
+                <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired nzFor="userName">Correo Electronico</nz-form-label>
                 <nz-form-control [nzSpan]="isHorizontal? 14:null">
-                    <input nzSize="small" nz-input formControlName="email" placeholder="email">
-                    <nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">Este campo es obligatorio!</nz-form-explain>
+                    <input nzSize="small" nz-input formControlName="userName" placeholder="Correo Electronico">
+                    <nz-form-explain *ngIf="formulario.get('userName').dirty && formulario.get('userName').errors">Este campo es obligatorio!</nz-form-explain>
                 </nz-form-control>
             </nz-form-item>
         </div>
         <div  nz-col nzSpan="11" >
             <nz-form-item>
-                <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired>Ofic. Principal o Sucursal</nz-form-label>
+                <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired> Sucursal</nz-form-label>
                 <nz-form-control [nzSpan]="isHorizontal? 14:null">
-                    <nz-select id="gender" nzSize="small"  formControlName="gender" nzPlaceHolder="Seleccione una opcion" (ngModelChange)="genderChange($event)">
-                    <nz-option nzValue="male" nzLabel="Masculino"></nz-option>
-                    <nz-option nzValue="female" nzLabel="Femenino"></nz-option>
+                    <nz-select nzShowSearch nzAllowClear nzSize="small"  formControlName="dentalBranchId" [nzLoading]="loadingDentalBranches"   nzPlaceHolder="seleccione una sucursal"   [(ngModel)]="dentalBranchSeletedForm" >
+                        <nz-option *ngFor="let o of comboboxDentalBranches" [nzValue]="o.code" [nzLabel]="o.title"></nz-option>
                     </nz-select>
-                    <nz-form-explain *ngIf="validateForm.get('gender').dirty && validateForm.get('gender').errors">Por favor seleccione un genero!</nz-form-explain>
+                    <nz-form-explain *ngIf="formulario.get('dentalBranchId').dirty && formulario.get('dentalBranchId').errors">Por favor seleccione una sucursal!</nz-form-explain>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -111,8 +101,8 @@
             <nz-form-item >
                 <nz-form-label [nzSpan]="isHorizontal? 4:null">Contraseña</nz-form-label>
                 <nz-form-control [nzSpan]="isHorizontal? 14:null">
-                    <input nz-input type="password" id="password" autocomplete="false" formControlName="password" (ngModelChange)="updateConfirmValidator()" nzSize="small" placeholder="Contraseña">
-                    <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">Este campo es obligatorio!</nz-form-explain>
+                    <input nz-input type="password" minlength="6" id="password" autocomplete="false" formControlName="password"  nzSize="small" placeholder="Contraseña">
+                    <nz-form-explain *ngIf="formulario.get('password').hasError('minlength')">La contraseña debe contener mas de 6 caracteres!</nz-form-explain>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -123,12 +113,12 @@
             <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired>Confirmar contraseña</nz-form-label>
             <nz-form-control [nzSpan]="isHorizontal? 14:null">
                 <input nz-input nzSize="small" autocomplete="false" type="password" formControlName="checkPassword" id="checkPassword">
-                <nz-form-explain *ngIf="validateForm.get('checkPassword').dirty && validateForm.get('checkPassword').errors">
-                    <ng-container *ngIf="validateForm.get('checkPassword').hasError('required')">
+                <nz-form-explain *ngIf="formulario.get('checkPassword').dirty && formulario.get('checkPassword').errors">
+                    <ng-container *ngIf="formulario.get('checkPassword').hasError('required')">
                         Por favor confirma la contraseña!
                     </ng-container>
-                    <ng-container *ngIf="validateForm.get('checkPassword').hasError('confirm')">
-                        Two passwords that you enter is inconsistent!
+                    <ng-container *ngIf="formulario.get('checkPassword').hasError('confirm')">
+                        Las contrase;as no son las mismas!
                     </ng-container>
                 </nz-form-explain>
             </nz-form-control>
@@ -138,7 +128,7 @@
   </div>
   <div style="float: right;">
     <button routerLink="/usuarios" nz-button nzType="default">Cancelar</button>
-    <button nz-button nzType="primary" style="margin-left: 8px;" [nzLoading]="LoadingButton">Guardar</button>
+    <button nz-button nzType="primary" style="margin-left: 8px;" [nzLoading]="loadingButton">Guardar</button>
   </div>   
 
   <div>
@@ -146,3 +136,4 @@
  
   </div>
 </form> 
+ </nz-spin>
