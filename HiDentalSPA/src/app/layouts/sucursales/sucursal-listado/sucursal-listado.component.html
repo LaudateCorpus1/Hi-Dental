@@ -13,8 +13,8 @@
                     </ng-template>   
                 </div>
                 <div class="m-b-10 m-r-20 d-flex align-items-center borderStrong">
-                    <nz-select  style="min-width: 220px;" class="w-100 "  nzPlaceHolder="Oficinas"  [(ngModel)]="oficinaSeletedFilter" >
-                        <nz-option *ngFor="let o of comboboxOficinas" [nzValue]="o.code" [nzLabel]="o.title"></nz-option>
+                    <nz-select nzShowSearch nzAllowClear [nzLoading]="loadingDentalBranches" style="min-width: 220px;" class="w-100 "  nzPlaceHolder="Oficinas"   [(ngModel)]="oficinaSeletedFilter" (ngModelChange)="getSucursales()" >
+                        <nz-option *ngFor="let o of comboboxOficinas" [nzValue]="o" [nzLabel]="o.title"></nz-option>
                     </nz-select>
                 </div>
             </div>          
@@ -43,9 +43,9 @@
           <tr>
               <th  nzSortKey="name">Nombre</th>
               <th  nzSortKey="phoneNumber">Telefono</th>
-              <th  nzSortKey="description">Descripcion</th>
+              <!-- <th  nzSortKey="description">Descripcion</th> -->
               <th  nzSortKey="address">Direccion</th>
-              <th  nzSortKey="isPrincipal">Principal</th>
+              <!-- <th  nzSortKey="isPrincipal">Principal</th> -->
               <th  nzSortKey="createAt">Creado</th>
               <th  nzSortKey="state">Estado</th>
               <th  nzSortKey="office">Oficina</th>
@@ -61,12 +61,12 @@
                   </div>
               </td>
               <td>{{item.phoneNumber}}</td>
-              <td>{{item.description}}</td>
+              <!-- <td>{{item.description}}</td> -->
               <td>{{item.address}}</td>
-              <td>
+              <!-- <td>
                   <span class="text-capitalize" *ngIf="item.isPrincipal">Si</span>
                   <span class="text-capitalize" *ngIf="item.isPrincipal==false">No</span>
-                </td>
+                </td> -->
               <td>{{item.createAt | date}}</td>
               <td>
                   <nz-badge *ngIf="item.state == 0" nzStatus="success"></nz-badge>
@@ -157,13 +157,13 @@
         </div>
         <div  nz-col nzSpan="11" >
             
-            <nz-form-item >
+            <!-- <nz-form-item >
                 <nz-form-label [nzSpan]="isHorizontal? 4:null">¿Esta sucursal es principal?</nz-form-label>
                 <nz-form-control [nzSpan]="isHorizontal? 14:null">
                     <label nz-checkbox  formControlName="isPrincipal" [(ngModel)]="isPrincipalChecked"  > {{ isPrincipalChecked ? 'Si' : 'No' }}</label>
                     <nz-form-explain *ngIf="validateForm.get('isPrincipal').dirty && validateForm.get('isPrincipal').errors">Este campo es obligatorio!</nz-form-explain>
                 </nz-form-control>
-            </nz-form-item>
+            </nz-form-item> -->
         </div>
       </div>
   <ng-template #modalFooter>

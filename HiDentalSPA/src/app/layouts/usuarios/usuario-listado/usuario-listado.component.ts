@@ -101,11 +101,18 @@ export class UsuarioListadoComponent implements OnInit {
       },
 
   ]
-  readonly params: UserFilterParams = {
-   dentalBranchId : '648b5bf1-3859-45a0-4434-08d7ca2e0a6c',
-};
+
+  pageIndex = 1;
+  pageSize = 7;
+  total = 0;
+
+  readonly params= new  UserFilterParams();
+
+
+
   ngOnInit(): void {
-this.getUsuarios();
+    this.refreshParameters();
+    this.getUsuarios();
   }
 
 
@@ -129,10 +136,14 @@ this.getUsuarios();
       this.usuarios = $event;
     // this.refreshStatus();
   }
-getUsuarios(){
+getUsuarios(reset:boolean=false){
+  if (reset) {
+    this.pageIndex = 1;
+  }
 this.refreshParameters();
 this.base.getAll<UsuariosViewModel>(DataApi.Usuarios,'GetAll',this.params).subscribe(x => {
      this.usuarios = x.entities;
+     this.total= x.total;
      this.Cargando=false;
      console.log(x)
 }, error => {
@@ -143,11 +154,27 @@ this.base.getAll<UsuariosViewModel>(DataApi.Usuarios,'GetAll',this.params).subsc
 refreshParameters(){
   this.Cargando=true;
   this.params.id='';
+  this.params.Page = this.pageIndex;
+  this.params.QuantityByPage = this.pageSize;
   this.params.names=this.search == undefined ? '' : this.search;
+  this.params.dentalBranchId='14bc4f39-e716-49ce-9fd3-08d82a82fbe0';
   // this.params.lastNames=this.search == undefined ? '' : this.search;
   // this.params.indentityDocument=this.search == undefined ? '' : this.search;
 }
+deleteUsuario(idusuario) {
+  console.log(idusuario);
+  this.Cargando = true;
+  this.base.DoDelete(DataApi.Usuarios, 'Remove', { 'id': idusuario }).subscribe(x => {
+    if (x) {
+      this.getUsuarios();
+    }
+    this.Cargando = false;
+  }, error => {
+    console.log(error);
+    this.Cargando = false;
+  });
 
+}
 
 
 

@@ -11,15 +11,16 @@ export class BaseService {
   baseUrl: string;
 
   dataApiRootMap: { [api: string]: string } = {
-    '1': 'api/user',
-    '2': 'api/PrincipalOffice',
-    '3': 'api/DentalBranch',
-    '4': 'api/ComboBox',
+    '1': 'api/Auth',
+    '2': 'api/user',
+    '3': 'api/PrincipalOffice',
+    '4': 'api/DentalBranch',
+    '5': 'api/ComboBox',
 
   };
   constructor(_http: HttpClient) {
     this.http = _http;
-    this.baseUrl = 'http://10.211.55.5:45455/';
+    this.baseUrl = 'http://10.0.0.6:45455/';
   }
 
 
@@ -82,10 +83,6 @@ public GetOne<T>(api: DataApi, Method: string, item?: any, apiParms?: HttpParams
 
 
 
-
-
-
-
 public GetAllByTerm<T>(api: DataApi, Method: string, termino: string): Observable<RespuestaContenido<T>>
 {
   return this.http.get<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method + '?termino=' + termino);
@@ -116,24 +113,6 @@ public GetAllByTerm<T>(api: DataApi, Method: string, termino: string): Observabl
   }
 
 
-  // public async GetAllWithPaginationPromise<T>(api: DataApi, Method: string, Columna: string, PaginaNo: number = 1, PaginaSize: number = 10, OrderASC: boolean = true, parametros: any = {}): Promise<RespuestaContenido<T>> {
-  //    let request = new RequestContenido<T>();
-  //    request.parametros = parametros;
-  //    request.pagina = new Paginacion();
-  //    request.pagina.paginaNo = PaginaNo;
-  //    request.pagina.paginaSize = PaginaSize;
-  //    request.pagina.ordenAsc = OrderASC;
-  //    request.pagina.ordenColumna = Columna;
-  //    return await this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request).toPromise();
-  //}
-
-
-  // public DoPost<T>(api: DataApi, Method: string, parametros: any): Observable<RespuestaContenido<T>> {
-  //   // tslint:disable-next-line: no-use-before-declare
-  //   const request = new RequestContenido<T>();
-  //   request.parametros = parametros;
-  //   return this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method, request);
-  // }
 
 
 
@@ -232,7 +211,7 @@ export class Combobox {
   title: string;
   Group: string;
   grupoID: string;
-  code: number;
+  code: string;
   //disabled: boolean
 }
 
@@ -241,8 +220,9 @@ export class Combobox {
 
 
 export enum DataApi {
-  Usuarios = 1,
-  Oficinas = 2,
-  Sucursales = 3,
-  ComboBox = 4
+  Auth = 1,
+  Usuarios = 2,
+  Oficinas = 3,
+  Sucursales = 4,
+  ComboBox = 5
 }

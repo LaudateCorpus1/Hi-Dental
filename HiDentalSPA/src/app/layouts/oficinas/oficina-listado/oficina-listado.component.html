@@ -74,7 +74,7 @@
               </td>
               <td class="text-md-right">
               
-                  <button nz-button class="m-r-10" nzType="primary" nzGhost [routerLink]="['oficina/0']">
+                  <button nz-button class="m-r-10" nzType="primary" nzGhost (click)="showModal_ListDentalB(item.id)" >
                     <i nz-icon nzType="eye" theme="outline"></i>
                     <span>Sucursales</span>
                 </button>
@@ -91,7 +91,7 @@
   
   </nz-spin>
   <nz-modal
-  [(nzVisible)]="isVisible"
+  [(nzVisible)]="isVisibleModalForm"
   [nzTitle]="title"
   [nzFooter]="modalFooter"
   [nzOkLoading]="isOkLoading"
@@ -149,5 +149,77 @@
 </form>
 </nz-spin>  
 </nz-modal>
+<nz-modal
+[nzWidth]="'1000'"
+[(nzVisible)]="isVisibleModal_ViewDentalBranches"
+[nzTitle]="'Sucursales de la oficina'"
+[nzFooter]="modalFooterDentalBranches"
+[nzOkLoading]="isOkLoading">
+<ng-template #title>
+  <span>{{textTitleModal}}</span>
+</ng-template>
+ 
+<nz-spin nzTip='Loading...' [nzSpinning]="listDentalBLoading" [nzDelay]="500">
+    <nz-spin nzTip='Loading...' [nzSpinning]="CargandoDB" [nzDelay]="500">
+        <nz-table #ordersListTableDB [nzData]="sucursales" 
+      
+  
+        (nzCurrentPageDataChange)="currentPageDataChangeDB($event)"
+        [nzFrontPagination]="false"
+        nzShowSizeChanger
+        [nzTotal]="totalDB"
+        [(nzPageIndex)]="pageIndexDB"
+        [(nzPageSize)]="pageSizeDB"
+        (nzPageIndexChange)="getSucursales()"
+        (nzPageSizeChange)="getSucursales(true)"
+        >
+        <thead  >
+            <tr>
+                <th  nzSortKey="name">Nombre</th>
+                <th  nzSortKey="phoneNumber">Telefono</th>
+                <!-- <th  nzSortKey="description">Descripcion</th> -->
+                <th  nzSortKey="address">Direccion</th>
+                <!-- <th  nzSortKey="isPrincipal">Principal</th> -->
+                <th  nzSortKey="createAt">Creado</th>
+                <th  nzSortKey="state">Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+             <tr *ngFor="let item of ordersListTableDB.data ">
+                <td>
+                    <div class="d-flex align-items-center">
+                        <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="'assets/images/avatars/thumb-7.jpg'"></nz-avatar>
+                        <h6 class="m-l-10 m-b-0">{{item.title}}</h6>
+                    </div>
+                </td>
+                <td>{{item.phoneNumber}}</td>
+                <!-- <td>{{item.description}}</td> -->
+                <td>{{item.address}}</td>
+                <!-- <td>
+                    <span class="text-capitalize" *ngIf="item.isPrincipal">Si</span>
+                    <span class="text-capitalize" *ngIf="item.isPrincipal==false">No</span>
+                  </td> -->
+                <td>{{item.createAt | date}}</td>
+                <td>
+                    <nz-badge *ngIf="item.state == 0" nzStatus="success"></nz-badge>
+                    <nz-badge *ngIf="item.state == 1" nzStatus="error"></nz-badge>
+                    <nz-badge *ngIf="item.state == 2"  nzStatus="processing"></nz-badge> 
+                    <span class="text-capitalize" *ngIf="item.state==0">Activo</span>
+                    <span class="text-capitalize" *ngIf="item.state==1">Eliminado</span>
+                    <span class="text-capitalize" *ngIf="item.state==2">Bloqueado</span>
+                </td>
+             
+            </tr> 
+        </tbody>
+    </nz-table>
+    
+    </nz-spin>
+    <ng-template #modalFooterDentalBranches>
+        <button nz-button nzType="default" (click)="handleCancel_ListDentalB()">Cancelar</button>
+      </ng-template>
+</nz-spin>  
+</nz-modal>
   </nz-card>
+
   

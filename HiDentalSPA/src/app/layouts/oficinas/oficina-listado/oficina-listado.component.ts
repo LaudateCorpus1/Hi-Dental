@@ -5,6 +5,7 @@ import { OficinasViewModel, OficinaFilterParams, Oficina } from 'src/app/shared/
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { error } from 'protractor';
 import { Usuarios } from 'src/app/shared/Models/usuarios/usuarios';
+import { SucursalesViewModel, SucursalFilterParams } from 'src/app/shared/Models/Sucursales/sucursales';
 
 @Component({
   selector: 'app-oficina-listado',
@@ -12,8 +13,7 @@ import { Usuarios } from 'src/app/shared/Models/usuarios/usuarios';
   styleUrls: ['./oficina-listado.component.css']
 })
 export class OficinaListadoComponent implements OnInit {
-  loadingButton: boolean;
-  editLoading:boolean;
+  
   idOficina:string;
    paginacion= new  PaginacionRequest;
    
@@ -27,17 +27,36 @@ export class OficinaListadoComponent implements OnInit {
   textTitleModal= 'Nueva oficina';
 
   validateForm: FormGroup;
-  isVisible = false;
+
+  isVisibleModalForm = false;
   isOkLoading = false;
+  loadingButton: boolean;
+  editLoading:boolean;
+
+  isVisibleModal_ViewDentalBranches:boolean;
+  listDentalBLoading:boolean;
+  
   search : any;
   displayData = [];
   oficinas: OficinasViewModel[]= [];
   oficina: OficinasViewModel;
   Cargando = true;
  
-  readonly params: OficinaFilterParams = {
-    title:''
-};
+
+
+//List sucursales by 
+  pageIndexDB = 1;
+  pageSizeDB = 7;
+  totalDB = 0;
+
+  displayDataDB = [];
+  sucursales: SucursalesViewModel[] = [];
+  CargandoDB = true;
+  paramsDB = new SucursalFilterParams();
+  OfficeId='';
+
+
+params = new OficinaFilterParams();
   ngOnInit(): void {
   
     this.CreateForm();
@@ -71,12 +90,14 @@ export class OficinaListadoComponent implements OnInit {
 
 
  saveOficina(oficina:Oficina){
-  this.base.DoPost<Oficina>(DataApi.Oficinas,'create',
+  this.base.DoPost<Oficina>(DataApi.Sucursales,'create',
   {
      'description': oficina.description,
     'address': oficina.address,
     'title': oficina.title,
-    'phoneNumber': oficina.phoneNumber
+    'phoneNumber': oficina.phoneNumber,
+    'isPrincipal':oficina.isPrincipal
+    
   }
     ).subscribe(x=>{
       this.loadingButton = false;
@@ -92,7 +113,7 @@ export class OficinaListadoComponent implements OnInit {
   });
  }
  updateOficina(oficina:Oficina){
-   this.base.DoPut(DataApi.Oficinas,'Update', 
+   this.base.DoPut(DataApi.Sucursales,'Update', 
     {
       'id':this.idOficina,
     'description': oficina.description,
@@ -118,9 +139,8 @@ export class OficinaListadoComponent implements OnInit {
         this.pageIndex=1;
        }
     this.refreshParameters();
-    this.base.getAll<OficinasViewModel>(DataApi.Oficinas,'GetAll',this.paginacion).subscribe(x => {
+    this.base.getAll<OficinasViewModel>(DataApi.Sucursales,'GetAll',this.params).subscribe(x => {
        this.total=x.total;
-      
         this.oficinas = x.entities;
         this.Cargando=false;
         console.log(x)
@@ -131,7 +151,7 @@ export class OficinaListadoComponent implements OnInit {
     }
   deleteOficina(idoficina){
     console.log(idoficina);
-      this.base.DoDelete(DataApi.Oficinas,'Remove',{'id':idoficina}).subscribe(x=>{
+      this.base.DoDelete(DataApi.Sucursales,'Remove',{'id':idoficina}).subscribe(x=>{
         if(x){
           this.getOficinas();
         }
@@ -156,15 +176,40 @@ export class OficinaListadoComponent implements OnInit {
       this.oficinas = $event;
     // this.refreshStatus();
   }
-
+  currentPageDataChangeDB($event: Array<{
+    id: number;
+    title: string;
+    address: string;
+    phoneNumber: string;
+    description: string;
+    isPrincipal: boolean;
+    officeName: string;
+    createAt: string;
+    updateAt: string;
+    state: number;
+    principalOfficeId: string;
+  }>): void {
+    this.sucursales = $event;
+    // this.refreshStatus();
+  }
 refreshParameters(){
   this.Cargando=true;
   // this.params.lastNames=this.search == undefined ? '' : this.search;
   // this.params.indentityDocument=this.search == undefined ? '' : this.search;
-  this.paginacion.Page = this.pageIndex;
-  this.paginacion.QuantityByPage = this.pageSize;
+  this.params.Page = this.pageIndex;
+  this.params.QuantityByPage = this.pageSize;
+  this.params.isPrincipal = true;
+  // this.params.lastNames=this.search == undefined ? '' : th
 }
-
+refreshParametersDB(){
+  this.Cargando=true;
+  // this.params.lastNames=this.search == undefined ? '' : this.search;
+  // this.params.indentityDocument=this.search == undefined ? '' : this.search;
+  this.paramsDB.Page = this.pageIndexDB;
+  this.paramsDB.QuantityByPage = this.pageSizeDB;
+  this.paramsDB.principalOfficeId = this.OfficeId;
+  // this.params.lastNames=this.search == undefined ? '' : th
+}
 
 
 
@@ -180,7 +225,7 @@ CreateForm() {
   });
 }
 showModal(id): void {
-  this.isVisible = true;
+  this.isVisibleModalForm = true;
   this.textTitleModal = 'Nueva oficina';
 
   if(id!=null){
@@ -188,7 +233,7 @@ showModal(id): void {
     this.editLoading=true;
 
     this.idOficina=id;
-      this.base.GetOne<Oficina>(DataApi.Oficinas,'GetById',{'id':id}).subscribe(x=>{
+      this.base.GetOne<Oficina>(DataApi.Sucursales,'GetById',{'id':id}).subscribe(x=>{
         this.oficina=x;
         this.validateForm.setValue({
           formLayout: [ 'vertical' ],
@@ -206,13 +251,46 @@ showModal(id): void {
   }
 }
 
+
+
 handleOk(): void {
  
 }
 
 handleCancel(): void {
-  this.isVisible = false;
+  this.isVisibleModalForm = false;
   this.clearForm();
+}
+
+showModal_ListDentalB(id): void
+{
+  this.isVisibleModal_ViewDentalBranches=true;
+  this.getSucursales(false,id);
+}
+
+getSucursales(reset: boolean = false,id:string=null) {
+  if (reset) {
+    this.pageIndexDB = 1;
+  }
+  if(id!==null){
+    this.OfficeId =id;
+  }
+  this.refreshParametersDB();
+  this.base.getAll<SucursalesViewModel>(DataApi.Sucursales, 'GetAll', this.paramsDB).subscribe(x => {
+    this.sucursales = x.entities;
+    this.totalDB = x.total;
+    this.CargandoDB = false;
+    console.log(x);
+  }, error => {
+    this.CargandoDB = false;
+    console.log(error);
+  });
+}
+
+
+handleCancel_ListDentalB(): void {
+  this.isVisibleModal_ViewDentalBranches = false;
+  this.Cargando=false;
 }
  clearForm(): void{
   this.validateForm.setValue({

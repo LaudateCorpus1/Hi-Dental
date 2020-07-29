@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsuarioFormularioComponent } from '../usuario-formulario/usuario-formulario.component';
 import { PermisosTreeViewComponent } from '../permisos-tree-view/permisos-tree-view.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-usuario-tabs',
@@ -10,9 +11,15 @@ import { PermisosTreeViewComponent } from '../permisos-tree-view/permisos-tree-v
 export class UsuarioTabsComponent implements OnInit {
   @ViewChild('tree', { static: false }) child: PermisosTreeViewComponent;
   @ViewChild('form', { static: false }) form: UsuarioFormularioComponent;
-  constructor() { }
+  UsuarioID: string;
+  textAccion = 'Nuevo usuario';
+  constructor(public  router: Router, public route: ActivatedRoute,) { }
 
   ngOnInit() {
+   this.UsuarioID = this.route.snapshot.paramMap.get('id');
+    if (this.UsuarioID !==  null || this.UsuarioID !== '0' ) {
+       this.textAccion = 'Editando usuario';
+    } 
   }
   MostrarMensajeDeErrorConexionServidor() {
     // tslint:disable-next-line: max-line-length
