@@ -1,0 +1,91 @@
+
+<nz-card>
+<h4>Listado de usuarios</h4>
+  <div class="row m-b-30">
+      <div class="col-lg-10">
+          <div class="d-md-flex">
+              <div class="m-b-10 m-r-20 w-100" >
+                  <nz-input-group  [nzPrefix]="prefixTemplate">
+                      <input class="borderStrong" type="text" (keyup)="getUsuarios()" nz-input placeholder="Nombre | Apellido | Cedula" [(ngModel)]="search">
+                  </nz-input-group>      
+                  <ng-template #prefixTemplate>
+                      <i nz-icon nzType="search" class="opacity-05"></i>
+                  </ng-template>   
+              </div>
+              <div class="m-b-10 m-r-20 d-flex align-items-center borderStrong">
+                  <nz-select  style="min-width: 220px;" class="w-100 "  nzPlaceHolder="Tipo de usuario">
+                      <nz-option nzLabel="todos" nzValue="todos"></nz-option>
+                      <nz-option nzLabel="Doctor" nzValue="Doctor"></nz-option>
+                      <nz-option nzLabel="Secretaria" nzValue="Secretaria"></nz-option>
+                      <nz-option nzLabel="Especialista" nzValue="Especialista"></nz-option>
+                  </nz-select>
+              </div>
+          </div>          
+      </div>
+      <div class="col-lg-2 text-right">
+          <button nz-button nzType="primary" [routerLink]="['usuario/0']">
+              <i nz-icon nzType="plus-circle" theme="outline"></i>
+              <span>Nuevo usuario</span>
+          </button>
+      </div>
+  </div>
+  <nz-spin nzTip='Loading...' [nzSpinning]="Cargando" [nzDelay]="500">
+    <nz-table #ordersListTable [nzData]="usuarios" 
+  
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+
+    [nzFrontPagination]="false"
+    nzShowSizeChanger
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="getUsuarios()"
+    (nzPageSizeChange)="getUsuarios(false)"
+    >
+    <thead  >
+        <tr>
+            <th  nzSortKey="name">Nombre</th>
+            <th  nzSortKey="email">Email</th>
+            <th  nzSortKey="typeuser">Tipo de usuario</th>
+            <th  nzSortKey="status">Creado</th>
+            <th  nzSortKey="status">Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+         <tr *ngFor="let item of ordersListTable.data ">
+            <td>
+                <div class="d-flex align-items-center">
+                    <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="'assets/images/avatars/thumb-7.jpg'"></nz-avatar>
+                    <h6 class="m-l-10 m-b-0">{{item.names +" "+ item.lastNames}}</h6>
+                </div>
+            </td>
+            <td>{{item.userName}}</td>
+            <td>tipo de usuario</td>
+
+            <td>{{item.createAt | date}}</td>
+            <td>
+                <nz-badge *ngIf="item.state == 0" nzStatus="success"></nz-badge>
+                <nz-badge *ngIf="item.state == 1" nzStatus="error"></nz-badge>
+                <nz-badge *ngIf="item.state == 2"  nzStatus="processing"></nz-badge> 
+                <span class="text-capitalize" *ngIf="item.state==0">Activo</span>
+                <span class="text-capitalize" *ngIf="item.state==1">Eliminado</span>
+                <span class="text-capitalize" *ngIf="item.state==2">Bloqueado</span>
+            </td>
+            <td class="text-md-right">
+            
+                <button class="m-r-10 " routerLink="usuario/{{item.id}}"  nz-button style="background-color: #FCF3CF !important;"  nzGhost>
+                  <i nz-icon nzType="edit" style=" color: #F1C40F !important;" theme="fill"></i>
+                </button>
+                <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?" (nzOnConfirm)="deleteUsuario(item.id)" nzGhost>
+                  <i nz-icon nzType="delete" theme="fill"></i>
+                </button>
+            </td>
+        </tr> 
+    </tbody>
+</nz-table>
+
+</nz-spin>
+
+
+</nz-card>

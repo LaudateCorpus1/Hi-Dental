@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,25 +11,82 @@ export class BaseService {
   baseUrl: string;
 
   dataApiRootMap: { [api: string]: string } = {
-    '1': 'api/Usuario',
-    '2': 'api/Paciente',
-    '3': 'api/Paciente',
+    '1': 'api/Auth',
+    '2': 'api/user',
+    '3': 'api/PrincipalOffice',
+    '4': 'api/DentalBranch',
+    '5': 'api/ComboBox',
+
   };
-  constructor(_http: HttpClient, @Inject('BASE_URL') _baseUrl: string) {
+  constructor(_http: HttpClient) {
     this.http = _http;
-    this.baseUrl = _baseUrl;
-  }
-
-  public GetOne<T>(api: DataApi, Method: string, id: number): Observable<RespuestaContenido<T>> {
-    // tslint:disable-next-line: no-use-before-declare
-    const request = new RequestContenido<T>();
-    request.parametros = { '@Id': id };
-    return this.http
-      .post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method, request);
-
+    this.baseUrl = 'http://10.0.0.6:45455/';
   }
 
 
+ // ******************************NEW METHODS*************************************
+  // Get data for passed parameters or item containing filters
+public getAll<T>(api: DataApi, Method: string,  item?: any, apiParms?: HttpParams): Observable<any> {
+  if (!apiParms) { apiParms = new HttpParams(); }
+  if (item) {
+      const keys = Object.keys(item) as Array<keyof T>;
+      for (const key of keys) {
+          apiParms = apiParms.append(key.toString(), item[key].toString());
+      }
+  }
+  // Call generic method of data service
+  // tslint:disable-next-line: max-line-length
+  return this.http.get<T>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method+ '?'+ apiParms);
+
+}
+
+public DoPost<T>(api: DataApi, Method: string, parametros: any): Observable<T> {
+  // tslint:disable-next-line: no-use-before-declare
+  return this.http.post<T>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method, parametros);
+}
+public DoPut<T>(api: DataApi, Method: string, parametros: any): Observable<T> {
+  // tslint:disable-next-line: no-use-before-declare
+  return this.http.put<T>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method, parametros);
+}
+public DoDelete(api: DataApi, Method: string,item?: any, apiParms?: HttpParams): Observable<any> {
+  if (!apiParms) { apiParms = new HttpParams(); }
+  if (item) {
+      const keys = Object.keys(item) as Array<keyof any>;
+      for (const key of keys) {
+          apiParms = apiParms.append(key.toString(), item[key].toString());
+      }
+  }
+  // tslint:disable-next-line: no-use-before-declare
+  return this.http.delete(this.baseUrl + this.dataApiRootMap[api]+ '/' + Method+ '?'+ apiParms );
+}
+
+public GetOne<T>(api: DataApi, Method: string, item?: any, apiParms?: HttpParams): Observable<any> {
+  if (!apiParms) { apiParms = new HttpParams(); }
+  if (item) {
+      const keys = Object.keys(item) as Array<keyof any>;
+      for (const key of keys) {
+          apiParms = apiParms.append(key.toString(), item[key].toString());
+      }
+  }
+  // tslint:disable-next-line: no-use-before-declare
+  return this.http
+    .get<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method + '?'+ apiParms);
+
+}
+  // ******************************NEW METHODS*************************************
+
+
+
+
+
+
+
+
+
+public GetAllByTerm<T>(api: DataApi, Method: string, termino: string): Observable<RespuestaContenido<T>>
+{
+  return this.http.get<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method + '?termino=' + termino);
+}
   public GetAll<T>(api: DataApi, Method: string, parametros: any = {}): Observable<RespuestaContenido<T>> {
     // tslint:disable-next-line: no-use-before-declare
     const request = new RequestContenido<T>();
@@ -39,10 +96,6 @@ export class BaseService {
   }
 
 
-  //public async GetAllPromise<T>(api: DataApi, Method: string): Promise<RespuestaContenido<T>> {
-  //    return await this.http
-  //        .get<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method).toPromise()
-  //}
 
 
   // tslint:disable-next-line: max-line-length
@@ -60,29 +113,8 @@ export class BaseService {
   }
 
 
-  // public async GetAllWithPaginationPromise<T>(api: DataApi, Method: string, Columna: string, PaginaNo: number = 1, PaginaSize: number = 10, OrderASC: boolean = true, parametros: any = {}): Promise<RespuestaContenido<T>> {
-  //    let request = new RequestContenido<T>();
-  //    request.parametros = parametros;
-  //    request.pagina = new Paginacion();
-  //    request.pagina.paginaNo = PaginaNo;
-  //    request.pagina.paginaSize = PaginaSize;
-  //    request.pagina.ordenAsc = OrderASC;
-  //    request.pagina.ordenColumna = Columna;
-  //    return await this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request).toPromise();
-  //}
 
 
-  public DoPost<T>(api: DataApi, Method: string, parametros: any): Observable<RespuestaContenido<T>> {
-    // tslint:disable-next-line: no-use-before-declare
-    const request = new RequestContenido<T>();
-    request.parametros = parametros;
-    return this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method, request);
-  }
-   
-  public GetAllByTerm<T>(api: DataApi, Method: string, termino: string): Observable<RespuestaContenido<T>>
-  {
-    return this.http.get<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method + '?termino=' + termino);
-  }
 
   public Get<T>(api: DataApi, Method: string, parametros: any ): Observable<SingleResponse<T>> {
 
@@ -163,7 +195,10 @@ export class Paginacion {
   public ordenAsc: boolean;
   public ordenColumna: string;
 }
-
+export class PaginacionRequest {
+  Page:number;
+  QuantityByPage:number;
+}
 export class SingleResponse<T>
 {
   ok: boolean;
@@ -173,10 +208,10 @@ export class SingleResponse<T>
 
 
 export class Combobox {
-  nombre: string;
-  grupo: string;
+  title: string;
+  Group: string;
   grupoID: string;
-  codigo: number;
+  code: string;
   //disabled: boolean
 }
 
@@ -185,7 +220,9 @@ export class Combobox {
 
 
 export enum DataApi {
-  Usuarios = 1,
-  FuncionAdmin = 2,
-  ComboBox = 3
+  Auth = 1,
+  Usuarios = 2,
+  Oficinas = 3,
+  Sucursales = 4,
+  ComboBox = 5
 }

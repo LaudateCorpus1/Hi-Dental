@@ -5,6 +5,8 @@ using DatabaseLayer.Models.Users;
 using DatabaseLayer.Persistence;
 using DatabaseLayer.Users.ViewModels;
 using DatabaseLayer.ViewModels.Users;
+using DataBaseLayer.Enums;
+using DataBaseLayer.Models.Users;
 using DataBaseLayer.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +14,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,18 +29,21 @@ namespace Auth.Services
         private readonly SignInManager<User> _signInManager;
         private readonly AuthSetting _settings;
         private readonly ApplicationDbContext _dbContext;
+        private readonly AppSetting _appSetting;
 
         public AuthService(UserManager<User> userManager
             , SignInManager<User> signInManager,
             IOptions<AuthSetting> options,
-            ApplicationDbContext dbContext)
+            ApplicationDbContext dbContext,
+            IOptions<AppSetting> optionsApp)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _settings = options.Value;
             _dbContext = dbContext;
+            _appSetting = optionsApp.Value;
         }
-        public async Task<AuthResult> BuildToken(UserViewModel model)
+        public async Task<AuthResult> BuildToken(UserLoginViewModel model)
         {
             var claims = await GetUserClaims(model.UserName);
 
@@ -48,13 +55,14 @@ namespace Auth.Services
             audience: _settings.ValidAudience,
             claims: claims,
             signingCredentials: creds);
+            var permissions = await GetUserPermissionAsync(model.UserName);
             var authResult = new AuthResult
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = DateTime.Today,
                 Expire = false,
-                Permissions = await GetUserPermissionAsync(model.UserName),
-                UserName = model.UserName
+                Permissions = permissions,
+                User = model
             };
             return authResult;
         }
@@ -98,32 +106,50 @@ namespace Auth.Services
                     ParentId = item.Role.ParentId,
                     UpdateAt = item.Role.UpdateAt,
                     Name = item.Role.Name
-
                 };
                 result.Add(res);
             }
             return result;
         }
+       
 
         public async Task<bool> Register(CreateUserViewModel model)
         {
-            var result = await _userManager.CreateAsync(new User
+            var user = new User
             {
                 UserName = model.UserName,
                 Email = model.UserName,
                 Names = model.Names,
                 LastNames = model.LastNames,
                 CreatedBy = model.CreatedBy,
-                CreationType = model.TypeOfCreation
-            }, model.Password);
+                CreationType = model.TypeOfCreation,
+                DentalBranchId = model.DentalBranchId.Value
+            };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (model.TypeOfCreation == TypeOfCreation.ByApp)
+            {
+                var userType = await _dbContext.UserTypes.FirstOrDefaultAsync(x => x.Name == _appSetting.DefautlUserType);//change
+                await AddUserDetailAndTypeByDefault(new UserDetail { UserId = user.Id, UserTypeId = userType.Id });
+            }
             return result.Succeeded;
         }
 
-        public async Task<bool> SignIn(UserViewModel model)
+
+        private async Task AddUserDetailAndTypeByDefault(UserDetail model)
+        {
+            _dbContext.UserDetails.Add(model);
+            await _dbContext.SaveChangesAsync();
+        }
+
+
+        public async Task<User> SignIn(UserLoginViewModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user == null) return null;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-            return result.Succeeded;
+            return result.Succeeded ? user : null;
         }
+
     }
+
 }

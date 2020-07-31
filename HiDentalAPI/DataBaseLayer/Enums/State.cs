@@ -8,8 +8,8 @@ namespace DatabaseLayer.Enums
         Removed,
         Blocked,
 
-        #region For Movements
-        Payment
+        #region Payments 
+        IsPayment ///TODO: AGREGAR ESTO AL COMBO BOX UN LISTADO
         #endregion
     }
 

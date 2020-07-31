@@ -28,7 +28,8 @@ namespace HiDentalAPI
             services.ConfigureDbContexts(Configuration);
             services.AddSettings(Configuration);
             services.ImplementServices();
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDocumentation();
             services.ConfigureAutoMapper();
 
@@ -41,7 +42,7 @@ namespace HiDentalAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseAuthentication();
             app.UseCors(nameof(Startup));
             app.UseStaticFiles();

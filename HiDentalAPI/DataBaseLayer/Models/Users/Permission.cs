@@ -1,9 +1,9 @@
 ﻿using DatabaseLayer.Enums;
-using DataBaseLayer.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace DataBaseLayer.Models.Users
 {
@@ -17,6 +17,7 @@ namespace DataBaseLayer.Models.Users
         public bool HasChild { get; set; }
         public bool IsExpanded { get; set; }
         public string ParentId { get; set; }
+        [JsonIgnore]
         public ICollection<UserPermission> Users { get; set; }
 
     }

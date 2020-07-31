@@ -10,7 +10,7 @@ namespace DatabaseLayer.Models
         public bool StateCharge { get; set; } //Pagado o Pendiente
 
         public Guid PaymentPlanID { get; set; }
-        public PaymentPlan Payment_plan { get; set; }
+        public PaymentPlan PaymentPlan { get; set; }
 
 
     }

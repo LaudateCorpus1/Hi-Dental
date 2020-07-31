@@ -3,6 +3,8 @@ using DatabaseLayer.Models.Users;
 using DatabaseLayer.Users.ViewModels;
 using DatabaseLayer.ViewModels.Users;
 using DataBaseLayer.Models;
+using DataBaseLayer.Models.Users;
+using DataBaseLayer.ViewModels.Users;
 
 namespace DataBaseLayer.MappingProfiles
 {
@@ -10,8 +12,14 @@ namespace DataBaseLayer.MappingProfiles
     {
         public SharedMap()
         {
-            CreateMap<CreateUserViewModel, User>().ReverseMap();
-            CreateMap<UserPermission, PermissionViewModel>().ReverseMap();
+            CreateMap<User, CreateUserViewModel> ().ReverseMap();
+            CreateMap<Permission, PermissionViewModel>().ReverseMap();
+            CreateMap<User, UserViewModel>().ReverseMap();
+            CreateMap<User, UserLoginViewModel>().ReverseMap();
+            CreateMap<UserDetail, UserDetailViewModel>().ReverseMap();
+            CreateMap<UserType, UserTypeViewModel>().ReverseMap();
+            CreateMap<Permission, PermissionViewModel>().ReverseMap();
+
         }
     }
 }

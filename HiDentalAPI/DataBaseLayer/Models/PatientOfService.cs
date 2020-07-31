@@ -16,7 +16,6 @@ namespace DatabaseLayer.Models
         public User User { get; set; }
 
         public Guid PacienteId { get; set; }
-        public Patient Paciente { get; set; }
 
         public virtual ICollection<Service> Services { get; set; }
     }

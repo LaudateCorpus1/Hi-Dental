@@ -65,7 +65,7 @@ namespace HiDentalAPI.Extensions
 
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(SharedMap));
+            services.AddAutoMapper(typeof(SharedMap),typeof(ComboMap));
         }
 
         public static void AddSettings(this IServiceCollection services, IConfiguration configuration)

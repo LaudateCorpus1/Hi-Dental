@@ -10,7 +10,5 @@ namespace DatabaseLayer.Models
         public string Cost { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<Patient> Patients { get; set; }
-
     }
 }
