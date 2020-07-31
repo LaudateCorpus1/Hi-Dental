@@ -30,7 +30,7 @@
     "chartist": "^0.11.0",
     "core-js": "^2.5.7",
     "handlebars": "^4.3.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "ng-chartist": "^1.1.1",
     "ng-chartjs": "0.0.7",
     "ng-zorro-antd": "^8.0.3",
