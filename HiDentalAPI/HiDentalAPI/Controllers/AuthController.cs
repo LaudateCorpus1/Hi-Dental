@@ -34,7 +34,7 @@ namespace HiDentalAPI.Controllers
                 return Ok(await _service.AuthService.BuildToken(new UserLoginViewModel
                 {
                     UserName = result.UserName,
-                    Password = model.Password,
+                    Password = string.Empty,
                     DentalBranchId = result.DentalBranchId,
                     Id = result.Id
                 }));
