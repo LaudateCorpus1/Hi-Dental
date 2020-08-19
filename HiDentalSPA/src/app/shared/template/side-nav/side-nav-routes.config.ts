@@ -27,7 +27,7 @@ export const ROUTES: SideNavInterface[] = [
         ]
     },
     {
-        path: '',
+        path: '/agenda',
         title: 'Citas',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -37,7 +37,7 @@ export const ROUTES: SideNavInterface[] = [
         ]
     },
     {
-        path: '',
+        path: '/pacientes',
         title: 'Pacientes',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -53,7 +53,6 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'file-search',
         submenu: [
-      
         ]
     },
     {

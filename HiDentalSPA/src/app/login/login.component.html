@@ -6,7 +6,7 @@
               <div class="col-md-7 col-lg-5 m-h-auto">
                   <nz-card class="m-b-100 shadow-lg">
                       <div class="d-flex align-items-center justify-content-between m-b-30">
-                          <img class="img-fluid" alt="" src="assets/images/logo/logo.png">
+                          <img class="img-fluid" alt="" width="150" src="assets/images/logo/logoHidental.png">
                           <h2 class="m-b-0">Login</h2>
                       </div>
                       <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
@@ -33,7 +33,7 @@
                               <nz-form-control>
                                   <div class="d-flex align-items-center justify-content-between">
                                       <span class="font-size-13 text-muted">No tienes una cuenta? <a class="small" [routerLink]="['/authentication/sign-up-1']"> Contactanos</a></span>
-                                      <button nz-button class="login-form-button" [nzType]="'primary'">Entrar</button>
+                                      <button nz-button class="login-form-button"  [nzLoading]="loading" [nzType]="'primary'">Entrar</button>
                                   </div>
                               </nz-form-control>
                           </nz-form-item>

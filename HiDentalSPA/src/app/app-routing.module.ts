@@ -7,6 +7,7 @@ import { FullLayout_ROUTES } from "./shared/routes/full-layout.routes";
 import { CommonLayout_ROUTES } from "./shared/routes/common-layout.routes";
 import { LayoutComponent } from './layouts/layout.component';
 import { Layout_ROUTES } from './layouts/layout.routes';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 const appRoutes: Routes = [
     {
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
     { 
         path: '', 
         component: LayoutComponent,
+        canActivate:[AuthGuard],
         children: Layout_ROUTES 
     },
   

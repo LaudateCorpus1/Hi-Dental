@@ -5,6 +5,7 @@ import { TableService } from 'src/app/shared/services/table.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { error } from 'protractor';
 import { Oficina } from 'src/app/shared/Models/Oficinas/oficinas';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-sucursal-listado',
@@ -13,7 +14,12 @@ import { Oficina } from 'src/app/shared/Models/Oficinas/oficinas';
 })
 export class SucursalListadoComponent implements OnInit {
 
-  constructor(private tableSvc: TableService, public base: BaseService, private fb: FormBuilder) {
+  constructor(
+    private tableSvc: TableService,
+    public base: BaseService,
+    private fb: FormBuilder,
+    private notification: NzNotificationService
+    ) {
   }
   comboboxOficinas: Combobox[] = [];
   textTitleModal = 'Nueva sucursal';
@@ -47,7 +53,6 @@ export class SucursalListadoComponent implements OnInit {
   ngOnInit(): void {
 
     this.CreateForm();
-
     this.getComboBoxOficinas();
     this.refreshParameters();
     this.getSucursales();
@@ -85,14 +90,14 @@ export class SucursalListadoComponent implements OnInit {
     ).subscribe(x => {
       this.loadingButton = false;
       if (x) {
-        console.log(x)
+        this.notification.success('Sucursal', 'Se ha guardado correctamente', {});
         this.handleCancel();
         this.getSucursales();
       }
 
     }, error => {
       this.loadingButton = false;
-
+      this.notification.error('Sucursal', 'Ha ocurrido un error!', {});
       console.log(error);
     });
   }
@@ -112,12 +117,13 @@ export class SucursalListadoComponent implements OnInit {
         this.loadingButton = false;
         if (x) {
           this.handleCancel();
+          this.notification.success('Sucursal', 'Se ha actualizado correctamente', {});
           this.getSucursales();
         }
 
       }, error => {
         this.loadingButton = false;
-
+        this.notification.error('Sucursal', 'Ha ocurrido un error!', {});
         console.log(error);
       })
   }
@@ -141,10 +147,11 @@ export class SucursalListadoComponent implements OnInit {
     console.log(idsucursal);
     this.base.DoDelete(DataApi.Sucursales, 'Remove', { 'id': idsucursal }).subscribe(x => {
       if (x) {
+        this.notification.success('Sucursal', 'Se ha eliminado correctamente', {});
         this.getSucursales();
       }
     }, error => {
-      console.log(error);
+      this.notification.error('Sucursal', 'Ha ocurrido un error!', {});
     });
 
   }

@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { ThemeConstantService } from '../../services/theme-constant.service';
+import { AuthenticationService } from '../../services/Autentication/authentication.service';
+import { UserAuthViewModel } from '../../Models/usuarios/usuarios';
 
 @Component({
     selector: 'app-header',
-    templateUrl: './header.component.html'
+    templateUrl: './header.component.html',
+    providers:[AuthenticationService]
 })
 
 export class HeaderComponent{
-
-    constructor( private themeService: ThemeConstantService) {}
+     currentUser:UserAuthViewModel;
+    constructor( private themeService: ThemeConstantService,    public authenticationService: AuthenticationService) {}
 
     searchVisible : boolean = false;
     quickViewVisible : boolean = false;
@@ -45,6 +48,8 @@ export class HeaderComponent{
     ngOnInit(): void {
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
+        this.currentUser=JSON.parse(localStorage.getItem('currentUser'));
+        console.log(this.currentUser);
     }
 
     toggleFold() {
@@ -65,5 +70,8 @@ export class HeaderComponent{
 
     quickViewToggle(): void {
         this.quickViewVisible = !this.quickViewVisible;
+    }
+    cerrarSesion(){
+        this.authenticationService.logout();
     }
 }

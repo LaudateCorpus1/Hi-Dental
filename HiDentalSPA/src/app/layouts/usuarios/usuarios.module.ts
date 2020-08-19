@@ -14,28 +14,28 @@ import { UsuarioFormularioComponent } from './usuario-formulario/usuario-formula
 
 @NgModule({
   imports: [
-  
+
     CommonModule,
-  
+
     SharedModule,
     UsuariosRoutingModule,
     NgZorroAntdModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
 
- 
+
   ],
 
-  declarations: [UsuariosComponent, UsuarioListadoComponent, UsuarioTabsComponent,UsuarioFormularioComponent,PermisosTreeViewComponent],
+  declarations: [UsuariosComponent, UsuarioListadoComponent, UsuarioTabsComponent, UsuarioFormularioComponent, PermisosTreeViewComponent],
       providers: [
-        { 
+        {
             provide: NZ_I18N,
-            useValue: en_US, 
+            useValue: en_US,
         },
         TableService,
         ThemeConstantService
     ],
     exports: [
-      
+
   ],
 
 })

@@ -1,9 +1,9 @@
 <nz-input-group [nzPrefix]="prefixTemplate">
-    <input type="text" nz-input placeholder="Search" [(ngModel)]="search">
+    <input type="text" nz-input placeholder="" [(ngModel)]="search">
 </nz-input-group>
 <div class="m-t-30">
-    <ng-container *ngFor="let item of files | search:'title':search as count ;  let i=index">
-        <h5 class="m-b-20"  *ngIf="i < 1 && !count.length == 0">Files</h5>
+    <ng-container *ngFor="let item of files | search:'title':search as count;  let i=index">
+        <h5 class="m-b-20"  *ngIf="i < 1 && !count.length == 0">Pacientes</h5>
         <div class="d-flex m-b-30">
             <nz-avatar [nzIcon]="item.icon" [ngClass]="item.color"></nz-avatar>
             <div class="m-l-15">

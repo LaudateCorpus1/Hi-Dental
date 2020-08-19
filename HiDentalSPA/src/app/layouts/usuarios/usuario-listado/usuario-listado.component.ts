@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableService } from 'src/app/shared/services/table.service';
 import { BaseService, DataApi } from 'src/app/shared/services/HTTPClient/base.service';
 import { Usuarios, UserFilterParams, UsuariosViewModel } from 'src/app/shared/Models/usuarios/usuarios';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-usuario-listado',
@@ -10,11 +11,14 @@ import { Usuarios, UserFilterParams, UsuariosViewModel } from 'src/app/shared/Mo
 })
 export class UsuarioListadoComponent implements OnInit {
 
-  constructor(private tableSvc : TableService,public base:BaseService) {
+  constructor(
+    private tableSvc: TableService,
+    public base: BaseService,
+    private notification: NzNotificationService) {
   }
-  search : any;
+  search: any;
   displayData = [];
-  usuarios: UsuariosViewModel[]= [];
+  usuarios: UsuariosViewModel[] = [];
   Cargando = true;
   ordersList = [
       {
@@ -100,13 +104,13 @@ export class UsuarioListadoComponent implements OnInit {
           checked : false
       },
 
-  ]
+  ];
 
   pageIndex = 1;
   pageSize = 7;
   total = 0;
 
-  readonly params= new  UserFilterParams();
+  readonly params = new  UserFilterParams();
 
 
 
@@ -136,7 +140,7 @@ export class UsuarioListadoComponent implements OnInit {
       this.usuarios = $event;
     // this.refreshStatus();
   }
-getUsuarios(reset:boolean=false){
+getUsuarios(reset: boolean = false){
   if (reset) {
     this.pageIndex = 1;
   }
@@ -166,11 +170,13 @@ deleteUsuario(idusuario) {
   this.Cargando = true;
   this.base.DoDelete(DataApi.Usuarios, 'Remove', { 'id': idusuario }).subscribe(x => {
     if (x) {
+      this.notification.success('Usuario', 'usuario eliminado correctamente',{});
       this.getUsuarios();
     }
     this.Cargando = false;
   }, error => {
     console.log(error);
+    this.notification.error('Usuario', 'Ha ocurrido un error!', {});
     this.Cargando = false;
   });
 

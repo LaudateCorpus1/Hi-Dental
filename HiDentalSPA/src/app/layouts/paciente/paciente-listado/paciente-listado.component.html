@@ -1,0 +1,170 @@
+
+<nz-card>
+  <h4>Listado de pacientes</h4>
+    <div class="row m-b-30">
+        <div class="col-lg-10">
+            <div class="d-md-flex">
+                <div class="m-b-10 m-r-20 w-100" >
+                    <nz-input-group  [nzPrefix]="prefixTemplate">
+                        <input class="borderStrong" type="text" (keyup)="getPacientes()" nz-input placeholder="Nombre | Apellido | Cedula" [(ngModel)]="search">
+                    </nz-input-group>      
+                    <ng-template #prefixTemplate>
+                        <i nz-icon nzType="search" class="opacity-05"></i>
+                    </ng-template>   
+                </div>
+                <div class="m-b-10 m-r-20 d-flex align-items-center borderStrong">
+                  
+                </div>
+            </div>          
+        </div>
+        <div class="col-lg-2 text-right">
+            <button nz-button nzType="primary" [routerLink]="['paciente/0']">
+                <i nz-icon nzType="plus-circle" theme="outline"></i>
+                <span>Nuevo paciente</span>
+            </button>
+        </div>
+    </div>
+    <nz-spin nzTip='Loading...' [nzSpinning]="false" [nzDelay]="500">
+      <nz-table #ordersListTable [nzData]="['data']" 
+    
+      (nzCurrentPageDataChange)="currentPageDataChange($event)"
+      [nzFrontPagination]="false"
+      nzShowSizeChanger
+      [nzTotal]="total"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="getPacientes()"
+      (nzPageSizeChange)="getPacientes(false)"
+      >
+      <thead>
+          <tr>
+            <th  nzSortKey="name">Id</th>
+             <th  nzSortKey="name">Foto</th>
+              <th  nzSortKey="email">Apellidos</th>
+              <th  nzSortKey="typeuser">Nombres</th>
+              <th  nzSortKey="status">Cedula</th>
+              <th  nzSortKey="status">Telefono</th>
+              <th class="text-md-right">Acciones</th>
+          </tr>
+      </thead>
+      <tbody>
+      
+          <tr>
+            <td ><b>2</b></td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="'assets/images/avatars/thumb-7.jpg'"></nz-avatar>
+                </div>
+            </td>
+            <td>Perez Montilla</td>
+            <td>Juan</td>
+            <td>22001291293</td>
+            <td>22221211212</td>
+            <td class="text-md-right">
+                <button class="m-r-10 " routerLink="paciente/{{2}}" nzType="primary"  nz-button  nzGhost>
+                    Continuar con el registro <i nz-icon nzType="edit" theme="fill"></i>
+                   </button>
+               <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?"  nzGhost>
+                 <i nz-icon nzType="delete" theme="fill"></i>
+               </button>
+           </td>
+         </tr> 
+      
+     
+         <tr>
+            <td ><b>2</b></td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="'assets/images/avatars/thumb-7.jpg'"></nz-avatar>
+                </div>
+            </td>
+            <td>Perez Montilla</td>
+            <td>Juan</td>
+            <td>22001291293</td>
+            <td>22221211212</td>
+            <td class="text-md-right">
+           
+               <button class="m-r-10 " routerLink="paciente/{{2}}"  nz-button style="background-color: #FCF3CF !important;"  nzGhost>
+                 <i nz-icon nzType="edit" style=" color: #F1C40F !important;" theme="fill"></i>
+               </button>
+                      
+             
+               <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?"  nzGhost>
+                 <i nz-icon nzType="delete" theme="fill"></i>
+               </button>
+           </td>
+         </tr> 
+         <tr>
+            <td ><b>2</b></td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="'assets/images/avatars/thumb-7.jpg'"></nz-avatar>
+                </div>
+            </td>
+            <td>Perez Montilla</td>
+            <td>Juan</td>
+            <td>22001291293</td>
+            <td>22221211212</td>
+            <td class="text-md-right">
+           
+               <button class="m-r-10 " routerLink="paciente/{{2}}"  nz-button style="background-color: #FCF3CF !important;"  nzGhost>
+                 <i nz-icon nzType="edit" style=" color: #F1C40F !important;" theme="fill"></i>
+               </button>
+                      
+             
+               <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?"  nzGhost>
+                 <i nz-icon nzType="delete" theme="fill"></i>
+               </button>
+           </td>
+         </tr> 
+         <tr>
+            <td ><b>2</b></td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="'assets/images/avatars/thumb-7.jpg'"></nz-avatar>
+                </div>
+            </td>
+            <td>Perez Montilla</td>
+            <td>Juan</td>
+            <td>22001291293</td>
+            <td>22221211212</td>
+            <td class="text-md-right">
+                <button class="m-r-10 " routerLink="paciente/{{2}}" nzType="primary"  nz-button  nzGhost>
+                    Continuar con el registro <i nz-icon nzType="edit" theme="fill"></i>
+                   </button>
+               <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?"  nzGhost>
+                 <i nz-icon nzType="delete" theme="fill"></i>
+               </button>
+           </td>
+         </tr> 
+         <tr>
+            <td ><b>2</b></td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="'assets/images/avatars/thumb-7.jpg'"></nz-avatar>
+                </div>
+            </td>
+            <td>Perez Montilla</td>
+            <td>Juan</td>
+            <td>22001291293</td>
+            <td>22221211212</td>
+            <td class="text-md-right">
+           
+               <button class="m-r-10 " routerLink="paciente/{{2}}"  nz-button style="background-color: #FCF3CF !important;"  nzGhost>
+                 <i nz-icon nzType="edit" style=" color: #F1C40F !important;" theme="fill"></i>
+               </button>
+             
+             
+               <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?"  nzGhost>
+                 <i nz-icon nzType="delete" theme="fill"></i>
+               </button>
+           </td>
+         </tr> 
+      </tbody>
+  </nz-table>
+  
+  </nz-spin>
+
+  
+  </nz-card>
+  
