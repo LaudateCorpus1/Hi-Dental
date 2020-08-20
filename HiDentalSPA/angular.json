@@ -28,7 +28,10 @@
                           }
                       ],
                       "styles": [
-                        "src/styles.scss" 
+                        "node_modules/@fullcalendar/list/main.css" ,
+                        "node_modules/@fullcalendar/daygrid/main.css",
+                        "node_modules/@fullcalendar/timegrid/main.css",
+                        "src/styles.scss"
                       ],
                       "scripts": [
                           "node_modules/jquery/dist/jquery.js",

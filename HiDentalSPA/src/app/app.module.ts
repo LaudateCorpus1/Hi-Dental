@@ -15,8 +15,10 @@ import { FullLayoutComponent } from './layouts/full-layout/full-layout.component
 import { NgChartjsModule } from 'ng-chartjs';
 import { ThemeConstantService } from './shared/services/theme-constant.service';
 import { LayoutComponent } from './layouts/layout.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 registerLocaleData(en);
+
 
 @NgModule({
     declarations: [
@@ -31,7 +33,8 @@ registerLocaleData(en);
         AppRoutingModule,
         TemplateModule,
         SharedModule,
-        NgChartjsModule
+        NgChartjsModule,
+        FullCalendarModule
     ],
     providers: [
         { 
