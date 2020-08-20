@@ -9,8 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./usuario-tabs.component.css']
 })
 export class UsuarioTabsComponent implements OnInit {
-  @ViewChild('tree', { static: false }) child: PermisosTreeViewComponent;
-  @ViewChild('form', { static: false }) form: UsuarioFormularioComponent;
+  @ViewChild('tree') child: PermisosTreeViewComponent;
+  @ViewChild('form') form: UsuarioFormularioComponent;
   UsuarioID: string;
   textAccion = 'Nuevo usuario';
   constructor(public  router: Router, public route: ActivatedRoute,) { }
