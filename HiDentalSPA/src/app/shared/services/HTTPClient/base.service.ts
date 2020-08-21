@@ -17,9 +17,10 @@ export class BaseService {
     '4': 'api/DentalBranch',
     '5': 'api/ComboBox',
   };
+  // tslint:disable-next-line: variable-name
   constructor(_http: HttpClient) {
     this.http = _http;
-    this.baseUrl = 'http://10.0.0.6:45457/';
+    this.baseUrl = 'http://10.0.0.3:45455/';
   }
 
 

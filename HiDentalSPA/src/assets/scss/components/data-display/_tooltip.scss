@@ -30,7 +30,6 @@
     padding-right: $tooltip-placement-gutter;
     
     .ant-tooltip-arrow {
-        right: 3px;
         border-width: 5px 0 5px 5px;
         border-left-color: rgba(0, 0, 0, 0.75);
     }
@@ -42,7 +41,6 @@
     padding-top: $tooltip-placement-gutter;
 
     .ant-tooltip-arrow {
-        top: 3px;
         border-width: 0 5px 5px;
         border-bottom-color: $tooltip-bg;
     }
@@ -54,7 +52,7 @@
     padding-left: $tooltip-placement-gutter;
 
     .ant-tooltip-arrow {
-        left: 3px;
+        left: -5px;
         border-width: 5px 5px 5px 0;
         border-right-color: $tooltip-bg;
     }
@@ -66,8 +64,7 @@
     padding-bottom: $tooltip-placement-gutter;
 
     .ant-tooltip-arrow {
-        bottom: 3px;
         border-width: 5px 5px 0;
-        border-top-color: rgba(0, 0, 0, 0.75);
+        border-top-color: $tooltip-bg;
     }
 }

@@ -1,21 +1,19 @@
 .ant-input {
-    font-family: $font-family-base;
     padding: $input-padding-y $input-padding-x;
     line-height: $input-line-height;
     color: $input-color;
     height: auto;
     border: 1px solid $input-border-color;
+    border-radius: $input-border-radius;
 
-    &:hover,
-    &:focus {
-
-        &:not([disabled]) {
-            border-color: $brand-primary;
-        }
+    &.ant-input:hover {
+        border-color: $input-theme-color;
     }
 
-    &:focus {
-        box-shadow: 0 0 0 2px rgba($brand-primary,.2)
+    &:focus,
+    .ant-input-focused {
+        border-color: $input-theme-color;
+        box-shadow: 0 0 0 2px rgba($input-theme-color,.2)
     }
 
     &.ant-input-disabled {
@@ -49,33 +47,6 @@
         color: $input-color-placeholder;
     }
 }
-
-.ant-input-disabled {
-    background-color: $input-bg-disabled;
-    cursor: not-allowed;
-
-    &:hover {
-        border-color: $input-border-color;
-    }
-}
-
-.ant-input-lg {
-    padding: $input-padding-y-lg $input-padding-x-lg;
-    height: auto;
-    font-size: $input-font-size-lg;
-
-    &~.ant-input-prefix,
-    &~.ant-input-suffix {
-
-        &:not(.anticon) {
-
-            .ant-input-search-button {
-                height: $select-height-lg;
-            }
-        }
-    }
-}    
-
 .ant-input-sm {
     padding: $input-padding-y-sm $input-padding-x-sm;
     height: auto;
@@ -92,31 +63,65 @@
     }
 }    
 
+.ant-input-lg {
+    padding: $input-padding-y-lg $input-padding-x-lg;
+    height: auto;
+    font-size: $input-font-size-lg;
+
+    &~.ant-input-prefix,
+    &~.ant-input-suffix {
+
+        &:not(.anticon) {
+
+            .ant-input-search-button {
+                height: $select-height-lg;
+            }
+        }
+    }
+}   
+
+.ant-input-affix-wrapper {
+    padding: $input-padding-y $input-padding-x;
+    color: $input-color;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    background-color: $white;
+    border: 1px solid $border-color;
+    border-radius: $input-border-radius;
+
+    &:hover {
+        border-color: $input-theme-color;
+    }
+
+    &:focus, 
+    &.ant-input-affix-wrapper-focused {
+        border-color: $input-theme-color;
+        box-shadow: 0 0 0 2px rgba($input-theme-color, 0.2);
+    }
+}
+
+.ant-input-affix-wrapper-sm {
+    padding: $input-padding-y-sm $input-padding-x-sm;
+}
+
+.ant-input-affix-wrapper-lg {
+    padding: $input-padding-y-lg $input-padding-x-lg;
+    
+    .ant-input-prefix,
+    .ant-input-suffix {
+        font-size: $input-font-size-lg;
+    }
+}
+
 .ant-input-group-addon {
     border: 1px solid $input-border-color;
     background-color: $gray-lightest;
     color: $body-color;
-}
-
-.ant-input-affix-wrapper {
-    font-family: $font-family-base;
-    line-height: $input-line-height;
     font-size: $font-size-base;
-
-    .ant-input-prefix,
-    .ant-input-suffix {
-        color: $body-color;
-    }
-
-    &:hover {
-        .ant-input {
-
-            &:not(.ant-input-disabled) {
-                border-color: $brand-primary;
-            }
-        }
-    }
+    padding: 0 0.625rem;
+    border-radius: $border-radius;
 }
+
 
 textarea {
     &.ant-input {
@@ -124,8 +129,29 @@ textarea {
     }
 }
 
+.ant-input-affix-wrapper-textarea-with-clear-btn {
+    padding: 0;
+    border: 0;
+}
+
+.ant-input-disabled {
+    background-color: $input-bg-disabled;
+    cursor: not-allowed;
+
+    &:hover {
+        border-color: $input-border-color;
+    }
+} 
+
+.ant-input-affix-wrapper-disabled {
+    background-color: $input-bg-disabled;
+    color: rgba($input-color, 0.6);
+    &:hover {
+        border-color: $input-border-color;
+    }
+}
+
 .ant-input-number {
-    font-family: $font-family-base;
     border: 1px solid $input-border-color;
     line-height: $input-line-height;
     height: $select-height;
@@ -134,7 +160,7 @@ textarea {
 
     &:hover,
     &:focus {
-        border-color: $brand-primary;
+        border-color: $input-theme-color;
     }
 
     &.ant-input-number-disabled {
@@ -143,6 +169,10 @@ textarea {
             border-color: $input-border-color;
         }
     }
+}
+
+.ant-input-number {
+    border-radius: $input-border-radius;
 }
 
 .ant-input-number-input {
@@ -174,7 +204,7 @@ textarea {
     &:hover {
         .ant-input-number-handler-down-inner,
         .ant-input-number-handler-up-inner {
-            color: $brand-primary;
+            color: $input-theme-color;
         }
     }
 
@@ -188,7 +218,7 @@ textarea {
 }
 
 .ant-input-number-focused {
-    border-color: $brand-primary;
+    border-color: $input-theme-color;
 }
 
 .has-error {

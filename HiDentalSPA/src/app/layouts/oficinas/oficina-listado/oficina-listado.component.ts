@@ -14,7 +14,7 @@ import { NzNotificationService } from 'ng-zorro-antd';
   styleUrls: ['./oficina-listado.component.css']
 })
 export class OficinaListadoComponent implements OnInit {
-  
+  isHorizontal = false;
   idOficina:string;
    paginacion= new  PaginacionRequest;
    

@@ -19,6 +19,7 @@ export class PacienteListadoComponent implements OnInit {
   pageSize = 7;
   total = 0;
 
+  isHorizontal = false;
   //readonly params= new  UserFilterParams();
 
   constructor(private tableSvc: TableService, public base: BaseService) { }

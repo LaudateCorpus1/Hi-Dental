@@ -29,18 +29,20 @@
     color: rgba($body-color, 0.8);
 }
 
-.ant-notification-notice-icon-success {
-    color: $state-success-text;
-}
+.anticon {
+    &.ant-notification-notice-icon-success {
+        color: $state-success-text;
+    }
 
-.ant-notification-notice-icon-error {
-    color: $state-danger-text;
-}
+    &.ant-notification-notice-icon-error {
+        color: $state-danger-text;
+    }
 
-.ant-notification-notice-icon-warning {
-    color: $state-warning-text;
-}
+    &.ant-notification-notice-icon-warning {
+        color: $state-warning-text;
+    }
 
-.ant-notification-notice-icon-info {
-    color: $brand-info;
+    &.ant-notification-notice-icon-info {
+        color: $brand-info;
+    }
 }

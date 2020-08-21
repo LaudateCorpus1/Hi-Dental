@@ -36,5 +36,31 @@ export class SearchComponent {
         }
     ]
 
+    members = [
+        {
+            title: 'Erin Gonzales',
+            desc: 'UI/UX Designer',
+            img: 'assets/images/avatars/thumb-1.jpg',
+        },
+        {
+            title: 'Darryl Day',
+            desc: 'Software Engineer',
+            img: 'assets/images/avatars/thumb-2.jpg',
+        },
+        {
+            title: 'Marshall Nichols ',
+            desc: 'Data Analyst',
+            img: 'assets/images/avatars/thumb-3.jpg',
+        }
+    ]
+
+    feeds = [
+        {
+            title: '5 Best Handwriting Fonts',
+            desc: '25 Nov 2018',
+            img: 'assets/images/others/img-1.jpg',
+        }
+    ]
+
 }
 

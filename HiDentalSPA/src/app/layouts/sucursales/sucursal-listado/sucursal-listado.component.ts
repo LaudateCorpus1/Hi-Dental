@@ -24,6 +24,9 @@ export class SucursalListadoComponent implements OnInit {
   comboboxOficinas: Combobox[] = [];
   textTitleModal = 'Nueva sucursal';
 
+  isHorizontal = false;
+
+
   oficinaSeletedForm: Combobox;
   oficinaSeletedFilter: Combobox = { code: '', grupoID: null, title: 'Todas las oficinas', Group: null };
 

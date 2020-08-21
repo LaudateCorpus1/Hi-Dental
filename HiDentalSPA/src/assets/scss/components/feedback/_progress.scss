@@ -1,5 +1,4 @@
 .ant-progress {
-    font-family: $font-family-sans-serif;
     line-height: $line-height-base;
     color: $body-color;
 }    
@@ -31,6 +30,14 @@
     stroke: $progress-bar-bg;
 }
 
+.ant-progress-inner {
+    &:not(.ant-progress-circle-gradient) {
+        .ant-progress-circle-path {
+            stroke: $progress-bar-bg !important;
+        } 
+    }
+}
+
 .ant-progress-text {
     width: 2em;
     font-size: 1em;
@@ -51,6 +58,14 @@
     .ant-progress-circle-path {
         stroke: $brand-danger;
     }
+
+    .ant-progress-inner {
+        &:not(.ant-progress-circle-gradient) {
+            .ant-progress-circle-path {
+                stroke: $brand-danger !important;
+            } 
+        }
+    }
 }
 
 .ant-progress-status-success {
@@ -65,6 +80,14 @@
 
     .ant-progress-circle-path {
         stroke: $brand-success;
+    }
+
+    .ant-progress-inner {
+        &:not(.ant-progress-circle-gradient) {
+            .ant-progress-circle-path {
+                stroke: $brand-success !important;
+            } 
+        }
     }
 }
 
@@ -112,3 +135,4 @@
         height: 4px !important;
     }
 }  
+

@@ -1,251 +1,263 @@
-.ant-calendar-picker,
-.ant-calendar-picker-container {
-    font-family: $font-family-base;
-    font-size: $font-size-base;
-    line-height: $input-line-height;
+.ant-picker {
     color: $input-color;
+    font-size: $input-font-size;
+    line-height: $input-line-height;
+    padding: 4px 11px 4px;
+    background: $white;
+    border: 1px solid $input-border-color;
+    border-radius: $input-border-radius;
+    height: $date-picker-height;
 
-    &:focus {
-        .ant-calendar-picker-input {
-            &:not(.ant-input-disabled) {
-                border-color: $calendar-date-theme-color;
+    &:hover, 
+    .ant-picker-focused {
+        border-color: $input-theme-color;
+    }
+
+    .ant-picker-input {
+        > input {
+            @include placeholder {
+                color: $input-color-placeholder;
             }
         }
     }
+
+    &.ant-picker-disabled {
+        background: $input-bg-disabled;
+        border-color: $border-color;
+    }
 }
 
-.ant-calendar-picker {
+.ant-picker-large {
+    padding: $input-padding-y-lg $input-padding-x-lg $input-padding-y-lg;
+    height: $date-picker-height-lg;
 
-    &:hover {
-
-        .ant-calendar-picker-input {
-
-            &:not(.ant-input-disabled) {
-                border-color: $calendar-date-theme-color;
-            }
+    .ant-picker-input {
+        > input {
+            font-size: $input-font-size-lg;
         }
     }
 }
 
-.ant-calendar {
-    width: 300px;
-    line-height: $line-height-base;
+.ant-picker-small {
+    padding: 0 $input-padding-x-sm 0;
 
-    .ant-calendar-ok-btn {
-        background-color: $calendar-date-theme-color;
-        color: $white;
-        border: 1px solid $calendar-date-theme-color;
-    }
-}
+    height: $date-picker-height-sm;
 
-.ant-calendar-range {
-    width: 600px; 
-
-    .ant-calendar-input-wrap {
-        height: auto;
-    }
-
-    .ant-calendar-in-range-cell {
-        
-        .ant-calendar-date {
-            color: $calendar-date-theme-color;
-
-            &:hover {
-                background-color: transparent;
-            }
-        }
-
-        &:before {
-            background-color: rgba($calendar-date-theme-color, 0.1);
+    .ant-picker-input {
+        > input {
+            font-size: $input-font-size-sm;
         }
     }
 }
 
-.ant-calendar-input-wrap {
-    height: auto;
-    padding: 10px;
-    border-bottom: 1px solid $input-border-color;
+.ant-picker-focused {
+    border-color: $input-theme-color;
+    box-shadow: 0 0 0 2px rgba($input-theme-color, 0.2);
 }
 
-.ant-calendar-input {
-    color: $calendar-date-text-color;
-}
+.ant-picker-input {
 
-.ant-calendar-header {
-    border-bottom: 1px solid $input-border-color;
-
-    a {
-        &:hover {
-            color: $calendar-date-theme-color;
-        }
+    > input:focus,
+    > .input-focused {
+        border-color: $input-theme-color;
     }
+}
 
-    .ant-calendar-century-select,
-    .ant-calendar-decade-select,
-    .ant-calendar-month-select,
-    .ant-calendar-year-select {
+.ant-picker-range {
+
+    .ant-picker-active-bar {
+        background: transparent;
+    }
+}
+
+
+.ant-picker-content {
+    
+    th {
         color: $gray-dark;
-        line-height: $line-height-base;
-    }
-
-    .ant-calendar-next-century-btn,
-    .ant-calendar-next-decade-btn,
-    .ant-calendar-next-month-btn,
-    .ant-calendar-next-year-btn,
-    .ant-calendar-prev-century-btn,
-    .ant-calendar-prev-decade-btn,
-    .ant-calendar-prev-month-btn,
-    .ant-calendar-prev-year-btn {
-        font-family: $font-family-base;
-        color: $calendar-date-text-color;
+        font-weight: $font-weight-semibold;
     }
 }
 
-.ant-calendar-footer {
-    border-top: 1px solid $input-border-color;
-    line-height: 45px;
-    padding: 0 15px;
-}
-
-.ant-calendar-last-month-cell,
-.ant-calendar-next-month-btn-day {
-    .ant-calendar-date {
-        color: rgba($calendar-date-text-color, 0.25);
-    }
-}
-
-.ant-calendar-date {
-    color: $calendar-date-text-color;
-    width: $calendar-date-x;
-    height: $calendar-date-y;
-    line-height: $calendar-date-line-height;
+.ant-picker-cell {
+    color: rgba($body-color, 0.25);
 
     &:hover {
-        background-color: rgba($calendar-date-theme-color, 0.1);
-        color: $calendar-date-theme-color;
-    }
-    
-    &:active {
-        background-color: rgba($calendar-date-theme-color, 0.9);
-        color: $white;
-    }
-}
-
-.ant-calendar-today {
-
-    .ant-calendar-date {
-        border-color: $calendar-date-theme-color;
-        font-weight: 500;
-        color: $calendar-date-theme-color;
-    }
-}    
-
-.ant-calendar-selected-day {
-
-    .ant-calendar-date {
-        background: $calendar-date-theme-color;
-        color: $white;
-        border: 1px solid transparent;
-
-        &:hover {
-            background: $calendar-date-theme-color
-        }
-    }
-}
-
-
-.ant-calendar-week-number {
-
-    .ant-calendar-body {
-        tr {
-            &:hover {
-                background-color: rgba($calendar-date-theme-color, 0.05);
+        &:not(.ant-picker-cell-in-view) {
+            
+            .ant-picker-cell-inner {
+                background: $picker-calendar-hover-bg;
             }
+        }
 
-            &.ant-calendar-active-week {
-                background-color: rgba($calendar-date-theme-color, 0.1);
+        &:not(.ant-picker-cell-selected)
+        :not(.ant-picker-cell-range-start)
+        :not(.ant-picker-cell-range-end)
+        :not(.ant-picker-cell-range-hover-start)
+        :not(.ant-picker-cell-range-hover-end) {
+
+            .ant-picker-cell-inner {
+                background: $picker-calendar-hover-bg;
             }
         }
     }
-}
 
-.ant-calendar-month-panel-month {
-    color: $calendar-date-text-color;
-    height: $calendar-year-month-height;
-    line-height: $calendar-year-month-height;
-    padding: 0 10px;
-    border-radius: $border-radius;
+    &:before {
+        height: $picker-calendar-mini-cell-size;
+    }
 
-    &:hover {
-        background: rgba($calendar-date-theme-color, 0.1);
+    .ant-picker-cell-inner {
+        min-width: $picker-calendar-mini-cell-size;
+        height: $picker-calendar-mini-cell-size;
+        line-height: $picker-calendar-mini-cell-size;
+        border-radius: $border-radius;
     }
 }
 
-.ant-calendar-month-panel-selected-cell {
+.ant-picker-cell-in-view {
+    color: $body-color;
 
-    .ant-calendar-month-panel-month {
-        background: $calendar-date-theme-color;
-        color: $white;
+    &.ant-picker-cell-today {
+        .ant-picker-cell-inner {
+            color: $picker-calendar-theme-color;
+
+            &:before {
+                border: 1px solid $picker-calendar-theme-color;
+                border-radius: $border-radius;
+            }
+        }
+    }
+
+    &.ant-picker-cell-in-range {
+        &:before {
+            background: rgba($picker-calendar-theme-color, 0.1);
+        }
+    }
+
+    &.ant-picker-cell-range-start {
+
+        &:not(.ant-picker-cell-range-start-single):not(.ant-picker-cell-range-end) {
+            .ant-picker-cell-inner {
+                border-radius: $border-radius;
+            }
+        }
+
+        &:not(.ant-picker-cell-range-start-single)::before {
+            background: rgba($picker-calendar-theme-color, 0.1);
+        }
+    }
+
+    &.ant-picker-cell-range-end {
+
+        &:not(.ant-picker-cell-range-end-single):not(.ant-picker-cell-range-start) {
+            .ant-picker-cell-inner {
+                border-radius: $border-radius;
+            }
+        }
+
+        &:not(.ant-picker-cell-range-end-single)::before {
+            background: rgba($picker-calendar-theme-color, 0.1);
+        }
+    }
+
+    &.ant-picker-cell-selected,
+    &.ant-picker-cell-range-start,
+    &.ant-picker-cell-range-end {
+        .ant-picker-cell-inner {
+            color: $white;
+            background: $picker-calendar-theme-color;        
+        }
 
         &:hover {
-            background: $calendar-date-theme-color;
+            .ant-picker-cell-inner {
+                color: $white;
+                background: $picker-calendar-theme-color;        
+            }
+        }
+    }
+
+}
+
+
+
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-start:not(.ant-picker-cell-in-range):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end)::after, 
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-end:not(.ant-picker-cell-in-range):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end)::after, 
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-start.ant-picker-cell-range-start-single::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-end.ant-picker-cell-range-end-single::after, 
+.ant-picker-cell-in-view.ant-picker-cell-range-hover:not(.ant-picker-cell-in-range)::after {
+    height: $picker-calendar-mini-cell-size;;
+    border-top: 1px dashed $picker-calendar-theme-color;
+    border-bottom: 1px dashed $picker-calendar-theme-color;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-in-range.ant-picker-cell-range-hover::before, 
+.ant-picker-cell-in-view.ant-picker-cell-range-start.ant-picker-cell-range-hover::before, 
+.ant-picker-cell-in-view.ant-picker-cell-range-end.ant-picker-cell-range-hover::before, 
+.ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single).ant-picker-cell-range-hover-start::before, 
+.ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single).ant-picker-cell-range-hover-end::before, 
+.ant-picker-panel > :not(.ant-picker-date-panel) .ant-picker-cell-in-view.ant-picker-cell-in-range.ant-picker-cell-range-hover-start::before, 
+.ant-picker-panel > :not(.ant-picker-date-panel) .ant-picker-cell-in-view.ant-picker-cell-in-range.ant-picker-cell-range-hover-end::before {
+    background: rgba($picker-calendar-theme-color, 0.3); 
+}
+
+.ant-picker-date-panel {
+    .ant-picker-cell-in-view {
+        &.ant-picker-cell-in-range {
+            &.ant-picker-cell-range-hover-end,
+            &.ant-picker-cell-range-hover-start {
+                .ant-picker-cell-inner {
+                    color: $picker-calendar-theme-color;
+                    font-weight: $font-weight-bold;
+                    font-size: $font-size-base;
+                }
+            }
+        }
+    }
+
+    .ant-picker-cell-in-view.ant-picker-cell-in-range {
+        &.ant-picker-cell-range-hover-start,
+        &.ant-picker-cell-range-hover-end {
+            .ant-picker-cell-inner {
+                &::after {
+                    background: transparent;
+                }
+            }
         }
     }
 }
 
-.ant-calendar-year-panel-year {
-    color: $calendar-date-text-color;
-    height: $calendar-year-month-height;
-    line-height: $calendar-year-month-height;
-    padding: 0 10px;
-    border-radius: $border-radius;
+
+.ant-picker-week-panel-row-selected  {
+    td {
+        background: $picker-calendar-theme-color;
+    }
 
     &:hover {
-        background: rgba($calendar-date-theme-color, 0.1);
-    }
-}
-
-.ant-calendar-year-panel-selected-cell {
-
-    .ant-calendar-year-panel-year {
-        background: $calendar-date-theme-color;
-        color: $white;
-
-        &:hover {
-            background: $calendar-date-theme-color;
+        td {
+            background: $picker-calendar-theme-color;
         }
     }
 }
 
-.ant-calendar-disabled-cell {
-    
-    .ant-calendar-date {
-        cursor: not-allowed;
-        color: $gray-light;
-        background: $gray-lightest;
-        border-radius: 0;
-        width: auto;
-        border: 1px solid transparent;
-    }
+tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover:first-child::after,
+tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-end:first-child::after,
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-edge-start:not(.ant-picker-cell-range-hover-edge-start-near-range)::after, 
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-start::after {
+    border-left: 1px dashed $picker-calendar-theme-color;
 }
 
-.w-100 {
-    .ant-calendar-picker   {
-        width: 100% !important;
-    }
+tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover:last-child::after, 
+tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::after, 
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-edge-end:not(.ant-picker-cell-range-hover-edge-end-near-range)::after, 
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-end::after {
+    border-right: 1px dashed $picker-calendar-theme-color;
 }
 
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-start.ant-picker-cell-range-start-single::after {
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+}
 
-
-.ant-calendar-range {
-    @include screen-mobile {
-        width: 276px;
-        .ant-calendar-range-part {
-            width: 100%;
-        }
-        .ant-calendar-range-right {
-            float: left;
-            border-top: 1px solid #e8e8e8;
-        }
-    }
+.ant-picker-cell-in-view.ant-picker-cell-range-hover-end::after  {
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
 }

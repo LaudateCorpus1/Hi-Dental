@@ -2,23 +2,34 @@
     font-size: $font-size-base;
     line-height: $line-height-base;
     color: $table-color;
-    font-family: $font-family-base;
 
     &.ant-table-bordered {
 
         .ant-table-title {
             border: 1px solid $table-border;
+            border-bottom: 0;;
         }
         .ant-table-footer {
             border: 1px solid $table-border;
             margin-top: -2px;
-            border-top: 1px solid $table-border;
+            border-top: 0px;
         }
     } 
 
     .ant-table-content {
         @include screen-mobile {
             overflow-x: auto;
+        }
+    }
+
+    thead {
+        > tr {
+
+            >th {
+                color: $gray-dark;
+                font-weight: $font-weight-semibold;
+                background: $table-head-bg;
+            }
         }
     }
 }
@@ -38,10 +49,40 @@
             .anticon-filter {
                 color: $table-color;
             }
-        }
 
-        &.ant-table-row-hover {
-            background-color: $table-hover;
+            &.ant-table-column-sort {
+                background: $table-has-action-hover-bg;
+            }
+
+            
+            &.ant-table-column-has-actions {
+                &.ant-table-column-has-sorters {
+
+                    &:hover {
+                        background: $table-has-action-hover-bg;
+
+                        .anticon-filter,
+                        .ant-table-filter-icon {
+                            background: $table-has-action-hover-bg;
+
+                            &:hover {
+                                background: darken($table-has-action-hover-bg, 5%);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .ant-table-header-column {
+                .ant-table-column-sorters {
+
+                    &:hover {
+                        &:before {
+                            background: $table-head-bg;
+                        }
+                    }
+                }
+            }
         }
 
         &:first-child {
@@ -69,23 +110,27 @@
             @include screen-mobile {
                 white-space: nowrap;
             }
+
+            &.ant-table-column-sort {
+                background: $table-column-sort-bg;
+            }
         }
 
-        &.ant-table-row-hover,
-        &:hover {
+        &.ant-table-row {
 
-            &:not(.ant-table-expanded-row) {
+            &:hover {
                 > td {
-                    background-color: $table-hover;
+                    background: $table-hover; 
                 }
             }
         }
 
         &.ant-table-row-selected  {
-            td {
-                background-color: $table-hover; 
+            > td {
+                background: $table-selected !important; 
             }
         }
+        
 
         &:last-child {
             >td{
@@ -101,10 +146,24 @@
     }
 }  
 
+tbody > tr.ant-table-placeholder:hover > td {
+    background: $white !important;
+}
+
+.ant-table-column-sorter-up.active,
+.ant-table-column-sorter-down.active {
+    color: $brand-primary;
+}
+
+.ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+    background: $table-hover;
+}
+
 .ant-table-column-sorter {
     margin-left: 10px;
-    width: $table-column-sorter-size;
-    height: $table-column-sorter-size;
     font-weight: $font-weight-base;
     color: $table-color;
 }
@@ -142,7 +201,6 @@
         > tr {
             > th {
                 border-right: 1px solid $table-border;
-                border-top: 1px solid $table-border;
             }
         }
     }
@@ -159,7 +217,7 @@
 }
 
 .ant-table-title {
-    padding: $table-spacing 0;
+    padding: $table-spacing;
     border-top-left-radius: $table-border-radius;
     border-top-right-radius: $table-border-radius; 
 }

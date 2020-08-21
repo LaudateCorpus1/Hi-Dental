@@ -7,10 +7,10 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'dashboard',
         submenu: [
-            { 
+            {
                 path: '',
-                title: 'Level 1', 
-                iconType: '', 
+                title: 'Level 1',
+                iconType: '',
                 icon: '',
                 iconTheme: '',
                 submenu: [
@@ -21,8 +21,8 @@ export const ROUTES: SideNavInterface[] = [
                         iconTheme: 'outline',
                         icon: 'layout',
                         submenu: []
-                    }    
-                ] 
+                    }
+                ]
             }
         ]
     },
@@ -33,7 +33,7 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'schedule',
         submenu: [
-      
+
         ]
     },
     {
@@ -43,7 +43,7 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'team',
         submenu: [
-      
+
         ]
     },
     {
@@ -62,7 +62,7 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'medicine-box',
         submenu: [
-      
+
         ]
     },
     {
@@ -72,7 +72,7 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'medicine-box',
         submenu: [
-      
+
         ]
     },
     {
@@ -82,10 +82,10 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'file',
         submenu: [
-            { 
+            {
                 path: '',
-                title: 'Level 1', 
-                iconType: '', 
+                title: 'Level 1',
+                iconType: '',
                 icon: '',
                 iconTheme: '',
                 submenu: [
@@ -96,8 +96,8 @@ export const ROUTES: SideNavInterface[] = [
                         iconTheme: 'outline',
                         icon: 'layout',
                         submenu: []
-                    }    
-                ] 
+                    }
+                ]
             }
         ]
     },
@@ -115,7 +115,7 @@ export const ROUTES: SideNavInterface[] = [
                 iconTheme: 'outline',
                 icon: 'user',
                 submenu: [
-              
+
                 ]
             },
             {
@@ -125,7 +125,7 @@ export const ROUTES: SideNavInterface[] = [
                 iconTheme: 'outline',
                 icon: 'user',
                 submenu: [
-              
+
                 ]
             },
             {
@@ -135,11 +135,11 @@ export const ROUTES: SideNavInterface[] = [
                 iconTheme: 'outline',
                 icon: 'user',
                 submenu: [
-              
+
                 ]
             },
-      
+
         ]
     },
 
-]    
+];
