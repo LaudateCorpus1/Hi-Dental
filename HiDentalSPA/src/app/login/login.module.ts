@@ -14,7 +14,6 @@ import { AuthenticationRoutingModule } from '../authentication/authentication-ro
     AuthenticationRoutingModule,
     LoginRoutingModule
   ],
-  
   declarations: [LoginComponent]
 })
 
