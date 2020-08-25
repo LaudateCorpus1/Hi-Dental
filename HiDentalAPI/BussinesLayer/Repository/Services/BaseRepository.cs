@@ -14,13 +14,13 @@ namespace BussinesLayer.Repository.Services
     {
         private readonly ApplicationDbContext _dbContext;
         public BaseRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
-        public async Task<bool> Add(TEntity entity)
+        public  virtual async Task<bool> Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
             return await CommitAsync();
         }
 
-        public async Task<bool> CommitAsync()
+        public virtual async Task<bool> CommitAsync()
         {
             var result = true;
             using var transaction = _dbContext.Database.BeginTransaction();
@@ -40,24 +40,24 @@ namespace BussinesLayer.Repository.Services
             return result;
         }
 
-        public IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> expression) => _dbContext.Set<TEntity>().Where(expression);
+        public virtual IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> expression) => _dbContext.Set<TEntity>().Where(expression);
 
-        public async Task<IEnumerable<TEntity>> FilterAsync(Expression<Func<TEntity, bool>> expression) => await Filter(expression).ToListAsync();
+        public virtual async Task<IEnumerable<TEntity>> FilterAsync(Expression<Func<TEntity, bool>> expression) => await Filter(expression).ToListAsync();
 
-        public IQueryable<TEntity> GetAll() => _dbContext.Set<TEntity>().AsQueryable();
+        public virtual IQueryable<TEntity> GetAll() => _dbContext.Set<TEntity>().AsQueryable();
 
-        public async Task<TEntity> GetById(Guid id) => await _dbContext.Set<TEntity>().FindAsync(id);
+        public virtual async Task<TEntity> GetById(Guid id) => await _dbContext.Set<TEntity>().FindAsync(id);
 
-        public async Task<IEnumerable<TEntity>> GetList(Expression<Func<TEntity, bool>> expression = null) 
+        public virtual async Task<IEnumerable<TEntity>> GetList(Expression<Func<TEntity, bool>> expression = null) 
             => expression == null ? await GetAll().ToListAsync() : await FilterAsync(expression);
 
-        public async Task<bool> Remove(TEntity entity)
+        public virtual async Task<bool> Remove(TEntity entity)
         {
             _dbContext.Set<TEntity>().Remove(entity);
             return await CommitAsync();
         }
 
-        public async Task<bool> Update(TEntity entity)
+        public virtual async Task<bool> Update(TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
             return await CommitAsync();

@@ -2,8 +2,10 @@
 using Auth.Services;
 using AutoMapper;
 using BussinesLayer.Contracts;
+using BussinesLayer.Contracts.Appointments;
 using BussinesLayer.Contracts.Plans;
 using BussinesLayer.Services;
+using BussinesLayer.Services.Appointments;
 using BussinesLayer.Services.Plans;
 using DatabaseLayer.Models.Users;
 using DatabaseLayer.Persistence;
@@ -40,6 +42,7 @@ namespace BussinesLayer.UnitOfWork
         private ServiceOfPattientService _serviceOfPattientService;
         private PlanService _planService;
         private ServicePlanService _servicePlanService;
+        private AppointmentService _apointmentService;
         #endregion
 
 
@@ -78,6 +81,8 @@ namespace BussinesLayer.UnitOfWork
         public IPlanService PlanService => _planService ?? (_planService = new PlanService(_context));
 
         public IServicePlanService ServicePlanService => _servicePlanService ?? (_servicePlanService = new ServicePlanService(_context));
+
+        public IAppointmentService AppointmentService => _apointmentService ?? (_apointmentService = new AppointmentService(_context));
 
         async Task IUnitOfWork.Commit() => await _context.SaveChangesAsync();
     }

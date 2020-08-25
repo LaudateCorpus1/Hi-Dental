@@ -4,14 +4,16 @@ using DatabaseLayer.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataBaseLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200825140517_AddingAppointment")]
+    partial class AddingAppointment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -337,7 +339,7 @@ namespace DataBaseLayer.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DentalBranchId")
+                    b.Property<Guid?>("DentalBranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("EndDate")
@@ -740,11 +742,9 @@ namespace DataBaseLayer.Migrations
 
             modelBuilder.Entity("DatabaseLayer.Models.Appointments.Appointment", b =>
                 {
-                    b.HasOne("DataBaseLayer.Models.Offices.DentalBranch", "DentalBranch")
+                    b.HasOne("DataBaseLayer.Models.Offices.DentalBranch", null)
                         .WithMany("Appoiments")
-                        .HasForeignKey("DentalBranchId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("DentalBranchId");
 
                     b.HasOne("DatabaseLayer.Models.Patients.Patient", "Patient")
                         .WithMany("Appointment")
