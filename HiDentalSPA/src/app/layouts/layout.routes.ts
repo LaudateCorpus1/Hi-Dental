@@ -1,17 +1,18 @@
 import { Routes } from '@angular/router';
 
+// tslint:disable-next-line: variable-name
 export const Layout_ROUTES: Routes = [
     {
         path: 'dashboard',
         loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardModule),
     } ,
-    // {
-    //     path: 'agenda',
-    //     data: {
-    //         title: 'citas',
-    //     },
-    //     loadChildren: () => import('../layouts/agenda/agenda.module').then(m => m.AgendaModule),
-    // },
+    {
+        path: 'agenda',
+        data: {
+            title: 'agenda',
+        },
+        loadChildren: () => import('../layouts/agenda/agenda.module').then(m => m.AgendaModule),
+    },
     {
         path: 'pacientes',
         data: {

@@ -14,17 +14,8 @@
     font-family: $font-family-base;
 
     > .ant-steps-icon {
-        top: 0px;
+        top: -1px;
     }
-}
-
-.ant-steps-item-title {
-    color: $gray-dark;
-}
-
-.ant-steps-item-description, 
-.ant-steps-item-subtitle {
-    color: $gray-light;
 }
 
 .ant-steps-item-wait {
@@ -36,16 +27,15 @@
             color: $gray-light;
         }
     }
-    >.ant-steps-item-container {
-        > .ant-steps-item-content {
 
-            > .ant-steps-item-description {
-                color: $gray-light;
-            }
+    > .ant-steps-item-content {
 
-            > .ant-steps-item-title {
-                color: $gray-light;
-            }
+        > .ant-steps-item-description {
+            color: $gray-light;
+        }
+
+        > .ant-steps-item-title {
+            color: $gray-light;
         }
     }
 }
@@ -103,26 +93,24 @@
         }
     }
 
-    >.ant-steps-item-container {
+    > .ant-steps-item-content {
 
-        > .ant-steps-item-content {
+        .ant-steps-item-title {
+            color: $gray-dark;
 
-            .ant-steps-item-title {
-                color: $gray-dark;
-
-                &:after {
-                    background-color: $step-theme-colors;
-                }
-            }
-        }
-
-        > .ant-steps-item-tail {
             &:after {
                 background-color: $step-theme-colors;
             }
         }
     }
+
+    > .ant-steps-item-tail {
+        &:after {
+            background-color: $step-theme-colors;
+        }
+    }
 }
+
 
 .ant-steps-item-error {
 
@@ -135,13 +123,11 @@
         }
     }
 
-    >.ant-steps-item-container {
-        > .ant-steps-item-content {
+    > .ant-steps-item-content {
 
-            > .ant-steps-item-description,
-            > .ant-steps-item-title {
-                color:$brand-danger;
-            }
+        > .ant-steps-item-description,
+        > .ant-steps-item-title {
+            color:$brand-danger;
         }
     }
 }    
@@ -195,13 +181,5 @@
 
     .ant-steps-item-tail {
         top: 3px;
-    }
-}
-
-.ant-steps-navigation {
-    .ant-steps-item {
-        &:before {
-            background-color: $step-theme-colors;
-        }
     }
 }

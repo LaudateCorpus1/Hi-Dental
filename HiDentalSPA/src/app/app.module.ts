@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';

@@ -1,14 +1,15 @@
 .ant-dropdown {
+    font-family: $font-family-base;
     color: $dropdown-item-text;
     margin: 0;
     padding: 0;
     list-style: none;
     z-index: $zindex-dropdown;
+    display: block;
 }    
 
 .ant-dropdown-menu {
     min-width: $dropdown-min-width;
-    box-shadow: $dropdown-shadow;
 
     ul {
         list-style: none;
@@ -59,11 +60,8 @@
 
 .ant-dropdown-menu-item-selected,
 .ant-dropdown-menu-submenu-title-selected {
-    background-color: $dropdown-bg-hover;
-    color: $dropdown-item-text-hover;
-
+    
     > a {
         background-color: $dropdown-bg-hover;
-        color: $dropdown-item-text-hover;
     }
 }

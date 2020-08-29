@@ -33,7 +33,8 @@
               ],
               "scripts": [
                   "node_modules/jquery/dist/jquery.js",
-                  "src/assets/lib/hljs/highlight.pack.js"
+                  "src/assets/lib/hljs/highlight.pack.js",
+                  "src/assets/lib/lang.js"
               ]
           },
           "configurations": {

@@ -12,6 +12,9 @@ const appRoutes: Routes = [
         redirectTo: '/dashboard/home',
         pathMatch: 'full',
     },
+    {
+        path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+      },
       { 
         path: '', 
         component: LayoutComponent,

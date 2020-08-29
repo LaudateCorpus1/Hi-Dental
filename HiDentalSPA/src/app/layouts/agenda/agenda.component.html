@@ -1,0 +1,85 @@
+
+  <div class='demo-app-main'>
+    <full-calendar
+    
+      *ngIf='calendarVisible'
+      [options]='calendarOptions'
+    ></full-calendar>
+      
+  <nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="title"
+  [nzFooter]="modalFooter"
+  [nzOkLoading]="isOkLoading"
+>
+<ng-template #title>
+     <span>{{textTitleModal}}</span><br>
+      <div  class="text-dark  pr-2 pl-2"  style="font-size: 13px; border-radius: 2px;background-color: #D4EFDF;">
+        Agendar para el
+        {{ dateStartAppointment | date : 'EEEE, MMMM d, h:mm' }} {{ dateStartAppointment | date : 'a' | lowercase }} <br>
+        <span style="color:#5DADE2;">Duracion: {{getDateDiffToString()}}</span>
+      </div>
+  </ng-template>
+  <nz-spin nzTip='Loading...' [nzSpinning]="editLoading" [nzDelay]="500">
+  <form nz-form [nzLayout]="validateForm.get('formLayout')?.value"  [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <div nz-row  style="margin-top: -20px !important" nzType="flex" nzJustify="space-between">
+      <div  nz-col nzSpan="24"> 
+          <nz-form-item>
+              <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired>Paciente</nz-form-label>
+              <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                  <nz-select id="oficinasSelectForm" nzShowSearch nzAllowClear formControlName="office" [(ngModel)]="pacienteSeletedForm" nzPlaceHolder="Seleccione un paciente" >
+                      <nz-option *ngFor="let o of comboboxPacientes" [nzValue]="o.code" [nzLabel]="o.title"></nz-option>
+                  </nz-select>
+                  <nz-form-explain *ngIf="validateForm.get('office').dirty && validateForm.get('office').errors">Por favor seleccione una oficina!</nz-form-explain>
+              </nz-form-control>
+          </nz-form-item>
+      </div>
+      <div  nz-col style="margin-top: -20px !important"  nzSpan="24"> 
+        <nz-form-item>
+            <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired>Profesional</nz-form-label>
+            <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                <nz-select id="oficinasSelectForm" nzShowSearch nzAllowClear formControlName="office" [(ngModel)]="pacienteSeletedForm" nzPlaceHolder="Seleccione un paciente" >
+                    <nz-option *ngFor="let o of comboboxPacientes" [nzValue]="o.code" [nzLabel]="o.title"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="validateForm.get('office').dirty && validateForm.get('office').errors">Por favor seleccione una oficina!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    </div>
+
+      <div nz-row  style="margin-top: -20px !important"   nzType="flex" nzJustify="space-between">
+        <div  nz-col nzSpan="24" >
+            <nz-form-item >
+                <nz-form-label [nzSpan]="isHorizontal? 4:null">Nota</nz-form-label>
+                <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                  <textarea
+                  nz-input
+                  formControlName="description"
+                  placeholder="Aqui puede agregar nota"
+                  [nzAutosize]="{ minRows: 2, maxRows: 6 }" ></textarea>
+                    <nz-form-explain *ngIf="validateForm.get('description').dirty && validateForm.get('description').errors">Este campo es obligatorio!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div  style="margin-top: -20px !important"  nz-col nzSpan="24" >
+          
+          <nz-form-item >
+              <nz-form-label [nzSpan]="isHorizontal? 4:null">¿Enviar informacion por correo?</nz-form-label>
+              <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                  <label nz-checkbox  formControlName="isPrincipal" [(ngModel)]="isPrincipalChecked"  > {{ isPrincipalChecked ? 'Si' : 'No' }}</label>
+                  <nz-form-explain *ngIf="validateForm.get('isPrincipal').dirty && validateForm.get('isPrincipal').errors">Este campo es obligatorio!</nz-form-explain>
+              </nz-form-control>
+          </nz-form-item>
+      </div>
+      </div>
+   
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
+    <button nz-button nzType="primary" (click)="submitForm()" [nzLoading]="loadingButton" >Guardar</button>
+  </ng-template>
+</form>
+</nz-spin>  
+</nz-modal>
+
+
+  </div>

@@ -28,7 +28,7 @@ export const ROUTES: SideNavInterface[] = [
     },
     {
         path: '/agenda',
-        title: 'Citas',
+        title: 'Agenda',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'schedule',
