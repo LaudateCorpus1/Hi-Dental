@@ -3,7 +3,8 @@ import { Validators, FormControl, FormBuilder, FormGroup, ValidationErrors } fro
 import { Observable, Observer } from 'rxjs';
 import { BaseService, Combobox, DataApi } from 'src/app/shared/services/HTTPClient/base.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserAuth, UserDetail, UserViewModel } from 'src/app/shared/Models/usuarios/usuarios';
+import { User, UserDetail, UserViewModel } from 'src/app/shared/Models/usuarios/usuarios';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'usuario-formulario',
@@ -34,7 +35,7 @@ export class UsuarioFormularioComponent implements OnInit {
  
 
   constructor(private fb: FormBuilder,public base: BaseService,
-    public route: ActivatedRoute, public  router: Router) {
+    public route: ActivatedRoute, public  router: Router, private notification: NzNotificationService) {
   }
 
   ngOnInit(): void {
@@ -149,7 +150,7 @@ get isHorizontal(): boolean {
 }
 
 onSubmitUserAuth(){
-    const userAuth = new UserAuth();
+    const userAuth = new User();
     userAuth.id = this.f.id.value;
     userAuth.userName = this.f.userName.value;
     userAuth.password = this.f.password.value;
@@ -160,7 +161,7 @@ onSubmitUserAuth(){
     console.log(userAuth);
     this.createOrUpdateUserAuth(userAuth);
 }
-createOrUpdateUserAuth(userAuth: UserAuth) {
+createOrUpdateUserAuth(userAuth: User) {
   this.loadingButton=true;
  if (userAuth.id !== null) {
     this.updateUserAuth(userAuth);
@@ -168,7 +169,7 @@ createOrUpdateUserAuth(userAuth: UserAuth) {
     this.createUserAuth(userAuth);
   }
 }
-createUserAuth(userAuth: UserAuth){
+createUserAuth(userAuth: User){
 
   this.base.DoPost<any>(DataApi.Auth, 'create',
   {
@@ -191,7 +192,7 @@ createUserAuth(userAuth: UserAuth){
   console.log(error);
 });
 }
-updateUserAuth(userAuth: UserAuth){
+updateUserAuth(userAuth: User){
 
   this.base.DoPut<any>(DataApi.Usuarios, 'update',
   {
@@ -236,7 +237,7 @@ onSubmitUserDetail(){
 // }
 createUserDetail(userDetail: UserDetail){
 
-  this.base.DoPost<UserAuth>(DataApi.Usuarios, 'AddDetail',
+  this.base.DoPost<User>(DataApi.Usuarios, 'AddDetail',
   {
     'description': userDetail.description,
     'identityDocument': userDetail.identityDocument,
@@ -268,14 +269,15 @@ updateUserDetail(userDetail: UserDetail){
   }).subscribe(x => {
     this.loadingButton = false;
     if (x) {
-      console.log(x);
+     
       this.router.navigateByUrl('/usuarios');
+      this.notification.success('Usuario', 'Se ha guardado correctamente.', {});
     }
 
   }, error => {
     this.loadingButton = false;
-
     console.log(error);
+    this.notification.success('Usuario', 'Ha ocurrido un error', {});
   })
 
 }

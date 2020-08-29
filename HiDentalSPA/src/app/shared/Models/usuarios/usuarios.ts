@@ -44,19 +44,26 @@ export class UserViewModel {
     // tslint:disable-next-line: no-use-before-declare
 
 }
-export class UserAuth {
+export class User {
     id: string;
     names: string;
     lastNames: string;
     userName: string;
     createdBy: string;
     password: string;
-    phoneNumber:string;
+    phoneNumber: string;
     dentalBranchId: string;
-
     // tslint:disable-next-line: no-use-before-declare
 }
-
+export class UserAuthViewModel {
+    expiration: string;
+    expire: boolean;
+    permissions: string[];
+    token: string;
+    unavailablePermissions?: string;
+    user:User
+    // tslint:disable-next-line: no-use-before-declare
+}
 export class UserDetail {
     id:number;
     description: string;

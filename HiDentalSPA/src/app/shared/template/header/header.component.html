@@ -80,8 +80,8 @@
                             <div class="d-flex m-r-50">
                                 <nz-avatar nzSize="large" nzSrc="assets/images/avatars/thumb-3.jpg"></nz-avatar>
                                 <div class="m-l-10">
-                                    <p class="m-b-0 text-dark font-weight-semibold">Marshall Nichols</p>
-                                    <p class="m-b-0 opacity-07">UI/UX Desinger</p>
+                                    <p class="m-b-0 text-dark font-weight-semibold">{{currentUser.user.userName}}</p>
+                                    <p class="m-b-0 opacity-07">Doctor | Tipo usuario</p>
                                 </div>
                             </div>
                         </li>
@@ -89,7 +89,7 @@
                             <a class="p-v-5 d-flex align-items-center justify-content-between">
                                 <div>
                                     <i class="opacity-04 font-size-16" nz-icon nzType="user" theme="outline"></i>
-                                    <span class="m-l-10">Edit Profile</span>
+                                    <span class="m-l-10">Editar Perfil</span>
                                 </div>
                                 <i class="font-size-10" nz-icon nzType="right" theme="outline"></i>
                             </a>
@@ -98,25 +98,17 @@
                             <a class="p-v-5 d-flex align-items-center justify-content-between">
                                 <div>
                                     <i class="opacity-04 font-size-16" nz-icon nzType="lock" theme="outline"></i>
-                                    <span class="m-l-10">Account Setting</span>
+                                    <span class="m-l-10">Configuracion</span>
                                 </div>
                                 <i class="font-size-10" nz-icon nzType="right" theme="outline"></i>
                             </a>
                         </li>
-                        <li nz-menu-item>
-                            <a class="p-v-5 d-flex align-items-center justify-content-between">
-                                <div>
-                                    <i class="opacity-04 font-size-16" nz-icon nzType="project" theme="outline"></i>
-                                    <span class="m-l-10">Projects</span>
-                                </div>
-                                <i class="font-size-10" nz-icon nzType="right" theme="outline"></i>
-                            </a>
-                        </li>
+                    
                         <li nz-menu-item>
                             <a class="p-v-5 d-flex align-items-center justify-content-between">
                                 <div>
                                     <i class="opacity-04 font-size-16" nz-icon nzType="logout" theme="outline"></i>
-                                    <span class="m-l-10">Logout</span>
+                                    <span class="m-l-10" (click)="cerrarSesion()">Salir</span>
                                 </div>
                                 <i class="font-size-10" nz-icon nzType="right" theme="outline"></i>
                             </a>

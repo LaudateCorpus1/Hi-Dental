@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
-import { registerLocaleData } from '@angular/common';
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+
+import { registerLocaleData, PathLocationStrategy, LocationStrategy } from '@angular/common';
 import en from '@angular/common/locales/en';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +12,7 @@ import { TemplateModule } from './shared/template/template.module';
 import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
+import { CommonLayoutComponent } from './layouts/common-layout/common-layout.component';
 import { FullLayoutComponent } from './layouts/full-layout/full-layout.component';
 
 import { NgChartjsModule } from 'ng-chartjs';
@@ -21,14 +24,14 @@ registerLocaleData(en);
 @NgModule({
     declarations: [
         AppComponent,
-        LayoutComponent,
-        FullLayoutComponent
+        CommonLayoutComponent,
+        LayoutComponent
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        NgZorroAntdModule,
         AppRoutingModule,
+        NzBreadCrumbModule,
         TemplateModule,
         SharedModule,
         NgChartjsModule
@@ -37,6 +40,10 @@ registerLocaleData(en);
         { 
             provide: NZ_I18N,
             useValue: en_US, 
+        },
+        {
+            provide: LocationStrategy, 
+            useClass: PathLocationStrategy
         },
         ThemeConstantService
     ],

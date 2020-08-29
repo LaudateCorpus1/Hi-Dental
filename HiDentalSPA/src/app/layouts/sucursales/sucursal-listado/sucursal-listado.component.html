@@ -155,16 +155,7 @@
                 </nz-form-control>
             </nz-form-item>
         </div>
-        <div  nz-col nzSpan="11" >
-            
-            <!-- <nz-form-item >
-                <nz-form-label [nzSpan]="isHorizontal? 4:null">¿Esta sucursal es principal?</nz-form-label>
-                <nz-form-control [nzSpan]="isHorizontal? 14:null">
-                    <label nz-checkbox  formControlName="isPrincipal" [(ngModel)]="isPrincipalChecked"  > {{ isPrincipalChecked ? 'Si' : 'No' }}</label>
-                    <nz-form-explain *ngIf="validateForm.get('isPrincipal').dirty && validateForm.get('isPrincipal').errors">Este campo es obligatorio!</nz-form-explain>
-                </nz-form-control>
-            </nz-form-item> -->
-        </div>
+  
       </div>
   <ng-template #modalFooter>
     <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
@@ -173,5 +164,8 @@
 </form>
 </nz-spin>  
 </nz-modal>
+
+
+
   </nz-card>
   

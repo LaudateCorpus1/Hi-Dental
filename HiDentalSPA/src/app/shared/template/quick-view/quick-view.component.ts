@@ -5,9 +5,9 @@ import { Component } from '@angular/core';
     templateUrl: './quick-view.component.html'
 })
 
-
-
 export class QuickViewComponent {
 
+    ngOnInit(): void {
+    }
 }
 

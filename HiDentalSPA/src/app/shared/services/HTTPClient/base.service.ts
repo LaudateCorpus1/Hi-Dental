@@ -16,11 +16,11 @@ export class BaseService {
     '3': 'api/PrincipalOffice',
     '4': 'api/DentalBranch',
     '5': 'api/ComboBox',
-
   };
+  // tslint:disable-next-line: variable-name
   constructor(_http: HttpClient) {
     this.http = _http;
-    this.baseUrl = 'http://10.0.0.6:45455/';
+    this.baseUrl = 'http://10.0.0.4:45457/';
   }
 
 
@@ -36,7 +36,7 @@ public getAll<T>(api: DataApi, Method: string,  item?: any, apiParms?: HttpParam
   }
   // Call generic method of data service
   // tslint:disable-next-line: max-line-length
-  return this.http.get<T>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method+ '?'+ apiParms);
+  return this.http.get<T>(this.baseUrl + this.dataApiRootMap[api] + '/' + Method + '?' + apiParms);
 
 }
 

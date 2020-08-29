@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { error } from 'protractor';
 import { Usuarios } from 'src/app/shared/Models/usuarios/usuarios';
 import { SucursalesViewModel, SucursalFilterParams } from 'src/app/shared/Models/Sucursales/sucursales';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-oficina-listado',
@@ -13,7 +14,7 @@ import { SucursalesViewModel, SucursalFilterParams } from 'src/app/shared/Models
   styleUrls: ['./oficina-listado.component.css']
 })
 export class OficinaListadoComponent implements OnInit {
-  
+  isHorizontal = false;
   idOficina:string;
    paginacion= new  PaginacionRequest;
    
@@ -21,7 +22,12 @@ export class OficinaListadoComponent implements OnInit {
    pageSize = 7;
    total = 0;
    
-  constructor(private tableSvc : TableService,public base:BaseService,private fb: FormBuilder,) {
+  constructor(
+    private tableSvc: TableService,
+    public base: BaseService,
+    private fb: FormBuilder,
+    private notification: NzNotificationService
+    ) {
   }
   
   textTitleModal= 'Nueva oficina';
@@ -102,13 +108,14 @@ params = new OficinaFilterParams();
     ).subscribe(x=>{
       this.loadingButton = false;
         if(x){
+          this.notification.success('Oficina', 'Se ha guardado correctamente', {});
            this.handleCancel();
            this.getOficinas();
         }
 
   }, error => {
     this.loadingButton = false;
-
+    this.notification.error('Oficina', 'Ha ocurrido un error!', {});
     console.log(error);
   });
  }
@@ -119,18 +126,20 @@ params = new OficinaFilterParams();
     'description': oficina.description,
    'address': oficina.address,
    'title': oficina.title,
-   'phoneNumber': oficina.phoneNumber
+   'phoneNumber': oficina.phoneNumber,
+   'isPrincipal':oficina.isPrincipal
  }).subscribe(x=>{
    this.idOficina=null;
    this.loadingButton = false;
    if(x){
+      this.notification.success('Oficina', 'Se ha actualizado correctamente', {});
       this.handleCancel();
       this.getOficinas();
    }
 
  },error=>{
   this.loadingButton = false;
-
+  this.notification.error('Oficina', 'Ha ocurrido un error!', {});
    console.log(error);
  })
  }
@@ -153,9 +162,11 @@ params = new OficinaFilterParams();
     console.log(idoficina);
       this.base.DoDelete(DataApi.Sucursales,'Remove',{'id':idoficina}).subscribe(x=>{
         if(x){
+          this.notification.success('Oficina', 'Se ha eliminado correctamente', {});
           this.getOficinas();
         }
       },error=>{
+        this.notification.error('Oficina', 'Ha ocurrido un error', {});
         console.log(error);
       });
 

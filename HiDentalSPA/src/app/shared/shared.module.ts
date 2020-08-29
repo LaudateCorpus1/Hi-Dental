@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from "@angular/router";
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ThemeConstantService } from './services/theme-constant.service';
 import { SearchPipe } from './pipes/search.pipe';
@@ -13,14 +13,15 @@ import { SearchPipe } from './pipes/search.pipe';
         CommonModule,
         FormsModule,
         HttpClientModule,
-        NgZorroAntdModule,
+        HttpClientJsonpModule,
+        NzIconModule,
         PerfectScrollbarModule,
         SearchPipe
     ],
     imports: [
         RouterModule,
         CommonModule,
-        NgZorroAntdModule,
+        NzIconModule,
         PerfectScrollbarModule
     ],
     declarations: [
