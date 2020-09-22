@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarOptions, DateSelectArg, EventClickArg, EventApi, CalendarApi, Calendar } from '@fullcalendar/angular';
+import { CalendarOptions, DateSelectArg, EventClickArg, EventApi, CalendarApi, Calendar, EventContentArg } from '@fullcalendar/angular';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
 import esLocale from '@fullcalendar/core/locales/es';
 import enLocale from '@fullcalendar/core/locales/en-au';
@@ -46,12 +46,12 @@ export class AgendaComponent implements OnInit {
       left: 'prev,next today',
       center: 'title',
       right: 'listWeek,timeGridDay,timeGridWeek,dayGridMonth'
-
     },
     height: 550,
     eventOverlap: false,
     initialView: 'timeGridWeek',
     initialEvents: INITIAL_EVENTS,
+    displayEventEnd:true,
     weekends: true,
     editable: true,
     selectable: true,
@@ -59,9 +59,16 @@ export class AgendaComponent implements OnInit {
     selectMirror: true,
     locale: esLocale,
     dayMaxEvents: true,
+    droppable : true,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
+    eventsSet: this.handleEvents.bind(this),
+    eventMouseEnter:(info)=> {
+      console.log(info.event.extendedProps.description)
+  },
+    eventDidMount:  (info)=> {
+        console.log(info.el)
+    },
   };
   locales = [esLocale, enLocale];
   currentEvents: EventApi[] = [];
@@ -108,7 +115,7 @@ export class AgendaComponent implements OnInit {
     this.validateForm = this.fb.group({
       formLayout: ['vertical'],
       title: [null, [Validators.required]],
-      address: [null, [Validators.required]],
+      start: [null, [Validators.required]],
       description: [null, [Validators.required]],
       phoneNumber: [null, [Validators.required]],
       isPrincipal: [false, [Validators.required]],
@@ -118,16 +125,21 @@ export class AgendaComponent implements OnInit {
   get f() { return this.validateForm.controls; }
 
   handleEventClick(clickInfo: EventClickArg) {
-    console.log(clickInfo.event.extendedProps.userAttendedID);
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
+    this.isVisible = true;
   }
 
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
   }
-
+  handleTooltipInfoEvent(info: EventContentArg){
+console.log(info.event.extendedProps.description);
+    // const tooltip = new Tooltip(info.el, {
+    //   title: info.event.extendedProps.description,
+    //   placement: 'top',
+    //   trigger: 'hover',
+    //   container: 'body'
+    // });
+  }
   showModal(): void {
     this.isVisible = true;
   }
