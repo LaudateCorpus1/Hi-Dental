@@ -1,9 +1,12 @@
 ﻿using BussinesLayer.Repository.Contracts;
 using DatabaseLayer.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace BussinesLayer.Repository.Services
 {
@@ -11,28 +14,53 @@ namespace BussinesLayer.Repository.Services
     {
         private readonly ApplicationDbContext _dbContext;
         public BaseRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
-        public async Task<bool> Add(TEntity entity)
+        public  virtual async Task<bool> Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
-            return await _dbContext.SaveChangesAsync() > 0;
+            return await CommitAsync();
         }
 
-        public IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> expression) => _dbContext.Set<TEntity>().Where(expression);
+        public virtual async Task<bool> CommitAsync()
+        {
+            var result = true;
+            using var transaction = _dbContext.Database.BeginTransaction();
+            {
+                try
+                {
+                    await _dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    result = false;
+                    await transaction.RollbackAsync();
+                    Console.WriteLine(ex.InnerException.Message);
+                }
+            }
+            return result;
+        }
 
-        public IQueryable<TEntity> GetAll() => _dbContext.Set<TEntity>().AsQueryable();
+        public virtual IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> expression) => _dbContext.Set<TEntity>().Where(expression);
 
-        public async Task<TEntity> GetById(Guid id) => await _dbContext.Set<TEntity>().FindAsync(id);
+        public virtual async Task<IEnumerable<TEntity>> FilterAsync(Expression<Func<TEntity, bool>> expression) => await Filter(expression).ToListAsync();
 
-        public async Task<bool> Remove(TEntity entity)
+        public virtual IQueryable<TEntity> GetAll() => _dbContext.Set<TEntity>().AsQueryable();
+
+        public virtual async Task<TEntity> GetById(Guid id) => await _dbContext.Set<TEntity>().FindAsync(id);
+
+        public virtual async Task<IEnumerable<TEntity>> GetList(Expression<Func<TEntity, bool>> expression = null) 
+            => expression == null ? await GetAll().ToListAsync() : await FilterAsync(expression);
+
+        public virtual async Task<bool> Remove(TEntity entity)
         {
             _dbContext.Set<TEntity>().Remove(entity);
-            return await _dbContext.SaveChangesAsync() > 0;
+            return await CommitAsync();
         }
 
-        public async Task<bool> Update(TEntity entity)
+        public virtual async Task<bool> Update(TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
-            return await _dbContext.SaveChangesAsync() > 0;
+            return await CommitAsync();
         }
 
     }

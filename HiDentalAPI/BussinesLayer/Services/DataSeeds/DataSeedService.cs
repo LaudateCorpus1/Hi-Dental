@@ -2,12 +2,14 @@
 using DatabaseLayer.Persistence;
 using DataBaseLayer.Enums;
 using DataBaseLayer.Models;
+using DataBaseLayer.Models.Offices;
 using DataBaseLayer.Models.Users;
 using DataBaseLayer.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,7 +30,16 @@ namespace BussinesLayer.Services.DataSeeds
             var result = SeedOfUserPermitions(dbContext, appSetting);
             if (result == Result.Success || result == Result.HasAny)
             {
-                SeedOfUsers(dbContext, userManager, appSetting);
+                var officesResult = SeedOfOffices(dbContext, appSetting);
+                if (officesResult != null)
+                {
+                    var userTypeResult = SeedOfUserType(dbContext, appSetting);
+                    if (userTypeResult != null)
+                    {
+                        var resultOfUser = SeedOfUsers(dbContext, userManager, appSetting, officesResult.Id);
+                        if (resultOfUser != null) SeedOfUserDetail(dbContext, resultOfUser.Id, userTypeResult.Id);
+                    }
+                }
             }
         }
 
@@ -42,21 +53,22 @@ namespace BussinesLayer.Services.DataSeeds
             if (dbContext.Roles.Any()) return Result.HasAny;
 
             var permissions = new List<Permission>();
-            foreach (var item in options.Value.DefaultPermissions) permissions.Add(new Permission { Name = item, NormalizedName = item });
+            foreach (var item in options.Value.DefaultPermissions) permissions.Add(new Permission { Name = item, NormalizedName = item.ToUpper() });
 
             dbContext.Roles.AddRange(permissions);
             return dbContext.SaveChanges() > 0 ? Result.Success : Result.Error;
         }
 
         /// <summary>
+        /// Create the root user
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="userManager"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static Result SeedOfUsers(ApplicationDbContext dbContext, UserManager<User> userManager, IOptions<AppSetting> options)
+        private static User SeedOfUsers(ApplicationDbContext dbContext, UserManager<User> userManager, IOptions<AppSetting> options, Guid officeId)
         {
-            if (dbContext.Users.Any()) return Result.HasAny;
+            if (dbContext.Users.Any()) return null;
             var user = new User
             {
                 UserName = options.Value.User.UserName,
@@ -66,17 +78,54 @@ namespace BussinesLayer.Services.DataSeeds
                 EmailConfirmed = true,
                 PhoneNumber = options.Value.User.PhoneNumber,
                 LockoutEnabled = false,
-                CreatedBy = nameof(TypeOfCreation.ByApp)
+                CreatedBy = nameof(TypeOfCreation.ByApp),
+                DentalBranchId = officeId
             };
+
             var result = userManager.CreateAsync(user, options.Value.User.Password);
             dbContext.Users.Add(user);
-            if (dbContext.SaveChanges() > 0)
+            if (dbContext.SaveChanges() <= 0) return null;
+
+            var permissions = dbContext.Roles.FirstOrDefault(x => x.Name == options.Value.DefaultPermissions.FirstOrDefault());
+            dbContext.UserRoles.Add(new UserPermission { RoleId = permissions.Id, UserId = user.Id });
+            return dbContext.SaveChanges() > 0 ? user : null;
+        }
+
+        /// <summary>
+        /// Create the root userType
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        private static UserType SeedOfUserType(ApplicationDbContext dbContext, IOptions<AppSetting> options)
+        {
+            if (dbContext.UserTypes.Any()) return null;
+            var model = new UserType { Name = options.Value.DefautlUserType };
+            dbContext.UserTypes.AddRange(model);
+            return dbContext.SaveChanges() > 0 ? model : null;
+        }
+
+
+        private static bool SeedOfUserDetail(ApplicationDbContext dbContext, string userId, Guid userTypeId)
+        {
+            dbContext.UserDetails.Add(new UserDetail { UserId = userId, UserTypeId = userTypeId });
+            return dbContext.SaveChanges() > 0;
+        }
+
+        private static DentalBranch SeedOfOffices(ApplicationDbContext dbContext, IOptions<AppSetting> options)
+        {
+            if (!dbContext.DentalBranch.Any())
             {
-                var permissions = dbContext.Roles.FirstOrDefault(x => x.Name == options.Value.DefaultPermissions.FirstOrDefault());
-                dbContext.UserRoles.Add(new UserPermission { RoleId = permissions.Id, UserId = user.Id });
-                return dbContext.SaveChanges() > 0 ? Result.Success : Result.Error;
+                var dentalBranch = new DentalBranch
+                {
+                    Title = options.Value.Office.Name,
+                    PhoneNumber = "0000000000",
+                    Address = options.Value.Office.Name,
+                };
+                dbContext.DentalBranch.Add(dentalBranch);
+                return dbContext.SaveChanges() > 0 ? dentalBranch : null;
             }
-            return Result.Error;
+            return null;
         }
     }
 

@@ -15,7 +15,7 @@
                 <span>{{item.title}}</span>
                 <i class="ant-menu-submenu-arrow"></i>
             </a>
-            <a [routerLink]="item.path" *ngIf="!item.submenu.length > 0">
+            <a [routerLink]="item.path" *ngIf="item.submenu.length === 0">
                 <i *ngIf="item.iconType == 'nzIcon'" nz-icon [nzType]="item.icon" [theme]="item.iconTheme"></i>
                 <i *ngIf="item.iconType == 'fontawesome'" class="m-r-10" [ngClass]="[item.iconTheme , item.icon]"></i>
                 <span>{{item.title}}</span>
@@ -33,7 +33,7 @@
                         <span>{{subItem.title}}</span>
                         <i class="ant-menu-submenu-arrow"></i>
                     </a>
-                    <a [routerLink]="subItem.path" class="p-l-30" *ngIf="!subItem.submenu.length > 0">
+                    <a [routerLink]="subItem.path" class="p-l-30" *ngIf="subItem.submenu.length === 0">
                         <i *ngIf="subItem.iconType == 'nzIcon'" nz-icon [nzType]="subItem.icon" [theme]="subItem.iconTheme"></i>
                         <i *ngIf="subItem.iconType == 'fontawesome'" class="m-r-10" [ngClass]="[subItem.iconTheme , subItem.icon]"></i>
                         <span>{{subItem.title}}</span>
@@ -50,7 +50,7 @@
                                 <span>{{subItem.title}}</span>
                                 <i class="ant-menu-submenu-arrow"></i>
                             </a>
-                            <a [routerLink]="subItem.path" class="p-l-50" *ngIf="!subItem.submenu.length > 0">
+                            <a [routerLink]="subItem.path" class="p-l-50" *ngIf="subItem.submenu.length === 0">
                                 <i *ngIf="subItem.iconType == 'nzIcon'" nz-icon [nzType]="subItem.icon" [theme]="subItem.iconTheme"></i>
                                 <i *ngIf="subItem.iconType == 'fontawesome'" class="m-r-10" [ngClass]="[subItem.iconTheme , subItem.icon]"></i>
                                 <span>{{subItem.title}}</span>

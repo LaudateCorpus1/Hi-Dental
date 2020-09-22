@@ -1,43 +1,36 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
-import { FullLayoutComponent } from "./layouts/full-layout/full-layout.component";
-import { CommonLayoutComponent } from "./layouts/common-layout/common-layout.component";
 
-import { FullLayout_ROUTES } from "./shared/routes/full-layout.routes";
-import { CommonLayout_ROUTES } from "./shared/routes/common-layout.routes";
+import { Layout_ROUTES } from './layouts/layout.routes';
+import { LayoutComponent } from './layouts/layout.component';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 const appRoutes: Routes = [
     {
-        path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
-        //canActivate: [AuthGuard]
-      },
-    {
         path: '',
-        redirectTo: '/dashboard/default',
+        redirectTo: '/dashboard/home',
         pathMatch: 'full',
     },
-    { 
+    {
+        path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+      },
+      { 
         path: '', 
-        component: CommonLayoutComponent,
-        children: CommonLayout_ROUTES 
+        component: LayoutComponent,
+        canActivate:[AuthGuard],
+        children: Layout_ROUTES 
     },
-    { 
-        path: '', 
-        component: FullLayoutComponent, 
-        children: FullLayout_ROUTES
-    },
- 
-    
+  
 ];
 
-@NgModule({ 
+@NgModule({
     imports: [
         RouterModule.forRoot(appRoutes, { 
             preloadingStrategy: PreloadAllModules,
-            useHash: true,
+            anchorScrolling: 'enabled',
             scrollPositionRestoration: 'enabled' 
-        }),
+        })
     ],
     exports: [
         RouterModule

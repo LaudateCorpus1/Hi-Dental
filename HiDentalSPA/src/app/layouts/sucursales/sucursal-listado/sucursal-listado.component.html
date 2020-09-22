@@ -1,0 +1,171 @@
+
+<nz-card>
+  <h4>Listado de sucursales</h4>
+    <div class="row m-b-30">
+        <div class="col-lg-10">
+            <div class="d-md-flex">
+                <div class="m-b-10 m-r-20 w-100" >
+                    <nz-input-group  [nzPrefix]="prefixTemplate">
+                        <input class="borderStrong" type="text" (keyup)="getSucursales()" nz-input placeholder="Nombre" [(ngModel)]="search">
+                    </nz-input-group>      
+                    <ng-template #prefixTemplate>
+                        <i nz-icon nzType="search" class="opacity-05"></i>
+                    </ng-template>   
+                </div>
+                <div class="m-b-10 m-r-20 d-flex align-items-center borderStrong">
+                    <nz-select nzShowSearch nzAllowClear [nzLoading]="loadingDentalBranches" style="min-width: 220px;" class="w-100 "  nzPlaceHolder="Oficinas"   [(ngModel)]="oficinaSeletedFilter" (ngModelChange)="getSucursales()" >
+                        <nz-option *ngFor="let o of comboboxOficinas" [nzValue]="o" [nzLabel]="o.title"></nz-option>
+                    </nz-select>
+                </div>
+            </div>          
+        </div>
+        <div class="col-lg-2 text-right">
+            <button nz-button nzType="primary" (click)="showModal(null)">
+                <i nz-icon nzType="plus-circle" theme="outline"></i>
+                <span>Nueva sucursal</span>
+            </button>
+        </div>
+    </div>
+    <nz-spin nzTip='Loading...' [nzSpinning]="Cargando" [nzDelay]="500">
+      <nz-table #ordersListTable [nzData]="sucursales" 
+    
+
+      (nzCurrentPageDataChange)="currentPageDataChange($event)"
+      [nzFrontPagination]="false"
+      nzShowSizeChanger
+      [nzTotal]="total"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="getSucursales()"
+      (nzPageSizeChange)="getSucursales(true)"
+      >
+      <thead  >
+          <tr>
+              <th  nzSortKey="name">Nombre</th>
+              <th  nzSortKey="phoneNumber">Telefono</th>
+              <!-- <th  nzSortKey="description">Descripcion</th> -->
+              <th  nzSortKey="address">Direccion</th>
+              <!-- <th  nzSortKey="isPrincipal">Principal</th> -->
+              <th  nzSortKey="createAt">Creado</th>
+              <th  nzSortKey="state">Estado</th>
+              <th  nzSortKey="office">Oficina</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody>
+           <tr *ngFor="let item of ordersListTable.data ">
+              <td>
+                  <div class="d-flex align-items-center">
+                      <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="'assets/images/avatars/thumb-7.jpg'"></nz-avatar>
+                      <h6 class="m-l-10 m-b-0">{{item.title}}</h6>
+                  </div>
+              </td>
+              <td>{{item.phoneNumber}}</td>
+              <!-- <td>{{item.description}}</td> -->
+              <td>{{item.address}}</td>
+              <!-- <td>
+                  <span class="text-capitalize" *ngIf="item.isPrincipal">Si</span>
+                  <span class="text-capitalize" *ngIf="item.isPrincipal==false">No</span>
+                </td> -->
+              <td>{{item.createAt | date}}</td>
+              <td>
+                  <nz-badge *ngIf="item.state == 0" nzStatus="success"></nz-badge>
+                  <nz-badge *ngIf="item.state == 1" nzStatus="error"></nz-badge>
+                  <nz-badge *ngIf="item.state == 2"  nzStatus="processing"></nz-badge> 
+                  <span class="text-capitalize" *ngIf="item.state==0">Activo</span>
+                  <span class="text-capitalize" *ngIf="item.state==1">Eliminado</span>
+                  <span class="text-capitalize" *ngIf="item.state==2">Bloqueado</span>
+              </td>
+              <td class="text-md-right">
+              
+                  <button class="m-r-10 "   nz-button style="background-color: #FCF3CF !important;"  (click)="showModal(item.id)" nzGhost>
+                    <i nz-icon nzType="edit" style=" color: #F1C40F !important;" theme="fill"></i>
+                  </button>
+                  <button class="m-r-10" nz-button nzType="danger" nz-popconfirm nzTitle="Estas seguro de eliminarlo?" (nzOnConfirm)="deleteSucursal(item.id)" nzGhost>
+                    <i nz-icon nzType="delete" theme="fill"></i>
+                  </button>
+              </td>
+          </tr> 
+      </tbody>
+  </nz-table>
+  
+  </nz-spin>
+  
+  <nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="title"
+  [nzFooter]="modalFooter"
+  [nzOkLoading]="isOkLoading"
+>
+<ng-template #title>
+     <span>{{textTitleModal}}</span>
+  </ng-template>
+  <p>Llene los siguientes campos</p>
+  <nz-spin nzTip='Loading...' [nzSpinning]="editLoading" [nzDelay]="500">
+  <form nz-form [nzLayout]="validateForm.get('formLayout')?.value"  [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <div nz-row style="margin-top: -8px !important; color: gray ;" nzType="flex" nzJustify="space-between">
+        <div  nz-col nzSpan="11"> 
+            <nz-form-item >
+                <nz-form-label [nzSpan]="isHorizontal? 4:null">Nombre</nz-form-label>
+                <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                    <input nzSize="small" nz-input formControlName="title" placeholder="Nombre">
+                    <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">Este campo es obligatorio!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div  nz-col nzSpan="11" >
+            <nz-form-item >
+                <nz-form-label [nzSpan]="isHorizontal? 4:null">Telefono</nz-form-label>
+                <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                    <input nzSize="small" nz-input formControlName="phoneNumber" placeholder="Telefono">
+                    <nz-form-explain *ngIf="validateForm.get('phoneNumber').dirty && validateForm.get('phoneNumber').errors">Este campo es obligatorio!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+      <div nz-row  style="margin-top: -20px !important" nzType="flex" nzJustify="space-between">
+        <div  nz-col nzSpan="11"> 
+            <nz-form-item >
+                <nz-form-label [nzSpan]="isHorizontal? 4:null">Direccion</nz-form-label>
+                <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                    <input nzSize="small" nz-input formControlName="address" placeholder="Direccion">
+                    <nz-form-explain *ngIf="validateForm.get('address').dirty && validateForm.get('address').errors">Este campo es obligatorio!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div  nz-col nzSpan="11" >
+            <nz-form-item >
+                <nz-form-label [nzSpan]="isHorizontal? 4:null">Descripcion</nz-form-label>
+                <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                    <input nzSize="small" nz-input formControlName="description" placeholder="Descripcion">
+                    <nz-form-explain *ngIf="validateForm.get('description').dirty && validateForm.get('description').errors">Este campo es obligatorio!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+      <div nz-row  style="margin-top: -20px !important" nzType="flex" nzJustify="space-between">
+        <div  nz-col nzSpan="11"> 
+            <nz-form-item>
+                <nz-form-label [nzSpan]="isHorizontal? 4:null" nzRequired>Oficinas</nz-form-label>
+                <nz-form-control [nzSpan]="isHorizontal? 14:null">
+                    <nz-select id="oficinasSelectForm" nzSize="small"  formControlName="office" [(ngModel)]="oficinaSeletedForm" nzPlaceHolder="Seleccione una oficina" >
+                        <nz-option *ngFor="let o of comboboxOficinas" [nzValue]="o.code" [nzLabel]="o.title"></nz-option>
+                    </nz-select>
+                    <nz-form-explain *ngIf="validateForm.get('office').dirty && validateForm.get('office').errors">Por favor seleccione una oficina!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+  
+      </div>
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
+    <button nz-button nzType="primary" (click)="submitForm()" [nzLoading]="loadingButton" >Guardar</button>
+  </ng-template>
+</form>
+</nz-spin>  
+</nz-modal>
+
+
+
+  </nz-card>
+  

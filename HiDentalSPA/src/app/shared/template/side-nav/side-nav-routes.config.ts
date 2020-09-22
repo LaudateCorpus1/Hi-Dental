@@ -7,10 +7,10 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'dashboard',
         submenu: [
-            { 
+            {
                 path: '',
-                title: 'Level 1', 
-                iconType: '', 
+                title: 'Level 1',
+                iconType: '',
                 icon: '',
                 iconTheme: '',
                 submenu: [
@@ -21,29 +21,29 @@ export const ROUTES: SideNavInterface[] = [
                         iconTheme: 'outline',
                         icon: 'layout',
                         submenu: []
-                    }    
-                ] 
+                    }
+                ]
             }
         ]
     },
     {
-        path: '',
-        title: 'Citas',
+        path: '/agenda',
+        title: 'Agenda',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'schedule',
         submenu: [
-      
+
         ]
     },
     {
-        path: '',
+        path: '/pacientes',
         title: 'Pacientes',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'team',
         submenu: [
-      
+
         ]
     },
     {
@@ -53,7 +53,6 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'file-search',
         submenu: [
-      
         ]
     },
     {
@@ -63,7 +62,7 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'medicine-box',
         submenu: [
-      
+
         ]
     },
     {
@@ -73,7 +72,7 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'medicine-box',
         submenu: [
-      
+
         ]
     },
     {
@@ -83,10 +82,10 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'file',
         submenu: [
-            { 
+            {
                 path: '',
-                title: 'Level 1', 
-                iconType: '', 
+                title: 'Level 1',
+                iconType: '',
                 icon: '',
                 iconTheme: '',
                 submenu: [
@@ -97,19 +96,50 @@ export const ROUTES: SideNavInterface[] = [
                         iconTheme: 'outline',
                         icon: 'layout',
                         submenu: []
-                    }    
-                ] 
+                    }
+                ]
             }
         ]
     },
     {
         path: '',
-        title: 'Usuarios',
+        title: 'Administracion',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'user',
         submenu: [
-      
+            {
+                path: '/usuarios',
+                title: 'Usuarios',
+                iconType: 'nzIcon',
+                iconTheme: 'outline',
+                icon: 'user',
+                submenu: [
+
+                ]
+            },
+            {
+                path: '/oficinas',
+                title: 'Oficinas',
+                iconType: 'nzIcon',
+                iconTheme: 'outline',
+                icon: 'user',
+                submenu: [
+
+                ]
+            },
+            {
+                path: '/sucursales',
+                title: 'sucursales',
+                iconType: 'nzIcon',
+                iconTheme: 'outline',
+                icon: 'user',
+                submenu: [
+
+                ]
+            },
+
         ]
     },
-]    
+
+];

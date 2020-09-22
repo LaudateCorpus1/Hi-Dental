@@ -1,26 +1,25 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
 import { SharedModule } from '../shared/shared.module';
 import { DashboardRoutingModule } from "./dashboard-routing.module";
-import { ThemeConstantService } from '../shared/services/theme-constant.service';
+import { DashboardComponent } from './dashboard.component';
 
-import { DefaultDashboardComponent } from './default/default-dashboard.component';
-import { WithBreadcrumbDashboardComponent } from './with-breadcrumb/with-breadcrumb-dashboard.component';
+/** Import any ng-zorro components as the module required except icon module */
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
+/** Assign all ng-zorro modules to this array*/
+const antdModule = [
+    NzButtonModule,
+]
 
 @NgModule({
     imports: [
-        CommonModule,
         SharedModule,
         DashboardRoutingModule,
+        ...antdModule
     ],
     exports: [],
     declarations: [
-        DefaultDashboardComponent,
-        WithBreadcrumbDashboardComponent
-    ],
-    providers: [
-        ThemeConstantService
-    ],
+        DashboardComponent
+    ]
 })
 export class DashboardModule { }

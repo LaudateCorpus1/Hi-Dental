@@ -1,0 +1,19 @@
+<!-- <nz-page-header  (nzBack)="onBack()" nzBackIcon nzTitle="Editando usuario"  nzSubtitle="Lony mejia"></nz-page-header> -->
+
+<nz-page-header class="border" nzBackIcon>
+  <nz-page-header-title>Usuario</nz-page-header-title>
+  <nz-page-header-subtitle>{{textAccion}}</nz-page-header-subtitle>
+  <!-- <nz-page-header-tags>
+    <nz-tag nzColor="blue">Lony mejia</nz-tag>
+  </nz-page-header-tags> -->
+ 
+  </nz-page-header>
+<div nz-row >
+  <nz-card  nz-col nzSpan="15" style="border-top:none ; height: 550px;">
+      <usuario-formulario ></usuario-formulario >
+  </nz-card >
+  <nz-card nz-col nzSpan="9" style="border-top:none ;border-left:none ; height: 550px;" >
+        <permisos-tree-view></permisos-tree-view>
+    </nz-card >
+</div>
+
