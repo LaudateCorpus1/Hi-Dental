@@ -8,6 +8,7 @@ export const INITIAL_EVENTS: EventInput[] = [
     id: createEventId(),
     title: 'Sandy German',
     start: TODAY_STR,
+    description: 'description for Repeating Event',
     state: '',
     pacienteID: '',
     userAttendedID: '' 
@@ -17,6 +18,7 @@ export const INITIAL_EVENTS: EventInput[] = [
     id: createEventId(),
     title: 'Jencarlos',
     start: TODAY_STR,
+    description: 'description for Repeating Event',
     state: '',
     pacienteID: '3003',
     userAttendedID: '30303' 

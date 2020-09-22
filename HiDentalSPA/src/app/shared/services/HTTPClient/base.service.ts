@@ -20,7 +20,7 @@ export class BaseService {
   // tslint:disable-next-line: variable-name
   constructor(_http: HttpClient) {
     this.http = _http;
-    this.baseUrl = 'http://10.0.0.4:45457/';
+    this.baseUrl = 'http://10.0.0.5:45457/';
   }
 
 
