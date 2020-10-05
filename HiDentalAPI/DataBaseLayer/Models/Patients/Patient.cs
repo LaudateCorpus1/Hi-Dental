@@ -17,7 +17,6 @@ namespace DatabaseLayer.Models.Patients
         public string Names { get; set; }
         [Required]
         public string LastNames { get; set; }
-        [Required]
         public string IdentificationCard { get; set; }
         [Required]
         public string Address { get; set; }
@@ -41,6 +40,7 @@ namespace DatabaseLayer.Models.Patients
         [Required]
         public Guid DentalBranchId { get; set; }
         public DentalBranch DentalBranch { get; set; }
+        public string Note { get; set; }
 
         [JsonIgnore]
         public string Code { get; set; } = StringsHelper.GenerateRandomString(6);
