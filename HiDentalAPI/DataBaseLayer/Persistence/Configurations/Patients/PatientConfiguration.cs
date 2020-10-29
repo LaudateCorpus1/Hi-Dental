@@ -13,7 +13,7 @@ namespace DataBaseLayer.Persistence.Configurations.Patients
         public void Configure(EntityTypeBuilder<Patient> builder)
         {
             builder.HasQueryFilter(x => x.State != State.Removed);
-
+            //builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
         }
     }
 }

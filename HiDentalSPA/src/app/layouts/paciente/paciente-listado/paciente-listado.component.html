@@ -18,7 +18,7 @@
             </div>          
         </div>
         <div class="col-lg-2 text-right">
-            <button nz-button nzType="primary" [routerLink]="['paciente/0']">
+            <button nz-button nzType="primary" (click)="crearNuevoPaciente()">
                 <i nz-icon nzType="plus-circle" theme="outline"></i>
                 <span>Nuevo paciente</span>
             </button>
@@ -168,3 +168,5 @@
   
   </nz-card>
   
+
+ 

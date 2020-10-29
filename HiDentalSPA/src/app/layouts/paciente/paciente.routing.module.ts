@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { PacienteComponent } from './paciente.component';
 import { PacienteListadoComponent } from './paciente-listado/paciente-listado.component';
+import { PacienteNuevoComponent } from './paciente-nuevo/paciente-nuevo.component';
 import { PacienteTabsComponent } from './paciente-tabs/paciente-tabs.component';
 import { NgModule } from '@angular/core';
 
@@ -9,6 +10,7 @@ const routes: Routes = [
      children: [
        {path: '', component: PacienteListadoComponent},
        {path: 'paciente/:id', data: {title: 'paciente'}, component: PacienteTabsComponent},
+ 
      ]
   },
 ];
