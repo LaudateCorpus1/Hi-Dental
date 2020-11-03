@@ -1,6 +1,7 @@
 ﻿using Common.Helpers;
 using DatabaseLayer.Models.Appointments;
 using DataBaseLayer.Enums;
+using DataBaseLayer.Enums.Pattient;
 using DataBaseLayer.Models;
 using DataBaseLayer.Models.Commons;
 using DataBaseLayer.Models.Offices;
@@ -46,6 +47,8 @@ namespace DatabaseLayer.Models.Patients
         public string Code { get; set; } = StringsHelper.GenerateRandomString(6);
 
         public virtual ICollection<Appointment> Appointment { get; set; }
+
+        public StepForm StepForm { get; set; }
 
     }
 }

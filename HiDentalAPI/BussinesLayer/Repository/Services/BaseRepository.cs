@@ -10,11 +10,11 @@ using System.Transactions;
 
 namespace BussinesLayer.Repository.Services
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity>  where TEntity :class
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly ApplicationDbContext _dbContext;
         public BaseRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
-        public  virtual async Task<bool> Add(TEntity entity)
+        public virtual async Task<bool> Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
             return await CommitAsync();
@@ -34,7 +34,7 @@ namespace BussinesLayer.Repository.Services
                 {
                     result = false;
                     await transaction.RollbackAsync();
-                    Console.WriteLine(ex.InnerException.Message);
+                    throw new Exception(ex.Message ?? ex.InnerException.Message);
                 }
             }
             return result;
@@ -48,7 +48,7 @@ namespace BussinesLayer.Repository.Services
 
         public virtual async Task<TEntity> GetById(Guid id) => await _dbContext.Set<TEntity>().FindAsync(id);
 
-        public virtual async Task<IEnumerable<TEntity>> GetList(Expression<Func<TEntity, bool>> expression = null) 
+        public virtual async Task<IEnumerable<TEntity>> GetList(Expression<Func<TEntity, bool>> expression = null)
             => expression == null ? await GetAll().ToListAsync() : await FilterAsync(expression);
 
         public virtual async Task<bool> Remove(TEntity entity)
