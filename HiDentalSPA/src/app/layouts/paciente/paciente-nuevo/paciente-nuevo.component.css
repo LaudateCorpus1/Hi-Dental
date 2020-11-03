@@ -1,0 +1,70 @@
+
+div[nz-modal-footer]{
+    border:0 !important;
+}
+
+/* .ant-modal-footer 
+{
+    border-top: 0px solid #edf2f9  ; 
+    padding: 0.625rem 1rem;
+    text-align: right;
+    border-radius: 0 0 0.25rem 0.25rem;
+} */
+
+nz-steps {
+
+    display: block;
+    margin-bottom: 60px;
+    box-shadow: rgb(232, 232, 232) 0px -1px 0px 0 inset;
+ 
+}
+
+.step-bottom
+{
+   margin-bottom: 0.7em;
+}
+
+
+.card-style
+{
+    min-height: 300px;
+    border:0;
+}
+
+ 
+
+  .phone-select {
+    width: 170px;
+  }
+
+  .register-area {
+    margin-bottom: 8px;
+  }
+
+ 
+  .form-container
+  {
+    max-width: 860px;
+  }
+
+  .centrel-save-cancel-button
+  {
+    padding-left: 38.009%;
+    background: #ededed;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  textarea
+  {
+    resize: none;
+  }
+
+  .ant-input{
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 0.55rem 1rem;
+    line-height: 1.5;
+    color: #53535f;
+    height: auto;
+    border: 1px solid #b2c1d6;
+}

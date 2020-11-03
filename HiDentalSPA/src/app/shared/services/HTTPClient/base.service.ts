@@ -16,11 +16,12 @@ export class BaseService {
     '3': 'api/PrincipalOffice',
     '4': 'api/DentalBranch',
     '5': 'api/ComboBox',
+    '6': 'api/Patient'
   };
   // tslint:disable-next-line: variable-name
   constructor(_http: HttpClient) {
     this.http = _http;
-    this.baseUrl = 'http://10.0.0.5:45457/';
+    this.baseUrl = 'http://localhost:5000/';
   }
 
 

@@ -1,0 +1,195 @@
+<form nz-form [formGroup]="datosPesonalesGrupo" (ngSubmit)="enviarFormulario()">
+
+  <div class="page-header has-tab mt-3">
+    <div class="d-md-flex align-items-center justify-content-between">
+      <div class="media align-items-center m-b-15">
+        <nz-avatar [nzSize]="70" nzSrc="assets/images/avatars/thumb-4.jpg"></nz-avatar>
+        <div class="m-l-15">
+          <h4 class="m-b-0">{{nombrecompleto}}</h4>
+          <p class="text-muted m-b-0">Edad: {{edad}} años</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nz-steps nzType="navigation" [nzCurrent]="tabIndice" (nzIndexChange)="tabCambioEvento($event)"
+    class="page-header-tab step-bottom" style="margin-bottom: 4px;">
+    <nz-step nzTitle="Informacion Personal" nzStatus="process"> </nz-step>
+    <nz-step nzTitle="Odontograma" nzStatus="wait"> </nz-step>
+    <nz-step nzTitle="Planes de tratamiento" nzStatus="wait"> </nz-step>
+    <nz-step nzTitle="Imagenes y archivos" nzStatus="wait"> </nz-step>
+    <nz-step nzTitle="Comentarios administractivos" nzStatus="wait"></nz-step>
+  </nz-steps>
+
+  <div class="d-md-flex m-b-15 align-items-center justify-content-between centrel-save-cancel-button">
+    <div class="m-t-1 align-items-center" style="width: 100%;">
+      <button nz-button nzType="default" (click)="cancelar()" style="margin-right: 4px;">
+        <span>Cancelar</span>
+      </button>
+      <button nz-button nzType="primary" [nzLoading]="isLoading">
+        <span>Guardar</span>
+      </button>
+    </div>
+  </div> 
+
+
+  <nz-card class='card-style' *ngIf="tabIndice == 0">
+
+
+    <div class="form-container">
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="nombre">Nombre</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Favor ingresar campo Nombre!">
+          <input nz-input formControlName="nombre" id="nombre" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="apellido">Apellido</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Favor ingresar el campo Apellido!">
+          <input nz-input formControlName="apellido" id="apellido" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="genero">G&eacute;nero</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Favor seleccionar el Genero!">
+          <nz-radio-group formControlName="genero" nzButtonStyle="solid">
+            <label nz-radio-button nzValue="0">Masculino</label>
+            <label nz-radio-button nzValue="1">Femenino</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="fechanacimiento">Fecha de Nac.</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="Favor ingresar la Fecha de Nacimiento!">
+          <nz-date-picker formControlName="fechanacimiento" style="min-width: 349px; padding: 0.55rem 1rem;">
+          </nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cedula">C&eacute;dula</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="cedula" id="cedula" maxlength="11" style="max-width: 207px;" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="direccion">Direcci&oacute;n</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Favor ingresar el campo Dirección!">
+          <input nz-input formControlName="direccion" id="direccion" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="direccionoficina">Direcci&oacute;n Oficina</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="direccionoficina" id="direccionoficina" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">E-mail</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="email" id="email" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ocupacion">Ocupaci&oacute;n</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="ocupacion" id="ocupacion" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="referidopor">Referido Por</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="referidopor" id="referidopor" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="telefono1" nzRequired>Tel&eacute;fono</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="datosPesonalesGrupo.controls['telefono1']"
+          nzErrorTip="Por favor ingrese el Número de Teléfono!">
+          <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+            <ng-template #addOnBeforeTemplate>
+              <nz-select formControlName="telefono1_Prefix" class="phone-select" style="min-width: 65px;">
+                <nz-option nzLabel="+1" nzValue="+1"></nz-option>
+                <nz-option nzLabel="+809" nzValue="+809"></nz-option>
+                <nz-option nzLabel="+829" nzValue="+829"></nz-option>
+                <nz-option nzLabel="+849" nzValue="+849"></nz-option>
+              </nz-select>
+            </ng-template>
+            <input formControlName="telefono1" id="'telefono1'" nz-input />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="telefono2">Trabajo Tel&eacute;fono</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate1">
+            <ng-template #addOnBeforeTemplate1>
+              <nz-select formControlName="telefono2_Prefix" class="phone-select" style="min-width: 65px;">
+                <nz-option nzLabel="+1" nzValue="+1"></nz-option>
+                <nz-option nzLabel="+809" nzValue="+809"></nz-option>
+                <nz-option nzLabel="+829" nzValue="+829"></nz-option>
+                <nz-option nzLabel="+849" nzValue="+849"></nz-option>
+              </nz-select>
+            </ng-template>
+            <input formControlName="telefono2" id="'telefono2'" nz-input />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nota">Nota</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <textarea id="nota"  nz-input formControlName="nota" placeholder="Ingresar comentario" rows="3" cols="5" ></textarea>  
+        </nz-form-control>
+      </nz-form-item>
+
+
+    </div>
+
+
+  </nz-card>
+
+
+  <nz-card class='card-style' *ngIf="tabIndice == 1">
+
+    <h5>Informacion personal section #2</h5>
+
+  </nz-card>
+
+  <nz-card class='card-style' *ngIf="tabIndice == 2">
+
+    <h5>Informacion personal section #3</h5>
+
+  </nz-card>
+
+
+  <nz-card class='card-style' *ngIf="tabIndice == 3">
+
+    <h5>Informacion personal section #4</h5>
+
+  </nz-card>
+
+
+  <nz-card class='card-style' *ngIf="tabIndice == 4">
+
+    <h5>Informacion personal section #5</h5>
+
+  </nz-card>
+
+
+
+ 
+
+</form>

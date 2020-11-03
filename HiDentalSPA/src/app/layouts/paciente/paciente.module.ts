@@ -6,6 +6,7 @@ import {  NZ_I18N, en_US } from 'ng-zorro-antd';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PacienteTabsComponent } from './paciente-tabs/paciente-tabs.component';
 import { PacienteListadoComponent } from './paciente-listado/paciente-listado.component';
+import { PacienteNuevoComponent } from './paciente-nuevo/paciente-nuevo.component';
 import { TableService } from 'src/app/shared/services/table.service';
 import { ThemeConstantService } from 'src/app/shared/services/theme-constant.service';
 import { PacienteRoutingModule } from './paciente.routing.module';
@@ -34,6 +35,8 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzNotificationServiceModule } from 'ng-zorro-antd/notification';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 const antdModule = [
   NzButtonModule,
@@ -58,7 +61,9 @@ const antdModule = [
   NzFormModule,
   NzNotificationServiceModule,
   NzSelectModule,
-  NzUploadModule
+  NzUploadModule,
+  NzStepsModule,
+  NzDatePickerModule
 ];
 
 @NgModule({
@@ -70,7 +75,7 @@ const antdModule = [
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  declarations: [PacienteComponent, PacienteListadoComponent, PacienteTabsComponent],
+  declarations: [PacienteComponent, PacienteListadoComponent, PacienteTabsComponent, PacienteNuevoComponent],
   providers: [
     {
         provide: NZ_I18N,
