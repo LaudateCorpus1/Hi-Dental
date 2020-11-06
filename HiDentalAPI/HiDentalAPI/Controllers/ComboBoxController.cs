@@ -47,7 +47,7 @@ namespace HiDentalAPI.Controllers
             => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid, Guid?>>>(await _unitOfWork.PatientService.GetList(x => x.DentalBranchId == dentalBranchId)));
     
         [HttpGet("{dentalBranchId}")]
-        public async Task<IActionResult> Profesionals(Guid dentalBranchId)
+        public async Task<IActionResult> Doctors(Guid dentalBranchId)
             => Ok(_mapper.Map<IEnumerable<ComboBoxViewModel<Guid, Guid?>>>(await _unitOfWork.UserService.GetAllDoctors(dentalBranchId)));
 
     }
