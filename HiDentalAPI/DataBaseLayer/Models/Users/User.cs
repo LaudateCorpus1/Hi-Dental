@@ -34,5 +34,6 @@ namespace DatabaseLayer.Models.Users
         public Guid DentalBranchId { get; set; }
         public virtual DentalBranch DentalBranch { get; set; }
 
+
     }
 }

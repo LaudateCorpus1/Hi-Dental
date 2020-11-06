@@ -8,6 +8,7 @@ using DataBaseLayer.Models.Offices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace DatabaseLayer.Models.Patients
@@ -18,6 +19,10 @@ namespace DatabaseLayer.Models.Patients
         public string Names { get; set; }
         [Required]
         public string LastNames { get; set; }
+
+        [NotMapped]
+        public string FullName => $"{Names} {LastNames}";
+
         public string IdentificationCard { get; set; }
         [Required]
         public string Address { get; set; }

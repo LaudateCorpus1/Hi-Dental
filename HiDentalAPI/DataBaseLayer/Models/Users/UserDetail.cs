@@ -27,6 +27,7 @@ namespace DataBaseLayer.Models.Users
     {
         [Required]
         public string Name { get; set; }
+        public bool IsDoctor { get; set; }
         [JsonIgnore]
         public virtual ICollection<UserDetail> UserDetails { get; set; }
     }

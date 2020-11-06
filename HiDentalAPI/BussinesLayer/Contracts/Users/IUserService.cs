@@ -64,5 +64,7 @@ namespace BussinesLayer.Contracts
         Task<bool> UpdateDentalBranchAsync(UserToDentalBranchViewModel model);
         Task<IEnumerable<User>> GetAllUserByDentalBranchAsync(Guid id);
         Task<User> GetByUserName(string userName);
+
+        Task<ICollection<User>> GetAllDoctors(Guid dentalBranchId);
     }
 }

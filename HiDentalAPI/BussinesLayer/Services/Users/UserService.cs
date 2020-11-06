@@ -243,5 +243,11 @@ namespace BussinesLayer.Services
         public async Task<User> GetByUserName(string userName)
             => await _userManager.FindByNameAsync(userName);
 
+        public async Task<ICollection<User>> GetAllDoctors(Guid dentalBranchId)
+        {
+            var result = GetAll().Where(x => x.DentalBranchId == dentalBranchId);
+            result = result.Include(x => x.UserDetail).ThenInclude(x => x.UserType).Where(x => x.UserDetail.UserType.IsDoctor);
+            return await result.ToListAsync();
+        }
     }
 }
