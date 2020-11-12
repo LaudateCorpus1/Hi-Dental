@@ -59,8 +59,8 @@ namespace HiDentalAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(UserType model)
         {
-            var existId = await _services.UserTypeService.GetById(model.Id);
-            if (existId == null) return BadRequest("No existe este tipo de usuario");
+            var existId = await _services.UserTypeService.Filter(x => x.Id == model.Id).AnyAsync();
+            if (!existId) return BadRequest("No existe este tipo de usuario");
             var existName = await _services.UserTypeService.Filter(x => x.Name == model.Name).ToListAsync();
             if (existName.Any()) return BadRequest("Ya existe este tipo de usuario , intente con otro nombre");
             var result = await _services.UserTypeService.Update(model);

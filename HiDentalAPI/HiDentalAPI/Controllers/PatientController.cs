@@ -4,6 +4,7 @@ using DataBaseLayer.ViewModels.Patient;
 using DataBaseLayer.ViewModels.Responses;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HiDentalAPI.Controllers
@@ -42,8 +43,8 @@ namespace HiDentalAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(Patient model)
         {
-            var exist = await _services.PatientService.GetById(model.Id);
-            if (exist == null) return NotFound(new ResponseBase { Code = CodeResponse.NotFound, Message = "Paciente No encontrado" });
+            var exist = _services.PatientService.GetAll().Any(x => x.Id == model.Id);
+            if (!exist) return NotFound(new ResponseBase { Code = CodeResponse.NotFound, Message = "Paciente No encontrado" });
             var result = await _services.PatientService.Update(model);
             if (!result) return BadRequest(new ResponseBase { Code = CodeResponse.DbError, Message = "Ocurrio un error intente de nuevo" });
             return Ok(result);
