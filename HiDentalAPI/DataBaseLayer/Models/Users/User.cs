@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer.Enums;
+using DatabaseLayer.Models.Appointments;
 using DataBaseLayer.Enums;
 using DataBaseLayer.Models;
 using DataBaseLayer.Models.Offices;
@@ -30,6 +31,8 @@ namespace DatabaseLayer.Models.Users
         public TypeOfCreation CreationType { get; set; } = TypeOfCreation.ByUser;
         public virtual ICollection<Consultation> Consults { get; set; }
         public virtual ICollection<UserPermission> UserRoles { get; set; }
+        public virtual ICollection<Appointment> Appointments { get; set; }
+
         public virtual UserDetail UserDetail { get; set; }
         public Guid DentalBranchId { get; set; }
         public virtual DentalBranch DentalBranch { get; set; }

@@ -24,6 +24,10 @@ namespace DatabaseLayer.Models.Appointments
         public User User { get; set; }
 
         [Required]
+        public string DoctorId { get; set; }
+        public User Doctor { get; set; }
+
+        [Required]
         public Guid DentalBranchId { get; set; }
         public DentalBranch DentalBranch { get; set; }
 

@@ -23,6 +23,8 @@
     <Compile Remove="Migrations\20200713195836_AddinTableOfPlans.Designer.cs" />
     <Compile Remove="Migrations\20200825140649_FixAddingAppointment.cs" />
     <Compile Remove="Migrations\20200825140649_FixAddingAppointment.Designer.cs" />
+    <Compile Remove="Migrations\20201121171507_AddingApointmentDoctor.cs" />
+    <Compile Remove="Migrations\20201121171507_AddingApointmentDoctor.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

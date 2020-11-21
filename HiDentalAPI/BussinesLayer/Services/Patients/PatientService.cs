@@ -26,7 +26,7 @@ namespace BussinesLayer.Services
             var result = GetAll().Where(x => x.DentalBranchId == filterEntity.DentalBranchId);
             if (!result.Any()) return null;
             if (!filterEntity.IdentityCard.IsNull()) result = result.Where(x => x.IdentificationCard.Contains(filterEntity.IdentityCard));
-            if (!filterEntity.Code.IsNull()) result = result.Where(x => x.Code == filterEntity.Code);
+            if (!filterEntity.Code.IsNull()) result = result.Where(x => x.Code.Contains(filterEntity.Code));
             if (!filterEntity.Name.IsNull()) result = result.Where(x => x.Names.Contains(filterEntity.Name));
             if (!filterEntity.LastNames.IsNull()) result = result.Where(x => x.LastNames.Contains(filterEntity.LastNames));
             if (!filterEntity.Email.IsNull()) result = result.Where(x => x.Email.Contains(filterEntity.Email));

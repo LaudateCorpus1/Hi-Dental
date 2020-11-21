@@ -20,6 +20,10 @@ namespace DataBaseLayer.Persistence.Configurations.Appointments
             builder.HasOne(x => x.DentalBranch)
                 .WithMany(x => x.Appoiments)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(x => x.Doctor)
+                .WithMany(x => x.Appointments)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

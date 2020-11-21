@@ -73,6 +73,8 @@ namespace HiDentalAPI.Extensions
             services.Configure<SwaggerSetting>(configuration.GetSection(nameof(SwaggerSetting)));
             services.Configure<AuthSetting>(configuration.GetSection(nameof(AuthSetting)));
             services.Configure<AppSetting>(configuration.GetSection(nameof(AppSetting)));
+            services.Configure<MailSetting>(configuration.GetSection(nameof(MailSetting)));
+
 
         }
     }

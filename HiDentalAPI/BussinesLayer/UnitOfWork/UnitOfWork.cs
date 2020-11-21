@@ -22,6 +22,8 @@ namespace BussinesLayer.UnitOfWork
     {
         private readonly ApplicationDbContext _context;
         private readonly IOptions<AppSetting> _appSettings;
+        private readonly IOptions<MailSetting> _mailSettings;
+
         private readonly IMapper _mapper;
 
         #region for user
@@ -52,7 +54,8 @@ namespace BussinesLayer.UnitOfWork
             RoleManager<Permission> roleManager,
             IOptions<AuthSetting> settings,
             IOptions<AppSetting> appSetting,
-            IMapper mapper)
+            IMapper mapper,
+            IOptions<MailSetting> mailSettings)
         {
             _context = context;
             _userManager = userManager;
@@ -61,6 +64,7 @@ namespace BussinesLayer.UnitOfWork
             _settings = settings;
             _appSettings = appSetting;
             _mapper = mapper;
+            _mailSettings = mailSettings;
         }
         public IPatientService PatientService => _patientService ?? (_patientService = new PatientService(_context));
 
@@ -82,7 +86,7 @@ namespace BussinesLayer.UnitOfWork
 
         public IServicePlanService ServicePlanService => _servicePlanService ?? (_servicePlanService = new ServicePlanService(_context));
 
-        public IAppointmentService AppointmentService => _apointmentService ?? (_apointmentService = new AppointmentService(_context));
+        public IAppointmentService AppointmentService => _apointmentService ?? (_apointmentService = new AppointmentService(_context,_mailSettings));
 
         async Task IUnitOfWork.Commit() => await _context.SaveChangesAsync();
     }
