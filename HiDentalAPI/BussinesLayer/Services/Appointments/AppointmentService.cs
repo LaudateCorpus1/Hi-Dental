@@ -44,13 +44,13 @@ namespace BussinesLayer.Services.Appointments
             var result = await base.Add(entity);
             if (result)
             {
-                var dentalBranch = await _context.DentalBranch.Select(x => new { x.Id }).FirstOrDefaultAsync(x => x.Id == entity.DentalBranchId);
-                if (!dentalBranch.Id.IsEmpty())
+                var dentalBranch = await _context.DentalBranch.FirstOrDefaultAsync(x => x.Id == entity.DentalBranchId);
+                if (dentalBranch != null)
                 {
                     var appointment = new Appointment
                     {
                         StartDate = entity.StartDate,
-                        DentalBranchId = dentalBranch.Id
+                        DentalBranch = dentalBranch
                     };
                     var to = await _context.Patients.Select(x => new { x.Id, x.Email }).FirstOrDefaultAsync(x => x.Id == entity.PatientId);
                     if (!string.IsNullOrEmpty(to.Email)) await SendNotification(appointment, to.Email);
@@ -74,6 +74,7 @@ namespace BussinesLayer.Services.Appointments
                 mail.Body = $"Hola, tienes una nueva cita de {model.DentalBranch.Title} en horario de {model.StartDate:f}";
 
                 SmtpServer.Port = _options.Port;
+                SmtpServer.UseDefaultCredentials = false;
                 SmtpServer.Credentials = new System.Net.NetworkCredential(_options.UserName, _options.Password);
                 SmtpServer.EnableSsl = _options.EnableSsl;
 
